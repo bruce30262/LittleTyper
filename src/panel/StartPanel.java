@@ -5,6 +5,9 @@
  */
 
 package panel;
+//import javax.swing.*;
+import frame.MainFrame;
+import littletyper.LittleTyper;
 
 /**
  *
@@ -33,9 +36,19 @@ public class StartPanel extends javax.swing.JPanel {
 
         jButton1.setFont(new java.awt.Font("新細明體", 0, 24)); // NOI18N
         jButton1.setText("Single Player Mode");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("新細明體", 0, 24)); // NOI18N
         jButton2.setText("Network Battle Mode");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -58,6 +71,16 @@ public class StartPanel extends javax.swing.JPanel {
                 .addGap(35, 35, 35))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        LittleTyper.MAINFRAME.SwitchPanel("difficulty");
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        // TODO add your handling code here:
+        LittleTyper.MAINFRAME.SwitchPanel("hostOrClient");
+    }//GEN-LAST:event_jButton2MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
