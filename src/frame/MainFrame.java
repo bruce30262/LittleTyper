@@ -23,6 +23,8 @@ public class MainFrame extends javax.swing.JFrame {
         CardLayout card  = new CardLayout();
         this.setLayout(card);
         this.add(new StartPanel(), "start");
+        this.add(new DifficultyPanel(), "difficulty");
+        this.add(new HostOrClientPanel(), "hostOrClient");
     }
 
     /**
