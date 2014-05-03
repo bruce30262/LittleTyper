@@ -17,7 +17,9 @@ public class LittleTyper {
     /**
      * @param args the command line arguments
      */
+    public static MainFrame MAINFRAME;
     public static void main(String[] args) {
+        
         // TODO code application logic here
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -43,9 +45,10 @@ public class LittleTyper {
         //</editor-fold>
 
         /* Create and display the form */
+        MAINFRAME = new MainFrame();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainFrame().setVisible(true);
+                MAINFRAME.setVisible(true);
             }
         });
     }
