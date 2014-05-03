@@ -17,14 +17,21 @@ public class MainFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainFrame
      */
+    private CardLayout card;
+    
     public MainFrame() {
         initComponents();
         this.setTitle("Little Typer");
-        CardLayout card  = new CardLayout();
+        card  = new CardLayout();
         this.setLayout(card);
         this.add(new StartPanel(), "start");
         this.add(new DifficultyPanel(), "difficulty");
         this.add(new HostOrClientPanel(), "hostOrClient");
+    }
+    
+    public void SwitchPanel (String panelName)
+    {
+        card.show(this.getContentPane(), panelName);
     }
 
     /**
