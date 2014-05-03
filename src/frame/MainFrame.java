@@ -5,6 +5,8 @@
  */
 
 package frame;
+import panel.*;
+import java.awt.*;
 
 /**
  *
@@ -18,6 +20,9 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         this.setTitle("Little Typer");
+        CardLayout card  = new CardLayout();
+        this.setLayout(card);
+        this.add(new StartPanel(), "start");
     }
 
     /**
