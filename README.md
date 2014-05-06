@@ -2,6 +2,7 @@ LittleTyper
 ===========
 
 A typing-fighting game develop in Java
+
 (it's still under heavy development.)
 
 Development Tools & Enviroments
