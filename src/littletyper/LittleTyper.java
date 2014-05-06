@@ -14,9 +14,6 @@ import frame.MainFrame;
  */
 public class LittleTyper {
 
-    /**
-     * @param args the command line arguments
-     */
     public static MainFrame MAINFRAME;
     public static void main(String[] args) {
         
