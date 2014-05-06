@@ -8,7 +8,7 @@ Development Tools & Enviroments
 * Tools:
     * NetBeans IDE 8.0
     * JDK 8
-    * Github  ( version control )
+    * GitHub  ( version control )
 * Enviroments:
     * Windows 7, Windows 8
     * Linux Mint 14.1
