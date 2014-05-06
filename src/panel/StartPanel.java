@@ -8,6 +8,9 @@ package panel;
 //import javax.swing.*;
 import frame.MainFrame;
 import littletyper.LittleTyper;
+import java.io.*;
+import java.net.URI; 
+import javax.sound.sampled.*;
 
 /**
  *
@@ -20,6 +23,26 @@ public class StartPanel extends javax.swing.JPanel {
      */
     public StartPanel() {
         initComponents();
+        String path = System.getProperty("user.dir") + File.separator + "music" + File.separator + "start.wav";
+        
+        try
+        {
+            File startMusic = new File(path);
+            AudioInputStream sound = AudioSystem.getAudioInputStream(startMusic);
+             // load the sound into memory (a Clip)
+            Clip clip = AudioSystem.getClip();
+            clip.open(sound);
+        //URI uriPath = startMusic.toURI();
+        
+            clip.setFramePosition(0);  // Must always rewind!
+            clip.start();
+            
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        
     }
 
     /**
