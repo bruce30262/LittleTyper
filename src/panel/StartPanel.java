@@ -96,6 +96,9 @@ public class StartPanel extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Impact", 0, 30)); // NOI18N
         jLabel4.setText("Ranking");
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel4MouseEntered(evt);
             }
@@ -172,6 +175,11 @@ public class StartPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         changeTextColor(this.jLabel4, "black");
     }//GEN-LAST:event_jLabel4MouseExited
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        // TODO add your handling code here:
+        LittleTyper.MAINFRAME.SwitchPanel("ranking");
+    }//GEN-LAST:event_jLabel4MouseClicked
 
     private void changeTextColor(javax.swing.JLabel label, String color)
     {
