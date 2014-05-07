@@ -23,7 +23,7 @@ public class StartPanel extends javax.swing.JPanel {
      */
     public StartPanel() {
         initComponents();
-        String path = System.getProperty("user.dir") + File.separator + "music" + File.separator + "start.wav";
+        String path = "music" + File.separator + "start.wav";
         
         try
         {
