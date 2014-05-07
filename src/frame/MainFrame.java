@@ -28,6 +28,7 @@ public class MainFrame extends javax.swing.JFrame {
         this.add(new DifficultyPanel(), "difficulty");
         this.add(new HostOrClientPanel(), "hostOrClient");
         this.add(new RankingPanel(), "ranking");
+        this.add(new TutorialPanel(), "tutorial");
     }
     
     public void SwitchPanel (String panelName)
