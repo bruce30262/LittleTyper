@@ -74,6 +74,9 @@ public class StartPanel extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Impact", 0, 30)); // NOI18N
         jLabel2.setText("Network Battle Mode");
         jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel2MouseEntered(evt);
             }
@@ -85,6 +88,9 @@ public class StartPanel extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Impact", 0, 30)); // NOI18N
         jLabel3.setText("Tutorial");
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel3MouseEntered(evt);
             }
@@ -180,6 +186,16 @@ public class StartPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         LittleTyper.MAINFRAME.SwitchPanel("ranking");
     }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        // TODO add your handling code here:
+        LittleTyper.MAINFRAME.SwitchPanel("tutorial");
+    }//GEN-LAST:event_jLabel3MouseClicked
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        // TODO add your handling code here:
+        LittleTyper.MAINFRAME.SwitchPanel("hostOrClient");
+    }//GEN-LAST:event_jLabel2MouseClicked
 
     private void changeTextColor(javax.swing.JLabel label, String color)
     {
