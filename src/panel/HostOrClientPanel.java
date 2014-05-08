@@ -5,7 +5,8 @@
  */
 
 package panel;
-import littletyper.LittleTyper;
+import frame.MainFrame;
+
 /**
  *
  * @author BruceChen
@@ -15,8 +16,19 @@ public class HostOrClientPanel extends javax.swing.JPanel {
     /**
      * Creates new form HostOrClientPanel
      */
-    public HostOrClientPanel() {
+    private static HostOrClientPanel hocpSingle;
+    
+    private HostOrClientPanel() {
         initComponents();
+    }
+    
+    public static HostOrClientPanel getInstance()
+    {
+        if(hocpSingle == null)
+        {
+            hocpSingle = new HostOrClientPanel();
+        }
+        return hocpSingle;
     }
 
     /**
@@ -83,7 +95,7 @@ public class HostOrClientPanel extends javax.swing.JPanel {
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
         // TODO add your handling code here:
-        LittleTyper.MAINFRAME.SwitchPanel("start");
+        MainFrame.getInstance().SwitchPanel("start");
     }//GEN-LAST:event_jButton3MouseClicked
 
 

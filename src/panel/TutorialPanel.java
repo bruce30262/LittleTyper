@@ -5,7 +5,8 @@
  */
 
 package panel;
-import littletyper.LittleTyper;
+import frame.MainFrame;
+
 
 /**
  *
@@ -16,8 +17,19 @@ public class TutorialPanel extends javax.swing.JPanel {
     /**
      * Creates new form TutorialPanel
      */
-    public TutorialPanel() {
+    private static TutorialPanel tutorSingle;
+    
+    private TutorialPanel() {
         initComponents();
+    }
+    
+    public static TutorialPanel getInstance()
+    {
+        if(tutorSingle == null)
+        {
+            tutorSingle = new TutorialPanel();
+        }
+        return tutorSingle;
     }
 
     /**
@@ -67,7 +79,7 @@ public class TutorialPanel extends javax.swing.JPanel {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
-        LittleTyper.MAINFRAME.SwitchPanel("start");
+        MainFrame.getInstance().SwitchPanel("start");
     }//GEN-LAST:event_jButton1MouseClicked
 
 

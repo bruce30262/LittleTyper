@@ -8,7 +8,6 @@ package panel;
 //import javax.swing.*;
 import frame.MainFrame;
 import java.awt.Color;
-import littletyper.LittleTyper;
 import java.io.*;
 import java.net.URI; 
 import javax.sound.sampled.*;
@@ -23,7 +22,10 @@ public class StartPanel extends javax.swing.JPanel {
      * Creates new form StartPanel
      */
     private Clip startClip;
-    public StartPanel() {
+    
+    private static StartPanel startSingle;
+    
+    private StartPanel() {
         initComponents();
         String path = "music" + File.separator + "start.wav";
         
@@ -45,6 +47,15 @@ public class StartPanel extends javax.swing.JPanel {
             e.printStackTrace();
         }
         
+    }
+    
+    public static StartPanel getInstance()
+    {
+        if(startSingle == null)
+        {
+            startSingle = new StartPanel();
+        }
+        return startSingle;
     }
 
     /**
@@ -210,17 +221,17 @@ public class StartPanel extends javax.swing.JPanel {
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         // TODO add your handling code here:
-        LittleTyper.MAINFRAME.SwitchPanel("ranking");
+        MainFrame.getInstance().SwitchPanel("ranking");
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
         // TODO add your handling code here:
-        LittleTyper.MAINFRAME.SwitchPanel("tutorial");
+        MainFrame.getInstance().SwitchPanel("tutorial");
     }//GEN-LAST:event_jLabel3MouseClicked
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // TODO add your handling code here:
-        LittleTyper.MAINFRAME.SwitchPanel("hostOrClient");
+        MainFrame.getInstance().SwitchPanel("hostOrClient");
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
@@ -242,7 +253,7 @@ public class StartPanel extends javax.swing.JPanel {
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         // TODO add your handling code here:
-        LittleTyper.MAINFRAME.SwitchPanel("character");
+        MainFrame.getInstance().SwitchPanel("character");
         ChoseCharacterPanel.getInstance().choseInit();
         
     }//GEN-LAST:event_jLabel1MouseClicked

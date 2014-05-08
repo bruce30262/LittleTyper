@@ -14,7 +14,6 @@ import frame.MainFrame;
  */
 public class LittleTyper {
 
-    public static MainFrame MAINFRAME;
     public static void main(String[] args) {
         
         // TODO code application logic here
@@ -42,10 +41,9 @@ public class LittleTyper {
         //</editor-fold>
 
         /* Create and display the form */
-        MAINFRAME = new MainFrame();
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                MAINFRAME.setVisible(true);
+                MainFrame.getInstance().setVisible(true);
             }
         });
     }

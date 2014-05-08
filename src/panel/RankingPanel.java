@@ -6,6 +6,7 @@
 
 package panel;
 
+import frame.MainFrame;
 import littletyper.LittleTyper;
 
 /**
@@ -17,8 +18,19 @@ public class RankingPanel extends javax.swing.JPanel {
     /**
      * Creates new form RankingPanel
      */
-    public RankingPanel() {
+    private static RankingPanel rankSingle;
+    
+    private RankingPanel() {
         initComponents();
+    }
+    
+    public static RankingPanel getInstance()
+    {
+        if(rankSingle == null)
+        {
+            rankSingle = new RankingPanel();
+        }
+        return rankSingle;
     }
 
     /**
@@ -131,17 +143,17 @@ public class RankingPanel extends javax.swing.JPanel {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
-        LittleTyper.MAINFRAME.SwitchPanel("start");
+        MainFrame.getInstance().SwitchPanel("start");
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         // TODO add your handling code here:
-         LittleTyper.MAINFRAME.SwitchPanel("start");
+        MainFrame.getInstance().SwitchPanel("start");
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
         // TODO add your handling code here:
-         LittleTyper.MAINFRAME.SwitchPanel("start");
+        MainFrame.getInstance().SwitchPanel("start");
     }//GEN-LAST:event_jButton3MouseClicked
 
 
