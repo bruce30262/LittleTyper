@@ -22,6 +22,7 @@ public class StartPanel extends javax.swing.JPanel {
     /**
      * Creates new form StartPanel
      */
+    private Clip startClip;
     public StartPanel() {
         initComponents();
         String path = "music" + File.separator + "start.wav";
@@ -31,12 +32,12 @@ public class StartPanel extends javax.swing.JPanel {
             File startMusic = new File(path);
             AudioInputStream sound = AudioSystem.getAudioInputStream(startMusic);
              // load the sound into memory (a Clip)
-            Clip clip = AudioSystem.getClip();
-            clip.open(sound);
+            startClip = AudioSystem.getClip();
+            startClip.open(sound);
         //URI uriPath = startMusic.toURI();
         
-            clip.setFramePosition(0);  // Must always rewind!
-            clip.start();
+            startClip.setFramePosition(0);  // Must always rewind!
+            startClip.start();
             
         }
         catch (Exception e)
@@ -221,7 +222,9 @@ public class StartPanel extends javax.swing.JPanel {
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         // TODO add your handling code here:
-        LittleTyper.MAINFRAME.dispose();
+        //this.startClip.stop();
+       // LittleTyper.MAINFRAME.dispose();
+        System.exit(0);
     }//GEN-LAST:event_jLabel5MouseClicked
 
     private void jLabel5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseEntered
