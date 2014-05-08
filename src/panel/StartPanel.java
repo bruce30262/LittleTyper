@@ -65,6 +65,9 @@ public class StartPanel extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Impact", 0, 30)); // NOI18N
         jLabel1.setText("Single Player Mode");
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel1MouseEntered(evt);
             }
@@ -236,6 +239,13 @@ public class StartPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         changeTextColor(this.jLabel5, "black");
     }//GEN-LAST:event_jLabel5MouseExited
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        // TODO add your handling code here:
+        LittleTyper.MAINFRAME.SwitchPanel("character");
+        ChoseCharacterPanel.getInstance().choseInit();
+        
+    }//GEN-LAST:event_jLabel1MouseClicked
 
     private void changeTextColor(javax.swing.JLabel label, String color)
     {
