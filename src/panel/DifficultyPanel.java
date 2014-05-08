@@ -15,8 +15,19 @@ public class DifficultyPanel extends javax.swing.JPanel {
     /**
      * Creates new form DifficultyPanel
      */
-    public DifficultyPanel() {
+    private static DifficultyPanel diffSingle;
+    
+    private DifficultyPanel() {
         initComponents();
+    }
+    
+    public static DifficultyPanel getInstance()
+    {
+        if(diffSingle == null)
+        {
+            diffSingle = new DifficultyPanel();
+        }
+        return diffSingle;
     }
 
     /**
@@ -30,7 +41,9 @@ public class DifficultyPanel extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
 
-        jLabel1.setFont(new java.awt.Font("新細明體", 0, 48)); // NOI18N
+        setFocusable(false);
+
+        jLabel1.setFont(new java.awt.Font("Impact", 0, 48)); // NOI18N
         jLabel1.setText("Please choose a difficulty");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -38,7 +51,7 @@ public class DifficultyPanel extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(164, Short.MAX_VALUE)
+                .addContainerGap(127, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(166, 166, 166))
         );
@@ -47,7 +60,7 @@ public class DifficultyPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addContainerGap(531, Short.MAX_VALUE))
+                .addContainerGap(530, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
