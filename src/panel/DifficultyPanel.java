@@ -82,6 +82,7 @@ public class DifficultyPanel extends javax.swing.JPanel {
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
         MainFrame.getInstance().SwitchPanel("character");
+        ChoseCharacterPanel.getInstance().choseInit();
     }//GEN-LAST:event_jButton1MouseClicked
 
 

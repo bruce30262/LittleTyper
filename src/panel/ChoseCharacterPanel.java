@@ -90,6 +90,7 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
 
         jButton1.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
         jButton1.setText("Back to menu");
+        jButton1.setFocusable(false);
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
@@ -98,6 +99,7 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
 
         jButton2.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
         jButton2.setText("Next");
+        jButton2.setFocusable(false);
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton2MouseClicked(evt);
@@ -211,6 +213,10 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
     {
         cnt = 0;
         characterBox[0].setBorder(redBorder);
+        characterBox[1].setBorder(blackBorder);
+        characterBox[2].setBorder(blackBorder);
+        characterBox[3].setBorder(blackBorder);
+        characterBox[4].setBorder(blackBorder);
         this.setFocusable(true);
         this.requestFocusInWindow();
     }
