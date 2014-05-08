@@ -26,7 +26,7 @@ public class MainFrame extends javax.swing.JFrame {
         card  = new CardLayout();
         this.setLayout(card);
         this.add(StartPanel.getInstance(), "start");
-        this.add(new DifficultyPanel(), "difficulty");
+        this.add(DifficultyPanel.getInstance(), "difficulty");
         this.add(HostOrClientPanel.getInstance(), "hostOrClient");
         this.add(RankingPanel.getInstance(), "ranking");
         this.add(TutorialPanel.getInstance(), "tutorial");
