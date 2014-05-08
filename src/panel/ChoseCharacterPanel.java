@@ -22,10 +22,20 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
     /**
      * Creates new form ChoseCharacterPanel
      */
-    public ChoseCharacterPanel() {
+    private static ChoseCharacterPanel characterSingle = null;
+    private ChoseCharacterPanel() {
         initComponents();
         boxInit();
         choseInit();
+    }
+    
+    public static ChoseCharacterPanel getInstance()
+    {
+        if(characterSingle == null)
+        {
+            characterSingle = new ChoseCharacterPanel();
+        }
+        return characterSingle;
     }
 
     /**
