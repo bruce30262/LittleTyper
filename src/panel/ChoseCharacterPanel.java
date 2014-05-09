@@ -196,9 +196,9 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
                     .addComponent(ch_Label1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(74, 74, 74)
                 .addComponent(headLabel)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nameLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -338,6 +338,7 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
     public void toDifficulty()
     {
         MainFrame.getInstance().SwitchPanel("difficulty");
+        DifficultyPanel.getInstance().setRole(headIcon[cnt], roleName[cnt], cnt);
     }
     
     public void loadImageAndName()
