@@ -31,12 +31,13 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
      */
     private Music selectMusic;
     private Icon[] headIcon;
+    private String[] roleName;
     
     private static ChoseCharacterPanel characterSingle = null;
     private ChoseCharacterPanel() {
         initComponents();
         boxInit();
-        loadImage();
+        loadImageAndName();
         choseInit();
         selectMusic = new Music("select.wav");
     }
@@ -68,6 +69,7 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         headLabel = new javax.swing.JLabel();
+        nameLabel = new javax.swing.JLabel();
 
         addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -142,6 +144,13 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
             }
         });
 
+        headLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/head_freeze.png"))); // NOI18N
+
+        nameLabel.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
+        nameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        nameLabel.setText("jLabel2");
+        nameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -158,13 +167,15 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(43, 43, 43)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(headLabel)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(ch_Label1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(43, 43, 43)
                                 .addComponent(ch_Label2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(43, 43, 43)
-                                .addComponent(ch_Label3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(ch_Label3, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(nameLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(headLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGap(42, 42, 42)
                         .addComponent(ch_Label4, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(42, 42, 42)
@@ -185,7 +196,9 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
                     .addComponent(ch_Label1, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(74, 74, 74)
                 .addComponent(headLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 220, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(nameLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 51, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -215,6 +228,7 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
         }
         
         headLabel.setIcon(headIcon[cnt]);
+        nameLabel.setText(roleName[cnt]);
     }//GEN-LAST:event_formKeyPressed
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
@@ -235,6 +249,7 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
         cnt = 0;
         characterBox[cnt].setBorder(redBorder);
         headLabel.setIcon(headIcon[cnt]);
+        nameLabel.setText(roleName[cnt]);
     }//GEN-LAST:event_ch_Label1MouseClicked
 
     private void ch_Label2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ch_Label2MouseClicked
@@ -243,6 +258,7 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
         cnt = 1;
         characterBox[cnt].setBorder(redBorder);
         headLabel.setIcon(headIcon[cnt]);
+        nameLabel.setText(roleName[cnt]);
     }//GEN-LAST:event_ch_Label2MouseClicked
 
     private void ch_Label3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ch_Label3MouseClicked
@@ -251,6 +267,7 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
         cnt = 2;
         characterBox[cnt].setBorder(redBorder);
         headLabel.setIcon(headIcon[cnt]);
+        nameLabel.setText(roleName[cnt]);
     }//GEN-LAST:event_ch_Label3MouseClicked
 
     private void ch_Label4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ch_Label4MouseClicked
@@ -259,6 +276,7 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
         cnt = 3;
         characterBox[cnt].setBorder(redBorder);
         headLabel.setIcon(headIcon[cnt]);
+        nameLabel.setText(roleName[cnt]);
     }//GEN-LAST:event_ch_Label4MouseClicked
 
     private void ch_Label5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ch_Label5MouseClicked
@@ -267,6 +285,7 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
         cnt = 4;
         characterBox[cnt].setBorder(redBorder);
         headLabel.setIcon(headIcon[cnt]);
+        nameLabel.setText(roleName[cnt]);
     }//GEN-LAST:event_ch_Label5MouseClicked
 
     private void boxInit()
@@ -301,6 +320,7 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
         characterBox[4].setBorder(blackBorder);
         
         headLabel.setIcon(headIcon[cnt]);
+        nameLabel.setText(roleName[cnt]);
         
         this.setFocusable(true);
         this.requestFocusInWindow();
@@ -311,7 +331,7 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
         return selectMusic;
     }
     
-    public void loadImage()
+    public void loadImageAndName()
     {
         headIcon = new Icon[5];
         headIcon[0] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/head_freeze.png"));
@@ -319,6 +339,13 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
         headIcon[2] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/head_davis.png"));
         headIcon[3] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/head_john.png"));
         headIcon[4] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/head_woody.png"));
+        
+        roleName = new String[5];
+        roleName[0] = "Freeze";
+        roleName[1] = "Firen";
+        roleName[2] = "Davis";
+        roleName[3] = "John";
+        roleName[4] = "Woody";
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -331,6 +358,7 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel nameLabel;
     // End of variables declaration//GEN-END:variables
     private JLabel[] characterBox;
     private Border redBorder;
