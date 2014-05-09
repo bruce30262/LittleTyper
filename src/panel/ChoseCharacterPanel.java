@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.border.Border;
+import littletyper.Music;
 
 
 /**
@@ -24,11 +25,14 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
     /**
      * Creates new form ChoseCharacterPanel
      */
+    private Music selectMusic;
+    
     private static ChoseCharacterPanel characterSingle = null;
     private ChoseCharacterPanel() {
         initComponents();
         boxInit();
         choseInit();
+        selectMusic = new Music("select.wav");
     }
     
     public static ChoseCharacterPanel getInstance()
@@ -179,6 +183,8 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
+        this.selectMusic.stop();
+        StartPanel.getInstance().getStartMusic().playOnce();
         MainFrame.getInstance().SwitchPanel("start");
     }//GEN-LAST:event_jButton1MouseClicked
 
@@ -217,9 +223,17 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
         characterBox[2].setBorder(blackBorder);
         characterBox[3].setBorder(blackBorder);
         characterBox[4].setBorder(blackBorder);
+        
         this.setFocusable(true);
         this.requestFocusInWindow();
     }
+    
+    public Music getSelectMusic()
+    {
+        return selectMusic;
+    }
+    
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ch_Label1;

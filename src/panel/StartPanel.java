@@ -236,9 +236,10 @@ public class StartPanel extends javax.swing.JPanel {
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         // TODO add your handling code here:
+        this.startMusic.stop();
         MainFrame.getInstance().SwitchPanel("character");
         ChoseCharacterPanel.getInstance().choseInit();
-        
+        ChoseCharacterPanel.getInstance().getSelectMusic().playLoop();        
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void changeTextColor(javax.swing.JLabel label, String color)
@@ -252,6 +253,12 @@ public class StartPanel extends javax.swing.JPanel {
             label.setForeground(Color.black);
         }
     }
+    
+    public Music getStartMusic()
+    {
+        return startMusic;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
