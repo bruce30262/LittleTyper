@@ -226,6 +226,10 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
             
             characterBox[cnt].setBorder(redBorder);   
         }
+        else if(key == KeyEvent.VK_ENTER)
+        {
+            toDifficulty();
+        }
         
         headLabel.setIcon(headIcon[cnt]);
         nameLabel.setText(roleName[cnt]);
@@ -240,7 +244,7 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         // TODO add your handling code here:
-        MainFrame.getInstance().SwitchPanel("difficulty");
+        toDifficulty();
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void ch_Label1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ch_Label1MouseClicked
@@ -329,6 +333,11 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
     public Music getSelectMusic()
     {
         return selectMusic;
+    }
+    
+    public void toDifficulty()
+    {
+        MainFrame.getInstance().SwitchPanel("difficulty");
     }
     
     public void loadImageAndName()
