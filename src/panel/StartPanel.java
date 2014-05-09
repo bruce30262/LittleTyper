@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.io.*;
 import java.net.URI; 
 import javax.sound.sampled.*;
+import littletyper.Music;
 
 /**
  *
@@ -21,32 +22,14 @@ public class StartPanel extends javax.swing.JPanel {
     /**
      * Creates new form StartPanel
      */
-    private Clip startClip;
+    private Music startMusic;
     
     private static StartPanel startSingle;
     
     private StartPanel() {
         initComponents();
-        String path = "music" + File.separator + "start.wav";
-        
-        try
-        {
-            File startMusic = new File(path);
-            AudioInputStream sound = AudioSystem.getAudioInputStream(startMusic);
-             // load the sound into memory (a Clip)
-            startClip = AudioSystem.getClip();
-            startClip.open(sound);
-        //URI uriPath = startMusic.toURI();
-        
-            startClip.setFramePosition(0);  // Must always rewind!
-            startClip.start();
-            
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        
+        startMusic = new Music("start.wav");
+        startMusic.playOnce();
     }
     
     public static StartPanel getInstance()
