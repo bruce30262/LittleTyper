@@ -10,7 +10,6 @@ import java.awt.Color;
 import java.util.Random;
 import javax.swing.plaf.ProgressBarUI;
 import javax.swing.plaf.basic.BasicProgressBarUI;
-import javax.swing.plaf.metal.MetalProgressBarUI;
 import littletyper.WordList;
 
 /**
