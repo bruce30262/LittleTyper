@@ -16,13 +16,11 @@ public class WordList {
     
     private FileReader fr;
     private String diffy;
-    private HashSet<String> wordSet;
     private List<String> allWord;
     
     public WordList(String d)
     {
         this.diffy = d.toLowerCase();
-        this.wordSet = new HashSet<String>();
         this.allWord = new ArrayList<String>();
         String path = "";
         
@@ -62,23 +60,13 @@ public class WordList {
         }
     }
     
-    public boolean checkRepeat(String singleWord)
-    {
-        return this.wordSet.contains(singleWord);
-    }
-    
     public String getWord(int index)
     {
         return this.allWord.get(index);
     }
     
-    public void resetWordSet()
+    public int getSize()
     {
-        this.wordSet.clear();
-    }
-    
-    public void addWordSet(String w)
-    {
-        this.wordSet.add(w);
+        return this.allWord.size();
     }
 }
