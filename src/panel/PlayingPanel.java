@@ -36,11 +36,10 @@ public class PlayingPanel extends javax.swing.JPanel {
     private String realStr = "";
     private int userCurIndex = 0;
     private int userHp = 100;
+    private int userAp = 0; // user angry point
     private int bossFakeHp = 0;
     private int bossRealHp = 100;
-    private ProgressBarUI bossBarUI;
-    private ProgressBarUI userBarUI;
-    
+   
     private BossAtkThread bossThd;
     private long atkTick;
     private int stage;
@@ -72,6 +71,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         
         bossHpBar.setValue(bossFakeHp);
         userHpBar.setValue(userHp);
+        userApBar.setValue(userAp);
         
         stage = 1;
         atkTick = 3000;
@@ -97,14 +97,21 @@ public class PlayingPanel extends javax.swing.JPanel {
     
     private void setBarUI()
     {
-        bossBarUI = new BasicProgressBarUI();
-        userBarUI = new BasicProgressBarUI();
-        bossHpBar.setUI(bossBarUI);
+        bossHpBar.setUI(new BasicProgressBarUI());
         bossHpBar.setForeground(Color.RED);
         bossHpBar.setBackground(Color.green);
-        userHpBar.setUI(userBarUI);
+        userHpBar.setUI(new BasicProgressBarUI());
         userHpBar.setForeground(Color.green);
         userHpBar.setBackground(Color.RED);
+        
+        userApBar.setUI(new BasicProgressBarUI() );
+        //                    {
+       //                         protected Color getSelectionBackground() { return Color.black; }
+          //                      protected Color getSelectionForeground() { return Color.white; }
+        //                    }
+       //                 );
+        userApBar.setForeground(Color.BLUE);
+        //userApBar.selectionForeground(Color.BLUE);
     }
     
     private void genNewWord()
@@ -171,6 +178,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         userWordLabel = new javax.swing.JLabel();
         bossHpBar = new javax.swing.JProgressBar();
         userHpBar = new javax.swing.JProgressBar();
+        userApBar = new javax.swing.JProgressBar(JProgressBar.VERTICAL);
 
         addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -190,6 +198,14 @@ public class PlayingPanel extends javax.swing.JPanel {
         userHpBar.setFocusable(false);
         userHpBar.setRequestFocusEnabled(false);
 
+        userApBar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        userApBar.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
+        userApBar.setDoubleBuffered(true);
+        userApBar.setFocusable(false);
+        userApBar.setRequestFocusEnabled(false);
+        userApBar.setString("");
+        userApBar.setStringPainted(true);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -201,7 +217,9 @@ public class PlayingPanel extends javax.swing.JPanel {
                         .addComponent(userWordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(48, 48, 48)
-                        .addComponent(userHpBar, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(userApBar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(userHpBar, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 192, Short.MAX_VALUE)
                 .addComponent(bossHpBar, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(48, 48, 48))
@@ -213,7 +231,9 @@ public class PlayingPanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(bossHpBar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(userHpBar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(212, 212, 212)
+                .addGap(35, 35, 35)
+                .addComponent(userApBar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(92, 92, 92)
                 .addComponent(userWordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(251, Short.MAX_VALUE))
         );
@@ -235,6 +255,15 @@ public class PlayingPanel extends javax.swing.JPanel {
                 bossFakeHp += 10;
                 bossRealHp -= 10;
                 bossHpBar.setValue(bossFakeHp);
+                userAp += 20;
+                userApBar.setValue(userAp);
+                if(userAp == 100)
+                {
+                    //userApBar.setString("Press space!!");
+                    userApBar.setForeground(Color.YELLOW);
+                    userApBar.setBackground(Color.BLUE);
+                    userApBar.setIndeterminate(true);
+                }
                 genNewWord();
                               
                 //one.setTerminate(true);
@@ -248,6 +277,7 @@ public class PlayingPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JProgressBar bossHpBar;
+    private javax.swing.JProgressBar userApBar;
     private javax.swing.JProgressBar userHpBar;
     private javax.swing.JLabel userWordLabel;
     // End of variables declaration//GEN-END:variables
