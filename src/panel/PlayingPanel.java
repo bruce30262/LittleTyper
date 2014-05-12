@@ -10,6 +10,7 @@ import java.awt.Color;
 import java.util.Random;
 import javax.swing.plaf.ProgressBarUI;
 import javax.swing.plaf.basic.BasicProgressBarUI;
+import javax.swing.JProgressBar;
 import littletyper.WordList;
 
 /**
@@ -34,11 +35,15 @@ public class PlayingPanel extends javax.swing.JPanel {
     private String leftStr = "";
     private String realStr = "";
     private int userCurIndex = 0;
-    private int userHp = 80;
+    private int userHp = 100;
     private int bossFakeHp = 0;
     private int bossRealHp = 100;
     private ProgressBarUI bossBarUI;
     private ProgressBarUI userBarUI;
+    
+    private BossAtkThread bossThd;
+    private long atkTick;
+    private int stage;
     
     private PlayingPanel() {
         gen = new Random();
@@ -68,7 +73,12 @@ public class PlayingPanel extends javax.swing.JPanel {
         bossHpBar.setValue(bossFakeHp);
         userHpBar.setValue(userHp);
         
+        stage = 1;
+        atkTick = 3000;
+        
         genNewWord();
+        bossThd = new BossAtkThread(atkTick);
+        bossThd.start();
     }
     
     public void clearRepeat()
@@ -128,7 +138,26 @@ public class PlayingPanel extends javax.swing.JPanel {
         this.setFocusable(true);
         this.requestFocusInWindow();
     }
-            
+    
+    public int getUserHp()
+    {
+        return this.userHp;
+    }
+    
+    public JProgressBar getUserHpBar()
+    {
+        return this.userHpBar;
+    }
+    
+    public void setUserHp(int hp)
+    {
+        this.userHp = hp;
+    }
+    
+    public void setUserHpBarValue()
+    {
+        this.userHpBar.setValue(this.userHp);
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -207,6 +236,11 @@ public class PlayingPanel extends javax.swing.JPanel {
                 bossRealHp -= 10;
                 bossHpBar.setValue(bossFakeHp);
                 genNewWord();
+                              
+                //one.setTerminate(true);
+                bossThd.setStartTime();
+                //one = new Test();
+                //one.start();
             }
         }    
     }//GEN-LAST:event_formKeyPressed
@@ -217,4 +251,55 @@ public class PlayingPanel extends javax.swing.JPanel {
     private javax.swing.JProgressBar userHpBar;
     private javax.swing.JLabel userWordLabel;
     // End of variables declaration//GEN-END:variables
+}
+
+class BossAtkThread extends Thread
+{
+    volatile boolean terminate;
+    long startTime;
+    long endTime;
+    long tick;
+    
+    public BossAtkThread(long tk)
+    {
+        this.terminate = false;
+        this.startTime = System.currentTimeMillis();
+        this.endTime = System.currentTimeMillis();
+        this.tick = tk;
+    }
+    
+    public void run() 
+    {
+        while(!terminate)
+        {
+            while( (endTime - startTime) < this.tick)
+            {
+                if(!terminate)
+                {
+                    endTime = System.currentTimeMillis();
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            int nowUserHp = PlayingPanel.getInstance().getUserHp() - 10;
+            PlayingPanel.getInstance().setUserHp(nowUserHp);
+            PlayingPanel.getInstance().setUserHpBarValue();
+            //thread.join
+            startTime = System.currentTimeMillis();
+            endTime = System.currentTimeMillis();
+        }
+    }  
+    
+    public void setTerminate(boolean v)
+    {
+        this.terminate = v;
+    }
+    
+    public void setStartTime()
+    {
+        this.startTime =  System.currentTimeMillis();
+    }
 }
