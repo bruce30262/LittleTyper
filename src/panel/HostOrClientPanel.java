@@ -68,6 +68,9 @@ public class HostOrClientPanel extends javax.swing.JPanel {
         jButton2.setFont(new java.awt.Font("Impact", 0, 36)); // NOI18N
         jButton2.setText("Be a client");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jButton2MouseEntered(evt);
             }
@@ -169,6 +172,11 @@ public class HostOrClientPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         MainFrame.getInstance().SwitchPanel("host");
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        // TODO add your handling code here:
+        MainFrame.getInstance().SwitchPanel("client");
+    }//GEN-LAST:event_jButton2MouseClicked
 
     private void changeButtonTextColor(javax.swing.JButton button, String color)
     {
