@@ -22,6 +22,7 @@ public class DifficultyPanel extends javax.swing.JPanel {
     private static DifficultyPanel diffSingle;
     private String diffy;
     public int roleId;
+    public String roleName;
     
     private DifficultyPanel() {
         roleId = 0;
@@ -179,8 +180,14 @@ public class DifficultyPanel extends javax.swing.JPanel {
     public void setRole(Icon icon, String name, int id)
     {
         roleId = id;
+        roleName = name;
         choseLabel.setIcon(icon);
         choseNameLabel.setText(name);
+    }
+    
+    public String getRoleName()
+    {
+        return this.roleName;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
