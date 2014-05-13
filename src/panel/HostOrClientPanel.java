@@ -6,6 +6,7 @@
 
 package panel;
 import frame.MainFrame;
+import java.awt.Color;
 
 /**
  *
@@ -46,9 +47,26 @@ public class HostOrClientPanel extends javax.swing.JPanel {
 
         jButton1.setFont(new java.awt.Font("Impact", 0, 36)); // NOI18N
         jButton1.setText("Host a game");
+        jButton1.setToolTipText("");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton1MouseExited(evt);
+            }
+        });
 
         jButton2.setFont(new java.awt.Font("Impact", 0, 36)); // NOI18N
         jButton2.setText("Be a client");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton2MouseExited(evt);
+            }
+        });
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -60,6 +78,12 @@ public class HostOrClientPanel extends javax.swing.JPanel {
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton3MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton3MouseExited(evt);
             }
         });
 
@@ -98,6 +122,48 @@ public class HostOrClientPanel extends javax.swing.JPanel {
         MainFrame.getInstance().SwitchPanel("start");
     }//GEN-LAST:event_jButton3MouseClicked
 
+    private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseEntered
+        // TODO add your handling code here:
+        changeButtonTextColor(this.jButton1, "red");
+    }//GEN-LAST:event_jButton1MouseEntered
+
+    private void jButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseExited
+        // TODO add your handling code here:
+        changeButtonTextColor(this.jButton1, "black");
+    }//GEN-LAST:event_jButton1MouseExited
+
+    private void jButton2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseEntered
+        // TODO add your handling code here:
+        changeButtonTextColor(this.jButton2, "red");
+    }//GEN-LAST:event_jButton2MouseEntered
+
+    private void jButton2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseExited
+        // TODO add your handling code here:
+        changeButtonTextColor(this.jButton2, "black");
+    }//GEN-LAST:event_jButton2MouseExited
+
+    private void jButton3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseEntered
+        // TODO add your handling code here:
+        changeButtonTextColor(this.jButton3, "red");
+    }//GEN-LAST:event_jButton3MouseEntered
+
+    private void jButton3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseExited
+        // TODO add your handling code here:
+        changeButtonTextColor(this.jButton3, "black");
+    }//GEN-LAST:event_jButton3MouseExited
+
+    private void changeButtonTextColor(javax.swing.JButton button, String color)
+    {
+        if(color.equals("red"))
+        {
+            button.setForeground(Color.red);
+        }
+        else
+        {
+            button.setForeground(Color.black);
+        }
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
