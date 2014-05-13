@@ -7,6 +7,7 @@
 package panel;
 import frame.MainFrame;
 import java.awt.Color;
+import panel.HostOrClientPanel;
 
 /**
  *
@@ -18,9 +19,15 @@ public class HostOrClientPanel extends javax.swing.JPanel {
      * Creates new form HostOrClientPanel
      */
     private static HostOrClientPanel hocpSingle;
+    private static String isHost;
     
     private HostOrClientPanel() {
         initComponents();
+    }
+    
+    public static String hostOrClient()
+    {
+        return isHost;
     }
     
     public static HostOrClientPanel getInstance()
@@ -170,15 +177,17 @@ public class HostOrClientPanel extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        MainFrame.getInstance().SwitchPanel("host");
+        HostOrClientPanel.isHost = "1";
+        MainFrame.getInstance().SwitchPanel("character");
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         // TODO add your handling code here:
-        MainFrame.getInstance().SwitchPanel("client");
+        HostOrClientPanel.isHost = "0";
+        MainFrame.getInstance().SwitchPanel("character");
     }//GEN-LAST:event_jButton2MouseClicked
 
-    private void changeButtonTextColor(javax.swing.JButton button, String color)
+    public static void changeButtonTextColor(javax.swing.JButton button, String color)
     {
         if(color.equals("red"))
         {

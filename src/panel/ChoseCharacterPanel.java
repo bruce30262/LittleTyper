@@ -18,6 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.border.Border;
 import littletyper.Music;
+import panel.HostOrClientPanel;
 
 
 /**
@@ -239,12 +240,15 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         this.selectMusic.stop();
         StartPanel.getInstance().getStartMusic().playOnce();
-        MainFrame.getInstance().SwitchPanel("start");
+        if(HostOrClientPanel.hostOrClient() == null)    MainFrame.getInstance().SwitchPanel("start");
+        else MainFrame.getInstance().SwitchPanel("hostOrClient");
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         // TODO add your handling code here:
-        toDifficulty();
+        if(HostOrClientPanel.hostOrClient() == null)  toDifficulty();
+        else if(HostOrClientPanel.hostOrClient().equals("1")) MainFrame.getInstance().SwitchPanel("host");
+        else MainFrame.getInstance().SwitchPanel("client");
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void ch_Label1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ch_Label1MouseClicked
