@@ -53,7 +53,7 @@ public class ProloguePanel extends javax.swing.JPanel {
         storyLabel = new javax.swing.JLabel();
 
         jButton1.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
-        jButton1.setText("Back to menu");
+        jButton1.setText("skip");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton1MouseClicked(evt);
@@ -89,7 +89,7 @@ public class ProloguePanel extends javax.swing.JPanel {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
-        MainFrame.getInstance().SwitchPanel("start");
+        MainFrame.getInstance().SwitchPanel("playing");
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void storyLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_storyLabelMouseClicked
@@ -97,6 +97,8 @@ public class ProloguePanel extends javax.swing.JPanel {
         storyLabel.setText(storyTexts[i]);
         if (i < 4)
             i++;
+        else
+            MainFrame.getInstance().SwitchPanel("playing");
     }//GEN-LAST:event_storyLabelMouseClicked
 
 
