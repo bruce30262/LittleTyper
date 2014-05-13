@@ -32,7 +32,6 @@ public class MainFrame extends javax.swing.JFrame {
         this.add(TutorialPanel.getInstance(), "tutorial");
         this.add(ChoseCharacterPanel.getInstance(), "character");
         this.add(PlayingPanel.getInstance(), "playing");
-        this.add(ProloguePanel.getInstance(), "prologue");
     }
     
     public static MainFrame getInstance()
