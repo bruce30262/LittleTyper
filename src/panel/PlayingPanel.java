@@ -8,9 +8,11 @@ package panel;
 
 import java.awt.Color;
 import java.util.Random;
+import javax.swing.JLabel;
 import javax.swing.plaf.ProgressBarUI;
 import javax.swing.plaf.basic.BasicProgressBarUI;
 import javax.swing.JProgressBar;
+import littletyper.Hero;
 import littletyper.WordList;
 
 /**
@@ -24,6 +26,7 @@ public class PlayingPanel extends javax.swing.JPanel {
      */
     
     private static PlayingPanel playSingle;
+    
     private String curDiffy;
     private int roleId;
     private int totalWordNum;
@@ -35,6 +38,7 @@ public class PlayingPanel extends javax.swing.JPanel {
     private String leftStr = "";
     private String realStr = "";
     private int userCurIndex = 0;
+    
     private int userHp = 100;
     private int userAp = 0; // user angry point
     private int bossFakeHp = 0;
@@ -44,12 +48,14 @@ public class PlayingPanel extends javax.swing.JPanel {
     private long atkTick;
     private int stage;
     
+    private boolean typeOk = true;
+    
+    private Hero hero;
+    
     private PlayingPanel() {
         gen = new Random();
         initComponents();
         setBarUI();
-        
-        //genNewWord();
     }
     
     public static PlayingPanel getInstance()
@@ -75,6 +81,8 @@ public class PlayingPanel extends javax.swing.JPanel {
         
         stage = 1;
         atkTick = 3000;
+        
+        hero = new Hero(DifficultyPanel.getInstance().getRoleName());
         
         genNewWord();
         bossThd = new BossAtkThread(atkTick);
@@ -166,6 +174,23 @@ public class PlayingPanel extends javax.swing.JPanel {
         this.userHpBar.setValue(this.userHp);
     }
     
+    public JLabel getIconLabel(String role)
+    {
+        if(role.equals("hero"))
+        {
+            return this.userIconLabel;
+        }
+        else
+        {
+            return null; //boss label
+        }
+    }
+    
+    public Hero getHero()
+    {
+        return this.hero;
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -179,6 +204,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         bossHpBar = new javax.swing.JProgressBar();
         userHpBar = new javax.swing.JProgressBar();
         userApBar = new javax.swing.JProgressBar(JProgressBar.VERTICAL);
+        userIconLabel = new javax.swing.JLabel();
 
         addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -206,6 +232,8 @@ public class PlayingPanel extends javax.swing.JPanel {
         userApBar.setString("");
         userApBar.setStringPainted(true);
 
+        userIconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/stand_freeze.gif"))); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -223,6 +251,10 @@ public class PlayingPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 192, Short.MAX_VALUE)
                 .addComponent(bossHpBar, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(48, 48, 48))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(174, 174, 174)
+                .addComponent(userIconLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -235,12 +267,17 @@ public class PlayingPanel extends javax.swing.JPanel {
                 .addComponent(userApBar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(92, 92, 92)
                 .addComponent(userWordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(251, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(userIconLabel)
+                .addContainerGap(162, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
         // TODO add your handling code here:
+        
+        if(!this.typeOk) return;
+        
         char key = evt.getKeyChar();
         
         if(key == leftStr.charAt(0))
@@ -252,33 +289,31 @@ public class PlayingPanel extends javax.swing.JPanel {
             
             if( userCurIndex == realStr.length() ) //next one
             {
-                bossFakeHp += 10;
-                bossRealHp -= 10;
-                bossHpBar.setValue(bossFakeHp);
-                userAp += 20;
-                userApBar.setValue(userAp);
-                if(userAp == 100)
-                {
-                    //userApBar.setString("Press space!!");
-                    userApBar.setForeground(Color.YELLOW);
-                    userApBar.setBackground(Color.BLUE);
-                    userApBar.setIndeterminate(true);
-                }
-                genNewWord();
-                              
-                //one.setTerminate(true);
-                bossThd.setStartTime();
-                //one = new Test();
-                //one.start();
+                this.typeOk = false;
+                UserAtkThd attack = new UserAtkThd();
+                attack.start();
             }
         }    
     }//GEN-LAST:event_formKeyPressed
-
+    
+    public void genNext()
+    {
+        hero.BackToStand();
+        bossFakeHp += 10;
+        bossRealHp -= 10;
+        bossHpBar.setValue(bossFakeHp);
+        userAp += 20;
+        userApBar.setValue(userAp);
+        genNewWord();
+        bossThd.setStartTime();
+        this.typeOk = true;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JProgressBar bossHpBar;
     private javax.swing.JProgressBar userApBar;
     private javax.swing.JProgressBar userHpBar;
+    private javax.swing.JLabel userIconLabel;
     private javax.swing.JLabel userWordLabel;
     // End of variables declaration//GEN-END:variables
 }
@@ -331,5 +366,22 @@ class BossAtkThread extends Thread
     public void setStartTime()
     {
         this.startTime =  System.currentTimeMillis();
+    }
+}
+
+class UserAtkThd extends Thread
+{
+    public void run()
+    {
+        try
+        {
+            PlayingPanel.getInstance().getHero().LaunchAtk("normal");
+            Thread.sleep(1000);
+            PlayingPanel.getInstance().genNext();
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }
