@@ -49,11 +49,19 @@ public class HostOrClientPanel extends javax.swing.JPanel {
         jButton1.setText("Host a game");
         jButton1.setToolTipText("");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jButton1MouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 jButton1MouseExited(evt);
+            }
+        });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -151,6 +159,16 @@ public class HostOrClientPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         changeButtonTextColor(this.jButton3, "black");
     }//GEN-LAST:event_jButton3MouseExited
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        MainFrame.getInstance().SwitchPanel("character");
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        MainFrame.getInstance().SwitchPanel("host");
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     private void changeButtonTextColor(javax.swing.JButton button, String color)
     {
