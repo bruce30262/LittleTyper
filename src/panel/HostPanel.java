@@ -9,6 +9,8 @@ package panel;
 import java.awt.Color;
 import frame.MainFrame;
 import panel.HostOrClientPanel;
+import java.net.InetAddress; 
+import java.net.UnknownHostException;
 
 /**
  *
@@ -23,6 +25,12 @@ public class HostPanel extends javax.swing.JPanel {
      */
     public HostPanel() {
         initComponents();
+        
+        try{
+            jLabel2.setText("Local IP:  " + InetAddress.getLocalHost().getHostAddress().toString());
+        }catch(Exception e){
+            jLabel2.setText("Local IP: not found");
+        }
     }
     
     public static HostPanel getInstance()
@@ -55,7 +63,8 @@ public class HostPanel extends javax.swing.JPanel {
         jLabel1.setText("Waiting for Connection");
 
         jLabel2.setFont(new java.awt.Font("Impact", 0, 36)); // NOI18N
-        jLabel2.setText("IP: 192.168.0.1");
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("IP:   127.0.0.1");
 
         jLabel4.setFont(new java.awt.Font("Impact", 0, 36)); // NOI18N
         jLabel4.setText("Difficulty");
@@ -94,9 +103,6 @@ public class HostPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(294, 294, 294)
-                        .addComponent(jLabel2))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(215, 215, 215)
                         .addComponent(jLabel4)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,15 +123,19 @@ public class HostPanel extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButton1)
                         .addGap(302, 302, 302))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(240, 240, 240))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(52, 52, 52)
                 .addComponent(jLabel1)
-                .addGap(90, 90, 90)
+                .addGap(98, 98, 98)
                 .addComponent(jLabel2)
-                .addGap(40, 40, 40)
+                .addGap(32, 32, 32)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel4)
                     .addGroup(layout.createSequentialGroup()
