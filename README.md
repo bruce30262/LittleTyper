@@ -16,8 +16,8 @@ Development Tools & Enviroments
     * Linux Mint 14.1
 
 
-Install
-=============
+Build & Execution
+====================
 System Requirement:
 
 * **Java SE Development Kit 8**
