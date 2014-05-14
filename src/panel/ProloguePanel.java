@@ -54,9 +54,9 @@ public class ProloguePanel extends javax.swing.JPanel {
 
         jButton1.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
         jButton1.setText("skip");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -87,14 +87,6 @@ public class ProloguePanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        // TODO add your handling code here:
-        //background music stop
-        MainFrame.getInstance().SwitchPanel("character");
-        ChoseCharacterPanel.getInstance().choseInit();
-        ChoseCharacterPanel.getInstance().getSelectMusic().playLoop();
-    }//GEN-LAST:event_jButton1MouseClicked
-
     private void storyLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_storyLabelMouseClicked
         // TODO add your handling code here:
         storyLabel.setText(storyTexts[i]);
@@ -108,6 +100,13 @@ public class ProloguePanel extends javax.swing.JPanel {
             ChoseCharacterPanel.getInstance().getSelectMusic().playLoop();
         }
     }//GEN-LAST:event_storyLabelMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        MainFrame.getInstance().SwitchPanel("character");
+        ChoseCharacterPanel.getInstance().choseInit();
+        ChoseCharacterPanel.getInstance().getSelectMusic().playLoop();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
