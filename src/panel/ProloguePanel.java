@@ -89,7 +89,10 @@ public class ProloguePanel extends javax.swing.JPanel {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
-        MainFrame.getInstance().SwitchPanel("playing");
+        //background music stop
+        MainFrame.getInstance().SwitchPanel("character");
+        ChoseCharacterPanel.getInstance().choseInit();
+        ChoseCharacterPanel.getInstance().getSelectMusic().playLoop();
     }//GEN-LAST:event_jButton1MouseClicked
 
     private void storyLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_storyLabelMouseClicked
@@ -98,7 +101,12 @@ public class ProloguePanel extends javax.swing.JPanel {
         if (i < 4)
             i++;
         else
-            MainFrame.getInstance().SwitchPanel("playing");
+        {
+           //background music stop
+            MainFrame.getInstance().SwitchPanel("character");
+            ChoseCharacterPanel.getInstance().choseInit();
+            ChoseCharacterPanel.getInstance().getSelectMusic().playLoop();
+        }
     }//GEN-LAST:event_storyLabelMouseClicked
 
 
