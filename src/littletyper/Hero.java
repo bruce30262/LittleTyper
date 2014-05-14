@@ -39,7 +39,7 @@ public class Hero {
         if(name.equals("freeze"))
         {
             stand_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/stand_freeze.gif"));  
-            atk_normal_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/attack_freeze.gif")); 
+            atk_normal_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/normalAttack_freeze.gif")); 
             launch_normal_atk = new Music("ice_ball.wav");
             ball_hit = new Music("ice_ball.wav");
         }
