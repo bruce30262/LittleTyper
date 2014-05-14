@@ -131,18 +131,18 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
         jButton1.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
         jButton1.setText("Back to menu");
         jButton1.setFocusable(false);
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
         jButton2.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
         jButton2.setText("Next");
         jButton2.setFocusable(false);
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton2MouseClicked(evt);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -237,21 +237,6 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
         nameLabel.setText(roleName[cnt]);
     }//GEN-LAST:event_formKeyPressed
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        // TODO add your handling code here:
-        this.selectMusic.stop();
-        StartPanel.getInstance().getStartMusic().playOnce();
-        if(HostOrClientPanel.hostOrClient() == null)    MainFrame.getInstance().SwitchPanel("start");
-        else MainFrame.getInstance().SwitchPanel("hostOrClient");
-    }//GEN-LAST:event_jButton1MouseClicked
-
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        // TODO add your handling code here:
-        if(HostOrClientPanel.hostOrClient() == null)  toDifficulty();
-        else if(HostOrClientPanel.hostOrClient().equals("1")) MainFrame.getInstance().SwitchPanel("host");
-        else MainFrame.getInstance().SwitchPanel("client");
-    }//GEN-LAST:event_jButton2MouseClicked
-
     private void ch_Label1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ch_Label1MouseClicked
         // TODO add your handling code here:
         characterBox[cnt].setBorder(blackBorder);
@@ -296,6 +281,24 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
         headLabel.setIcon(headIcon[cnt]);
         nameLabel.setText(roleName[cnt]);
     }//GEN-LAST:event_ch_Label5MouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        this.selectMusic.stop();
+        StartPanel.getInstance().getStartMusic().playOnce();
+        if(HostOrClientPanel.hostOrClient() == null)    MainFrame.getInstance().SwitchPanel("start");
+        else MainFrame.getInstance().SwitchPanel("hostOrClient");
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+        if(this.mode.equals("single"))
+        {
+            toDifficulty();
+        }
+        else if(HostOrClientPanel.hostOrClient().equals("1")) MainFrame.getInstance().SwitchPanel("host");
+        else MainFrame.getInstance().SwitchPanel("client");
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void boxInit()
     {
