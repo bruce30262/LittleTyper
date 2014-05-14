@@ -237,6 +237,7 @@ public class StartPanel extends javax.swing.JPanel {
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         // TODO add your handling code here:
         this.startMusic.stop();
+        ChoseCharacterPanel.getInstance().setMode("single");
         MainFrame.getInstance().SwitchPanel("prologue");    
     }//GEN-LAST:event_jLabel1MouseClicked
 

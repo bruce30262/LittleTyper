@@ -33,6 +33,7 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
     private Music selectMusic;
     private Icon[] headIcon;
     private String[] roleName;
+    private String mode = "";
     
     private static ChoseCharacterPanel characterSingle = null;
     private ChoseCharacterPanel() {
@@ -360,6 +361,16 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
         roleName[2] = "Davis";
         roleName[3] = "John";
         roleName[4] = "Woody";
+    }
+    
+    public String getMode()
+    {
+        return this.mode;
+    }
+    
+    public void setMode(String m)
+    {
+        this.mode = m;
     }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
