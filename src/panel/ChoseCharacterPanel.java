@@ -230,7 +230,18 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
         }
         else if(key == KeyEvent.VK_ENTER)
         {
-            toDifficulty();
+            if(this.mode.equals("single"))
+            {
+                toDifficulty();
+            }
+            else if(this.mode.equals("host"))
+            { 
+                MainFrame.getInstance().SwitchPanel("host");
+            }
+            else
+            {
+                MainFrame.getInstance().SwitchPanel("client");
+            }
         }
         
         headLabel.setIcon(headIcon[cnt]);
@@ -284,10 +295,17 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        this.selectMusic.stop();
-        StartPanel.getInstance().getStartMusic().playOnce();
-        if(HostOrClientPanel.hostOrClient() == null)    MainFrame.getInstance().SwitchPanel("start");
-        else MainFrame.getInstance().SwitchPanel("hostOrClient");
+        
+        if(this.mode.equals("single"))
+        {
+            this.selectMusic.stop();
+            StartPanel.getInstance().getStartMusic().playOnce();
+            MainFrame.getInstance().SwitchPanel("start");
+        }
+        else //must be host or client, back to HostOrClient
+        {
+            MainFrame.getInstance().SwitchPanel("hostOrClient");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -296,8 +314,14 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
         {
             toDifficulty();
         }
-        else if(HostOrClientPanel.hostOrClient().equals("1")) MainFrame.getInstance().SwitchPanel("host");
-        else MainFrame.getInstance().SwitchPanel("client");
+        else if(this.mode.equals("host"))
+        { 
+            MainFrame.getInstance().SwitchPanel("host");
+        }
+        else
+        {
+            MainFrame.getInstance().SwitchPanel("client");
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void boxInit()
@@ -333,6 +357,15 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
         
         headLabel.setIcon(headIcon[cnt]);
         nameLabel.setText(roleName[cnt]);
+        
+        if(this.mode.equals("single"))
+        {
+            jButton1.setText("Back to menu");
+        }
+        else
+        {
+            jButton1.setText("Back");
+        }
         
         this.setFocusable(true);
         this.requestFocusInWindow();

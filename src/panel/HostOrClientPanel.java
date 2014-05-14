@@ -19,17 +19,11 @@ public class HostOrClientPanel extends javax.swing.JPanel {
      * Creates new form HostOrClientPanel
      */
     private static HostOrClientPanel hocpSingle;
-    private static String isHost;
-    
+        
     private HostOrClientPanel() {
         initComponents();
     }
-    
-    public static String hostOrClient()
-    {
-        return isHost;
-    }
-    
+        
     public static HostOrClientPanel getInstance()
     {
         if(hocpSingle == null)
@@ -56,9 +50,6 @@ public class HostOrClientPanel extends javax.swing.JPanel {
         jButton1.setText("Host a game");
         jButton1.setToolTipText("");
         jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jButton1MouseEntered(evt);
             }
@@ -75,9 +66,6 @@ public class HostOrClientPanel extends javax.swing.JPanel {
         jButton2.setFont(new java.awt.Font("Impact", 0, 36)); // NOI18N
         jButton2.setText("Be a client");
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton2MouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jButton2MouseEntered(evt);
             }
@@ -94,14 +82,16 @@ public class HostOrClientPanel extends javax.swing.JPanel {
         jButton3.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
         jButton3.setText("Back to menu");
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton3MouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jButton3MouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 jButton3MouseExited(evt);
+            }
+        });
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
             }
         });
 
@@ -133,12 +123,10 @@ public class HostOrClientPanel extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        ChoseCharacterPanel.getInstance().setMode("client");
+        MainFrame.getInstance().SwitchPanel("character");
+        ChoseCharacterPanel.getInstance().choseInit();
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
-        // TODO add your handling code here:
-        MainFrame.getInstance().SwitchPanel("start");
-    }//GEN-LAST:event_jButton3MouseClicked
 
     private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseEntered
         // TODO add your handling code here:
@@ -170,22 +158,19 @@ public class HostOrClientPanel extends javax.swing.JPanel {
         changeButtonTextColor(this.jButton3, "black");
     }//GEN-LAST:event_jButton3MouseExited
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-        // TODO add your handling code here:
-        MainFrame.getInstance().SwitchPanel("character");
-    }//GEN-LAST:event_jButton1MouseClicked
-
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        HostOrClientPanel.isHost = "1";
+        ChoseCharacterPanel.getInstance().setMode("host");
         MainFrame.getInstance().SwitchPanel("character");
+        ChoseCharacterPanel.getInstance().choseInit();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        HostOrClientPanel.isHost = "0";
-        MainFrame.getInstance().SwitchPanel("character");
-    }//GEN-LAST:event_jButton2MouseClicked
+        ChoseCharacterPanel.getInstance().getSelectMusic().stop();
+        StartPanel.getInstance().getStartMusic().playOnce();
+        MainFrame.getInstance().SwitchPanel("start");
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     public static void changeButtonTextColor(javax.swing.JButton button, String color)
     {

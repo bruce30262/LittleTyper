@@ -214,7 +214,9 @@ public class StartPanel extends javax.swing.JPanel {
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
         // TODO add your handling code here:
+        this.startMusic.stop();
         MainFrame.getInstance().SwitchPanel("hostOrClient");
+        ChoseCharacterPanel.getInstance().getSelectMusic().playLoop();
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked

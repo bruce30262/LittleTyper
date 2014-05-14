@@ -85,14 +85,16 @@ public class HostPanel extends javax.swing.JPanel {
         jButton3.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
         jButton3.setText("Back");
         jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton3MouseClicked(evt);
-            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jButton3MouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 jButton3MouseExited(evt);
+            }
+        });
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
             }
         });
 
@@ -154,11 +156,6 @@ public class HostPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
-        // TODO add your handling code here:
-        MainFrame.getInstance().SwitchPanel("character");
-    }//GEN-LAST:event_jButton3MouseClicked
-
     private void jButton3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseEntered
         // TODO add your handling code here:
         HostOrClientPanel.changeButtonTextColor(this.jButton3, "red");
@@ -168,6 +165,12 @@ public class HostPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         HostOrClientPanel.changeButtonTextColor(this.jButton3, "black");
     }//GEN-LAST:event_jButton3MouseExited
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+        MainFrame.getInstance().SwitchPanel("character");
+        ChoseCharacterPanel.getInstance().choseInit();
+    }//GEN-LAST:event_jButton3ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
