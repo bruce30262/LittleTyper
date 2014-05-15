@@ -9,8 +9,10 @@ package panel;
 import java.awt.Color;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
 import javax.swing.SwingWorker;
@@ -361,8 +363,11 @@ public class PlayingPanel extends javax.swing.JPanel {
                                
                 UserAtkThd attack = new UserAtkThd();
                 BallFlyingThd ball = new BallFlyingThd("hero", userBallX, userBallY, enemyBallX, enemyBallY);
+               //  Icon test = new javax.swing.ImageIcon(getClass().getResource("/panel/image/normalAttack_freeze.gif"));
+                //PlayingPanel.getInstance().getIconLabel("hero").setIcon(test);
+                
                 //System.out.println(userBallX +" "+ userBallY +" "+ enemyBallX +" "+ enemyBallY);
-                attack.start();
+                attack.execute();
                 ball.execute();
             }
         }    
@@ -486,20 +491,67 @@ class EnemyAtkThread extends Thread
     }
 }
 
-class UserAtkThd extends Thread
+class UserAtkThd extends SwingWorker<Integer, Integer>
 {
-    public void run()
+    @Override
+    protected Integer doInBackground() throws Exception
     {
-        try
-        {
-            PlayingPanel.getInstance().getHero().LaunchAtk("normal");
+        publish(0);
+         try {
+            System.out.println("in sleep");
             Thread.sleep(1000);
-            PlayingPanel.getInstance().getHero().ToStand();
-            //PlayingPanel.getInstance().genNext();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(UserAtkThd.class.getName()).log(Level.SEVERE, null, ex);
         }
-        catch(Exception e)
+         publish(1);
+        return 100;
+    }
+
+    Icon test = new javax.swing.ImageIcon(getClass().getResource("/panel/image/normalAttack_freeze.gif"));
+    protected void done()
+    {
+        System.out.println("in done");
+        /*try {
+            get();
+        } catch (InterruptedException ex) {
+            Logger.getLogger(UserAtkThd.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ExecutionException ex) {
+            Logger.getLogger(UserAtkThd.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
+        PlayingPanel.getInstance().getHero().ToStand();
+    }
+    
+    @Override
+    protected void process(List<Integer> chunks) 
+    {
+        for(Integer curValue : chunks)
         {
-            e.printStackTrace();
+            if(curValue == 0)
+            {
+                 System.out.println("to stand");
+                 PlayingPanel.getInstance().getHero().ToStand();
+                //PlayingPanel.getInstance().getHero().LaunchAtk("normal");
+                /*try {
+                    System.out.println("in process");
+                    PlayingPanel.getInstance().getIconLabel("hero").setIcon(test);
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(UserAtkThd.class.getName()).log(Level.SEVERE, null, ex);
+                }*/
+            }
+            else
+            {
+                 System.out.println("in process");
+                 PlayingPanel.getInstance().getIconLabel("hero").setIcon(test);
+                //PlayingPanel.getInstance().getHero().LaunchAtk("normal");
+                /*try {
+                    System.out.println("in process");
+                    PlayingPanel.getInstance().getIconLabel("hero").setIcon(test);
+                    Thread.sleep(1000);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(UserAtkThd.class.getName()).log(Level.SEVERE, null, ex);
+                }*/
+            }
         }
     }
 }
