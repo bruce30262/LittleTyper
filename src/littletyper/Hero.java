@@ -44,7 +44,7 @@ public class Hero {
     {
         if(type.equals("normal"))
         {
-            PlayingPanel.getInstance().getIconLabel("hero").setIcon(atk_normal_icon);
+            //PlayingPanel.getInstance().getIconLabel("hero").setIcon(atk_normal_icon);
             atk_normal_sound.playOnce();
         }
         else

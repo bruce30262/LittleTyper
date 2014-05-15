@@ -7,11 +7,13 @@
 package panel;
 
 import java.awt.Color;
+import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
+import javax.swing.SwingWorker;
 import javax.swing.plaf.ProgressBarUI;
 import javax.swing.plaf.basic.BasicProgressBarUI;
 import littletyper.Enemy;
@@ -57,6 +59,11 @@ public class PlayingPanel extends javax.swing.JPanel {
     private Hero hero;
     private Enemy enemy;
     
+    private int userBallX;
+    private int userBallY;
+    private int enemyBallX;
+    private int enemyBallY;
+    
     private PlayingPanel() {
         gen = new Random();
         initComponents();
@@ -90,7 +97,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         hero = new Hero(DifficultyPanel.getInstance().getRoleName());
         hero.ToStand();
         
-        enemy = new Enemy("Julian");
+        enemy = new Enemy("Frizen");
         enemy.ToStand();
         
         genNewWord();
@@ -209,6 +216,16 @@ public class PlayingPanel extends javax.swing.JPanel {
         return this.enemy;
     }
     
+    public JLabel getUserBallIconLabel()
+    {
+        return this.userBallLabel;
+    }
+    
+    public JLabel getEnemyBallIconLabel()
+    {
+        return this.userBallLabel;
+    }
+    
     public void setUserAtkMode(boolean value)
     {
         this.typeOk = value;
@@ -243,6 +260,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         enemyApBar.setValue(enemyAp);
     }
     
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -259,24 +277,30 @@ public class PlayingPanel extends javax.swing.JPanel {
         userIconLabel = new javax.swing.JLabel();
         enemyApBar = new javax.swing.JProgressBar(JProgressBar.VERTICAL);
         enemyIconLabel = new javax.swing.JLabel();
+        userBallLabel = new javax.swing.JLabel();
+        enemyBallLabel = new javax.swing.JLabel();
 
         addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 formKeyPressed(evt);
             }
         });
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         userWordLabel.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         userWordLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        userWordLabel.setText("international");
+        userWordLabel.setText("   ");
+        add(userWordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(117, 314, 151, 35));
 
         enemyHpBar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         enemyHpBar.setFocusable(false);
         enemyHpBar.setRequestFocusEnabled(false);
+        add(enemyHpBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(496, 55, 256, 47));
 
         userHpBar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         userHpBar.setFocusable(false);
         userHpBar.setRequestFocusEnabled(false);
+        add(userHpBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 55, 256, 47));
 
         userApBar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         userApBar.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
@@ -285,8 +309,10 @@ public class PlayingPanel extends javax.swing.JPanel {
         userApBar.setRequestFocusEnabled(false);
         userApBar.setString("");
         userApBar.setStringPainted(true);
+        add(userApBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 137, 35, 85));
 
         userIconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/stand_freeze.gif"))); // NOI18N
+        add(userIconLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(137, 358, -1, -1));
 
         enemyApBar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         enemyApBar.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
@@ -295,54 +321,19 @@ public class PlayingPanel extends javax.swing.JPanel {
         enemyApBar.setRequestFocusEnabled(false);
         enemyApBar.setString("");
         enemyApBar.setStringPainted(true);
+        add(enemyApBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(717, 137, 35, 85));
 
         enemyIconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/stand_freeze_reverse.gif"))); // NOI18N
+        add(enemyIconLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(582, 358, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(48, 48, 48)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(userApBar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(userHpBar, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 192, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(enemyHpBar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(enemyApBar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(48, 48, 48))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(149, 149, 149)
-                .addComponent(userIconLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(enemyIconLabel)
-                .addGap(150, 150, 150))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(117, 117, 117)
-                .addComponent(userWordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(55, 55, 55)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(enemyHpBar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(userHpBar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(userApBar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(enemyApBar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(92, 92, 92)
-                        .addComponent(userWordLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(userIconLabel))
-                    .addComponent(enemyIconLabel))
-                .addContainerGap(162, Short.MAX_VALUE))
-        );
+        userBallLabel.setText("   ");
+        userBallLabel.setFocusable(false);
+        userBallLabel.setRequestFocusEnabled(false);
+        add(userBallLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 380, -1, -1));
+
+        enemyBallLabel.setText("   ");
+        enemyBallLabel.setDoubleBuffered(true);
+        add(enemyBallLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 380, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
@@ -361,17 +352,25 @@ public class PlayingPanel extends javax.swing.JPanel {
             
             if( userCurIndex == realStr.length() ) //next one
             {
+                userBallX = userBallLabel.getX();
+                userBallY = userBallLabel.getY();
+                enemyBallX = enemyBallLabel.getX();
+                enemyBallY = enemyBallLabel.getY();
                 this.typeOk = false;
                 setEnemyAtkMode(false);
+                               
                 UserAtkThd attack = new UserAtkThd();
+                BallFlyingThd ball = new BallFlyingThd("hero", userBallX, userBallY, enemyBallX, enemyBallY);
+                //System.out.println(userBallX +" "+ userBallY +" "+ enemyBallX +" "+ enemyBallY);
                 attack.start();
+                ball.execute();
             }
         }    
     }//GEN-LAST:event_formKeyPressed
     
     public void genNext()
     {
-        hero.ToStand();
+        //hero.ToStand();
         enemyFakeHp += 5;
         enemyRealHp -= 5;
         enemyHpBar.setValue(enemyFakeHp);
@@ -379,15 +378,21 @@ public class PlayingPanel extends javax.swing.JPanel {
                
         genNewWord();
         enemyThd.setStartTime();
+        userBallLabel.setIcon(null);
+
+        // **IMPORTANT** to call revalidate() to cause JLabel to resize and be repainted.
+        userBallLabel.revalidate();
         this.typeOk = true;
         setEnemyAtkMode(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JProgressBar enemyApBar;
+    private javax.swing.JLabel enemyBallLabel;
     private javax.swing.JProgressBar enemyHpBar;
     private javax.swing.JLabel enemyIconLabel;
     private javax.swing.JProgressBar userApBar;
+    private javax.swing.JLabel userBallLabel;
     private javax.swing.JProgressBar userHpBar;
     private javax.swing.JLabel userIconLabel;
     private javax.swing.JLabel userWordLabel;
@@ -400,7 +405,7 @@ class EnemyAtkThread extends Thread
     long startTime;
     long endTime;
     long tick;
-    boolean canAtk;
+    volatile boolean canAtk;
     
     public EnemyAtkThread(long tk)
     {
@@ -408,7 +413,7 @@ class EnemyAtkThread extends Thread
         this.startTime = System.currentTimeMillis();
         this.endTime = System.currentTimeMillis();
         this.tick = tk;
-        canAtk = true;
+        this.canAtk = true;
     }
     
     public void run() 
@@ -458,6 +463,7 @@ class EnemyAtkThread extends Thread
     
     private void Attacking()
     {
+        if(!this.canAtk) return;
         PlayingPanel.getInstance().setUserAtkMode(false); //disable user atk
             
         try //enemyAttaking
@@ -488,11 +494,89 @@ class UserAtkThd extends Thread
         {
             PlayingPanel.getInstance().getHero().LaunchAtk("normal");
             Thread.sleep(1000);
-            PlayingPanel.getInstance().genNext();
+            PlayingPanel.getInstance().getHero().ToStand();
+            //PlayingPanel.getInstance().genNext();
         }
         catch(Exception e)
         {
             e.printStackTrace();
+        }
+    }
+}
+
+class BallFlyingThd extends SwingWorker<Integer, Integer>
+{
+    String role;
+    int ux, uy, ex, ey;
+    
+    public BallFlyingThd(String man, int x1, int y1, int x2, int y2)
+    {
+        this.role = man;
+        this.ux = x1;
+        this.uy = y1;
+        this.ex = x2;
+        this.ey = y2;
+    }
+
+    @Override
+    protected Integer doInBackground() throws Exception
+    {
+        // Do a time-consuming task.
+        try
+        {
+            Thread.sleep(800);
+            int cnt = 1;
+            if(this.role.equals("hero"))
+            {
+                //PlayingPanel.getInstance().getHero().setBallFlying("normal");
+                publish(0);
+
+                int a = 100;
+                while(a > 0)
+                {
+                    
+                    //PlayingPanel.getInstance().getUserBallIconLabel().setLocation(ux, uy);
+                    a--;
+                    publish(ux);
+                    //System.out.println(ux + " " + uy);
+                    Thread.sleep(25);
+                    ux += 10;
+                }
+                //PlayingPanel.getInstance().genNext();
+            }
+            else
+            {
+                
+            }
+            
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return 100;
+    }
+
+    protected void done()
+    {
+       PlayingPanel.getInstance().genNext();
+    }
+    
+    @Override
+    protected void process(List<Integer> chunks) 
+    {
+        for(Integer curValue : chunks)
+        {
+            //System.out.println(curValue);
+            if(curValue == 0)
+            {
+                PlayingPanel.getInstance().getHero().setBallFlying("normal");
+                //System.out.println(ux+" vfuytftyu");
+            }
+            else
+            {
+                PlayingPanel.getInstance().getUserBallIconLabel().setLocation(curValue, uy);
+            }
         }
     }
 }
