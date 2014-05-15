@@ -90,7 +90,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         hero = new Hero(DifficultyPanel.getInstance().getRoleName());
         hero.ToStand();
         
-        enemy = new Enemy("Firen");
+        enemy = new Enemy("Julian");
         enemy.ToStand();
         
         genNewWord();

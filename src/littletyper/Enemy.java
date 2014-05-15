@@ -78,7 +78,7 @@ public class Enemy {
         atk_normal_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/normalAttack_"+this.name+"_reverse.gif")); 
         //atk_special_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/normalAttack_"+this.name+".gif")); 
                 
-        hurt_normal_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/normalHurt_"+this.name+"_reverse.gif")); 
+        //hurt_normal_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/normalHurt_"+this.name+"_reverse.gif")); 
         //hurt_special_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/normalAttack_"+this.name+"_reverse.gif")); 
     
         //ball_normal_flying_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/normalAttack_"+this.name+"_reverse.gif")); 
