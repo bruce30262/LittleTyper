@@ -493,6 +493,7 @@ class EnemyAtkThread extends Thread
 
 class UserAtkThd extends SwingWorker<Integer, Integer>
 {
+    //check this: http://www.javamex.com/tutorials/threads/invokelater.shtml
     @Override
     protected Integer doInBackground() throws Exception
     {
