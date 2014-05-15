@@ -20,26 +20,28 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="142" max="-2" attributes="0"/>
-                      <Component id="userWordLabel" min="-2" pref="151" max="-2" attributes="0"/>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="userApBar" min="-2" pref="35" max="-2" attributes="0"/>
-                          <Component id="userHpBar" min="-2" pref="256" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
+                  <Component id="userApBar" min="-2" pref="35" max="-2" attributes="0"/>
+                  <Component id="userHpBar" min="-2" pref="256" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="192" max="32767" attributes="0"/>
-              <Component id="bossHpBar" min="-2" pref="256" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="enemyHpBar" alignment="1" min="-2" pref="256" max="-2" attributes="0"/>
+                  <Component id="enemyApBar" alignment="1" min="-2" pref="35" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace min="-2" pref="174" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="149" max="-2" attributes="0"/>
               <Component id="userIconLabel" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
+              <Component id="enemyIconLabel" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="150" max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace min="-2" pref="117" max="-2" attributes="0"/>
+              <Component id="userWordLabel" min="-2" pref="151" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -49,15 +51,23 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="55" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="bossHpBar" min="-2" pref="47" max="-2" attributes="0"/>
+                  <Component id="enemyHpBar" min="-2" pref="47" max="-2" attributes="0"/>
                   <Component id="userHpBar" min="-2" pref="47" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-              <Component id="userApBar" min="-2" pref="85" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
-              <Component id="userWordLabel" min="-2" pref="35" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="userIconLabel" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="userApBar" alignment="3" min="-2" pref="85" max="-2" attributes="0"/>
+                          <Component id="enemyApBar" alignment="3" min="-2" pref="85" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
+                      <Component id="userWordLabel" min="-2" pref="35" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="userIconLabel" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="enemyIconLabel" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace pref="162" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -73,7 +83,7 @@
         <Property name="text" type="java.lang.String" value="international"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JProgressBar" name="bossHpBar">
+    <Component class="javax.swing.JProgressBar" name="enemyHpBar">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -117,6 +127,31 @@
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/panel/image/stand_freeze.gif"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JProgressBar" name="enemyApBar">
+      <Properties>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+            <LineBorder thickness="3"/>
+          </Border>
+        </Property>
+        <Property name="debugGraphicsOptions" type="int" value="-1"/>
+        <Property name="doubleBuffered" type="boolean" value="true"/>
+        <Property name="focusable" type="boolean" value="false"/>
+        <Property name="requestFocusEnabled" type="boolean" value="false"/>
+        <Property name="string" type="java.lang.String" value=""/>
+        <Property name="stringPainted" type="boolean" value="true"/>
+      </Properties>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JProgressBar(JProgressBar.VERTICAL)"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JLabel" name="enemyIconLabel">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/panel/image/stand_freeze_reverse.gif"/>
         </Property>
       </Properties>
     </Component>
