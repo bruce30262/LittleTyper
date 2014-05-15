@@ -222,6 +222,11 @@ public class PlayingPanel extends javax.swing.JPanel {
         }
     }
     
+    public void setEnemyAtkMode(boolean value)
+    {
+        enemyThd.setCanAtk(value);
+    }
+    
     public void setAp(String whoAtk)
     {
         if(whoAtk.equals("hero")) //hero atk, userAp+, enemyAp++
@@ -357,16 +362,12 @@ public class PlayingPanel extends javax.swing.JPanel {
             if( userCurIndex == realStr.length() ) //next one
             {
                 this.typeOk = false;
+                setEnemyAtkMode(false);
                 UserAtkThd attack = new UserAtkThd();
                 attack.start();
             }
         }    
     }//GEN-LAST:event_formKeyPressed
-    
-    public void EnemyAttacking(String type)
-    {
-        enemy.LaunchAtk(type);
-    }
     
     public void genNext()
     {
@@ -379,6 +380,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         genNewWord();
         enemyThd.setStartTime();
         this.typeOk = true;
+        setEnemyAtkMode(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -398,6 +400,7 @@ class EnemyAtkThread extends Thread
     long startTime;
     long endTime;
     long tick;
+    boolean canAtk;
     
     public EnemyAtkThread(long tk)
     {
@@ -405,6 +408,7 @@ class EnemyAtkThread extends Thread
         this.startTime = System.currentTimeMillis();
         this.endTime = System.currentTimeMillis();
         this.tick = tk;
+        canAtk = true;
     }
     
     public void run() 
@@ -424,29 +428,16 @@ class EnemyAtkThread extends Thread
                 }
             }
             
-            PlayingPanel.getInstance().setUserAtkMode(false); //disable user atk
-            
-            try //enemyAttaking
+            if(this.canAtk)
             {
-                PlayingPanel.getInstance().getEnemy().LaunchAtk("normal"); 
-                //new a thread to move ball
-                Thread.sleep(1000);
-                PlayingPanel.getInstance().getEnemy().ToStand(); 
-            } 
-            catch (Exception ex) 
-            {
-                Logger.getLogger(EnemyAtkThread.class.getName()).log(Level.SEVERE, null, ex);
+                Attacking();
+                startTime = System.currentTimeMillis();
+                endTime = System.currentTimeMillis();
             }
-            
-            int nowUserHp = PlayingPanel.getInstance().getUserHp() - 10;
-            PlayingPanel.getInstance().setUserHp(nowUserHp);
-            PlayingPanel.getInstance().setAp("enemy");
-            
-            PlayingPanel.getInstance().setUserAtkMode(true); //enable user atk
-           
-            //thread.join
-            startTime = System.currentTimeMillis();
-            endTime = System.currentTimeMillis();
+            else
+            {
+                continue;
+            }
         }
     }  
     
@@ -458,6 +449,34 @@ class EnemyAtkThread extends Thread
     public void setStartTime()
     {
         this.startTime =  System.currentTimeMillis();
+    }
+    
+    public void setCanAtk(boolean value)
+    {
+        this.canAtk = value;
+    }
+    
+    private void Attacking()
+    {
+        PlayingPanel.getInstance().setUserAtkMode(false); //disable user atk
+            
+        try //enemyAttaking
+        {
+            PlayingPanel.getInstance().getEnemy().LaunchAtk("normal"); 
+            //new a thread to move ball
+            Thread.sleep(1000);
+            PlayingPanel.getInstance().getEnemy().ToStand(); 
+        } 
+        catch (Exception ex) 
+        {
+            Logger.getLogger(EnemyAtkThread.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        int nowUserHp = PlayingPanel.getInstance().getUserHp() - 10;
+        PlayingPanel.getInstance().setUserHp(nowUserHp);
+        PlayingPanel.getInstance().setAp("enemy");
+
+        PlayingPanel.getInstance().setUserAtkMode(true); //enable user atk
     }
 }
 
