@@ -76,20 +76,20 @@ public class Hero {
         stand_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/stand_"+this.name+".gif")); 
         
         atk_normal_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/normalAttack_"+this.name+".gif")); 
-        //atk_special_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/normalAttack_"+this.name+".gif")); 
+        atk_special_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/specialAttack_"+this.name+".gif")); 
                 
         hurt_normal_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/normalHurt_"+this.name+".gif")); 
-        //hurt_special_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/normalAttack_"+this.name+".gif")); 
+        hurt_special_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/specialHurt_"+this.name+".gif")); 
     
-        //ball_normal_flying_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/normalAttack_"+this.name+".gif")); 
-        //ball_normal_hit_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/normalAttack_"+this.name+".gif")); 
-        //ball_special_flying_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/normalAttack_"+this.name+".gif")); 
+        ball_normal_flying_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/normalBall_"+this.name+".gif")); 
+        ball_normal_hit_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/normalBallHit_"+this.name+".gif")); 
+        ball_special_flying_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/specialBall_"+this.name+".gif")); 
     }
     
     private void loadSoundtrack()
     {
         atk_normal_sound = new Music("atk_normal_"+this.name+".wav");
-        //atk_special_sound = new Music("");
+        atk_special_sound = new Music("atk_special_"+this.name+".wav");
         ball_hit_sound = new Music("ball_hit_"+this.name+".wav");
     }
     
