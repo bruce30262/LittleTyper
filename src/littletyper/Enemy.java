@@ -71,6 +71,23 @@ public class Enemy {
         PlayingPanel.getInstance().getIconLabel("enemy").setIcon(stand_icon);
     }
     
+    public void setBallFlying(String type)
+    {
+        if(type.equals("normal"))
+        {
+            PlayingPanel.getInstance().getUserBallIconLabel().setIcon(ball_normal_flying_icon);
+        }
+        else
+        {
+            PlayingPanel.getInstance().getUserBallIconLabel().setIcon(ball_special_flying_icon);
+        }
+    }
+    
+    public void setBallHitting()
+    {
+        PlayingPanel.getInstance().getUserBallIconLabel().setIcon(ball_normal_flying_icon);
+    }
+    
     private void loadImage()
     {
         stand_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/stand_"+this.name+"_reverse.gif")); 
