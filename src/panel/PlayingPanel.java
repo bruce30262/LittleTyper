@@ -83,6 +83,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         atkTick = 3000;
         
         hero = new Hero(DifficultyPanel.getInstance().getRoleName());
+        hero.ToStand();
         
         genNewWord();
         bossThd = new BossAtkThread(atkTick);
@@ -298,7 +299,7 @@ public class PlayingPanel extends javax.swing.JPanel {
     
     public void genNext()
     {
-        hero.BackToStand();
+        hero.ToStand();
         bossFakeHp += 10;
         bossRealHp -= 10;
         bossHpBar.setValue(bossFakeHp);
