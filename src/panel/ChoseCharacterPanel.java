@@ -302,7 +302,7 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
         if(this.mode.equals("single"))
         {
             this.selectMusic.stop();
-            StartPanel.getInstance().getStartMusic().playOnce();
+            StartPanel.getInstance().getStartMusic().playLoop();
             MainFrame.getInstance().SwitchPanel("start");
         }
         else //must be host or client, back to HostOrClient

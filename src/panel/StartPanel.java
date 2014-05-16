@@ -32,7 +32,7 @@ public class StartPanel extends javax.swing.JPanel {
         initComponents();
         startMusic = new Music("start.wav");
         startPic = new javax.swing.ImageIcon(getClass().getResource("/panel/image/title.png"));
-        startMusic.playOnce();
+        startMusic.playLoop();
         jLabel6.setIcon(startPic);
     }
     
