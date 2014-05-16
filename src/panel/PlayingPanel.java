@@ -7,6 +7,7 @@
 package panel;
 
 import java.awt.Color;
+import java.awt.event.KeyEvent;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
@@ -68,6 +69,7 @@ public class PlayingPanel extends javax.swing.JPanel {
     private int stage;
     
     private boolean typeOk = true;
+    private boolean inSpecial = false;
     
     private Hero hero;
     private String heroName = "";
@@ -156,6 +158,48 @@ public class PlayingPanel extends javax.swing.JPanel {
     private void setVisibleUserWord()
     {
         userWordLabel.setText("");
+    }
+    
+    private void setApBar(String role, String flag)
+    {
+        if(flag.equals("full"))
+        {
+            if(role.equals("hero"))
+            {
+                userAp = 100;
+                userApBar.setForeground(Color.YELLOW);
+                userApBar.setBackground(Color.BLUE);
+                userApBar.setIndeterminate(true);
+            }
+            else
+            {
+                enemyAp = 100;
+                enemyApBar.setForeground(Color.YELLOW);
+                enemyApBar.setBackground(Color.BLUE);
+                enemyApBar.setIndeterminate(true);
+            }
+        }
+        else //empty
+        {
+            if(role.equals("hero"))
+            {
+                userAp = 0;
+                userApBar.setForeground(Color.BLUE);
+                userApBar.setBackground(null);
+                userApBar.setIndeterminate(false);
+                userApBar.setValue(userAp);
+                
+                inSpecial = false;
+            }
+            else
+            {
+                enemyAp = 0;
+                enemyApBar.setForeground(Color.BLUE);
+                enemyApBar.setBackground(null);
+                enemyApBar.setIndeterminate(false);
+                enemyApBar.setValue(enemyAp);
+            }
+        }
     }
     
     private void setBarUI()
@@ -297,6 +341,9 @@ public class PlayingPanel extends javax.swing.JPanel {
         }
         userApBar.setValue(userAp);
         enemyApBar.setValue(enemyAp);
+        
+        if(userAp >= 100) setApBar("hero", "full");
+        if(enemyAp >= 100) setApBar("enemy", "full");
     }
     
     public void HurtEnemy()
@@ -407,6 +454,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         if(!this.typeOk) return;
         
         char key = evt.getKeyChar();
+        int keyNum = evt.getKeyCode();
         
         if(key == leftStr.charAt(0))
         {
@@ -433,7 +481,13 @@ public class PlayingPanel extends javax.swing.JPanel {
                 attack.start();
                 ball.start();
             }
-        }    
+        }   
+        
+        if(keyNum == KeyEvent.VK_SPACE && userAp >= 100 && !inSpecial)
+        {
+            inSpecial = true;
+            setApBar("hero", "empty");
+        }
     }//GEN-LAST:event_formKeyPressed
    
     // Variables declaration - do not modify//GEN-BEGIN:variables
