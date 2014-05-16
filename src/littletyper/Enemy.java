@@ -75,17 +75,21 @@ public class Enemy {
     {
         if(type.equals("normal"))
         {
-            PlayingPanel.getInstance().getUserBallIconLabel().setIcon(ball_normal_flying_icon);
+            PlayingPanel.getInstance().getEnemyBallIconLabel().setIcon(ball_normal_flying_icon);
         }
         else
         {
-            PlayingPanel.getInstance().getUserBallIconLabel().setIcon(ball_special_flying_icon);
+            PlayingPanel.getInstance().getEnemyBallIconLabel().setIcon(ball_special_flying_icon);
         }
     }
     
     public void setBallHitting()
     {
-        PlayingPanel.getInstance().getUserBallIconLabel().setIcon(ball_normal_flying_icon);
+        PlayingPanel.getInstance().getEnemyBallIconLabel().setIcon(null);
+        PlayingPanel.getInstance().getEnemyBallIconLabel().revalidate(); // **IMPORTANT** to call revalidate() to cause JLabel to resize and be repainted.
+               
+        ball_hit_sound.playOnce();
+        PlayingPanel.getInstance().getUserBallIconLabel().setIcon(ball_normal_hit_icon);
     }
     
     private void loadImage()

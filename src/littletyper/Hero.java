@@ -85,7 +85,11 @@ public class Hero {
     
     public void setBallHitting()
     {
-        PlayingPanel.getInstance().getUserBallIconLabel().setIcon(ball_normal_flying_icon);
+        PlayingPanel.getInstance().getUserBallIconLabel().setIcon(null);
+        PlayingPanel.getInstance().getUserBallIconLabel().revalidate(); // **IMPORTANT** to call revalidate() to cause JLabel to resize and be repainted.
+        
+        ball_hit_sound.playOnce();
+        PlayingPanel.getInstance().getEnemyBallIconLabel().setIcon(ball_normal_hit_icon);
     }
     
     private void loadImage()
