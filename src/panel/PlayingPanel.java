@@ -26,6 +26,14 @@ import littletyper.WordList;
 /**
  *
  * @author BruceChen
+ * 
+ * TODO:
+ * 1. judging special attack (interrupt twice then launch failed)
+ *    special attack's icon need to be adjust y coordinate
+ * 2. judging death (0 hp, death pose)
+ * 3. switch between different stage
+ * 4. judge single or network player
+ * 
  */
 public class PlayingPanel extends javax.swing.JPanel {
 
