@@ -112,6 +112,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         clearRepeat();
         
         enemyHpBar.setValue(enemyFakeHp);
+        enemyApBar.setValue(enemyAp);
         userHpBar.setValue(userHp);
         userApBar.setValue(userAp);
         
