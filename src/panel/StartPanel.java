@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.io.*;
 import java.net.URI; 
 import javax.sound.sampled.*;
+import javax.swing.Icon;
 import littletyper.Music;
 
 /**
@@ -23,13 +24,16 @@ public class StartPanel extends javax.swing.JPanel {
      * Creates new form StartPanel
      */
     private Music startMusic;
+    private Icon startPic;
     
     private static StartPanel startSingle;
     
     private StartPanel() {
         initComponents();
         startMusic = new Music("start.wav");
+        startPic = new javax.swing.ImageIcon(getClass().getResource("/panel/image/title.png"));
         startMusic.playOnce();
+        jLabel6.setIcon(startPic);
     }
     
     public static StartPanel getInstance()
@@ -55,6 +59,9 @@ public class StartPanel extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+
+        setLayout(null);
 
         jLabel1.setFont(new java.awt.Font("Impact", 0, 30)); // NOI18N
         jLabel1.setText("Single Player Mode");
@@ -69,6 +76,8 @@ public class StartPanel extends javax.swing.JPanel {
                 jLabel1MouseExited(evt);
             }
         });
+        add(jLabel1);
+        jLabel1.setBounds(496, 342, 251, 38);
 
         jLabel2.setFont(new java.awt.Font("Impact", 0, 30)); // NOI18N
         jLabel2.setText("Network Battle Mode");
@@ -83,6 +92,8 @@ public class StartPanel extends javax.swing.JPanel {
                 jLabel2MouseExited(evt);
             }
         });
+        add(jLabel2);
+        jLabel2.setBounds(496, 386, 251, 38);
 
         jLabel3.setFont(new java.awt.Font("Impact", 0, 30)); // NOI18N
         jLabel3.setText("Tutorial");
@@ -97,6 +108,8 @@ public class StartPanel extends javax.swing.JPanel {
                 jLabel3MouseExited(evt);
             }
         });
+        add(jLabel3);
+        jLabel3.setBounds(496, 430, 251, 38);
 
         jLabel4.setFont(new java.awt.Font("Impact", 0, 30)); // NOI18N
         jLabel4.setText("Ranking");
@@ -111,6 +124,8 @@ public class StartPanel extends javax.swing.JPanel {
                 jLabel4MouseExited(evt);
             }
         });
+        add(jLabel4);
+        jLabel4.setBounds(496, 474, 173, 38);
 
         jLabel5.setFont(new java.awt.Font("Impact", 0, 30)); // NOI18N
         jLabel5.setText("Exit");
@@ -128,38 +143,10 @@ public class StartPanel extends javax.swing.JPanel {
                 jLabel5MouseExited(evt);
             }
         });
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(496, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(53, 53, 53))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(342, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35))
-        );
+        add(jLabel5);
+        jLabel5.setBounds(496, 518, 101, 38);
+        add(jLabel6);
+        jLabel6.setBounds(0, 0, 800, 590);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseEntered
@@ -266,5 +253,6 @@ public class StartPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     // End of variables declaration//GEN-END:variables
 }
