@@ -33,6 +33,7 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
     private Music selectMusic;
     private Icon[] headIcon;
     private String[] roleName;
+    private String curRoleName;
     private String mode = "";
     
     private static ChoseCharacterPanel characterSingle = null;
@@ -42,6 +43,7 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
         loadImageAndName();
         choseInit();
         selectMusic = new Music("select.wav");
+        curRoleName = "Freeze";
     }
     
     public static ChoseCharacterPanel getInstance()
@@ -230,6 +232,7 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
         }
         else if(key == KeyEvent.VK_ENTER)
         {
+            curRoleName = roleName[cnt];
             if(this.mode.equals("single"))
             {
                 toDifficulty();
@@ -310,6 +313,7 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        curRoleName = roleName[cnt];
         if(this.mode.equals("single"))
         {
             toDifficulty();
@@ -324,6 +328,12 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    
+    public String getRoleName()
+    {
+        return this.curRoleName;
+    }
+    
     private void boxInit()
     {
         characterBox = new JLabel[5];
