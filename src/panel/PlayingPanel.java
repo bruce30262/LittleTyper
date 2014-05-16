@@ -269,6 +269,11 @@ public class PlayingPanel extends javax.swing.JPanel {
         enemyThd.setCanAtk(value);
     }
     
+    public void setEnemyAtking(boolean value)
+    {
+        enemyThd.setAtking(value);
+    }
+    
     public void setAp(String whoAtk)
     {
         if(whoAtk.equals("hero")) //hero atk, userAp+, enemyAp++
@@ -442,6 +447,7 @@ class ComputerAtkThread extends Thread
     long endTime;
     long tick;
     volatile boolean canAtk;
+    volatile boolean atking;
     String atkType;
     
     public ComputerAtkThread(long tk)
@@ -452,6 +458,7 @@ class ComputerAtkThread extends Thread
         this.tick = tk;
         this.canAtk = true;
         this.atkType = "normal";
+        this.atking= false;
     }
     
     public void run() 
@@ -462,7 +469,15 @@ class ComputerAtkThread extends Thread
             {
                 if(!terminate)
                 {
-                    endTime = System.currentTimeMillis();
+                    if(this.canAtk && !this.atking)
+                    {
+                        endTime = System.currentTimeMillis();
+                    }
+                    else
+                    {
+                        startTime = System.currentTimeMillis();
+                        endTime = System.currentTimeMillis();
+                    }
                     continue;
                 }
                 else
@@ -474,6 +489,7 @@ class ComputerAtkThread extends Thread
             if(this.canAtk)
             {
                 Attacking();
+                atking = true;
                 startTime = System.currentTimeMillis();
                 endTime = System.currentTimeMillis();
             }
@@ -502,6 +518,11 @@ class ComputerAtkThread extends Thread
     public void setCanAtk(boolean value)
     {
         this.canAtk = value;
+    }
+    
+    public void setAtking(boolean value)
+    {
+        this.atking = value;
     }
     
     private void Attacking()
@@ -841,6 +862,7 @@ class HurtingThread extends Thread
                     PlayingPanel.getInstance().getHero().ToStand();
                     PlayingPanel.getInstance().setUserAtkMode(true); //re-enable attack mode
                     PlayingPanel.getInstance().setEnemyAtkMode(true); //re-enable attack mode
+                    PlayingPanel.getInstance().setEnemyAtking(false); 
                 }
                 else
                 {
