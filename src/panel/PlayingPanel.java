@@ -22,18 +22,12 @@ import javax.swing.plaf.ProgressBarUI;
 import javax.swing.plaf.basic.BasicProgressBarUI;
 import littletyper.Enemy;
 import littletyper.Hero;
+import littletyper.Music;
 import littletyper.WordList;
 
 /**
  *
  * @author BruceChen
- * 
- * TODO:
- * 1. judging special attack (interrupt twice then launch failed)
- *    special attack's icon need to be adjust y coordinate
- * 2. judging death (0 hp, death pose)
- * 3. switch between different stage
- * 4. judge single or network player
  * 
  */
 public class PlayingPanel extends javax.swing.JPanel {
@@ -49,9 +43,12 @@ public class PlayingPanel extends javax.swing.JPanel {
     private String whoAmI = "";
     private int roleId;
     private int totalWordNum;
+    private int totalSpecialWordNum;
     private WordList wordList;
+    private WordList specialWordList;
     private Random gen;
     private boolean[] checkRepeat;
+    private boolean[] checkRepeatSpecial;
     
     private String userCurStr = "";
     private String leftStr = "";
@@ -70,6 +67,8 @@ public class PlayingPanel extends javax.swing.JPanel {
     
     private boolean typeOk = true;
     private boolean inSpecial = false;
+    private boolean hasSpecialWord = false;
+    private boolean notFull = true;
     
     private Hero hero;
     private String heroName = "";
@@ -109,8 +108,11 @@ public class PlayingPanel extends javax.swing.JPanel {
         this.curDiffy = d;
         this.whoAmI = ChoseCharacterPanel.getInstance().getMode();
         wordList = new WordList(d);
+        specialWordList = new WordList("special"+d);
         this.totalWordNum = wordList.getSize();
+        this.totalSpecialWordNum = specialWordList.getSize();
         this.checkRepeat = new boolean[this.totalWordNum];
+        this.checkRepeatSpecial = new boolean[this.totalSpecialWordNum];
         clearRepeat();
         
         enemyHpBar.setValue(enemyFakeHp);
@@ -146,6 +148,11 @@ public class PlayingPanel extends javax.swing.JPanel {
         for(int i = 0 ; i < this.totalWordNum ; i++)
         {
             checkRepeat[i] = false;
+        }
+        
+        for(int i = 0 ; i < this.totalSpecialWordNum ; i++)
+        {
+            checkRepeatSpecial[i] = false;
         }
     }
     
@@ -190,6 +197,7 @@ public class PlayingPanel extends javax.swing.JPanel {
                 userApBar.setValue(userAp);
                 
                 inSpecial = false;
+                notFull = true;
             }
             else
             {
@@ -243,6 +251,33 @@ public class PlayingPanel extends javax.swing.JPanel {
                 ok = true;
             }
         }
+        setTextColor();
+    }
+    
+    private void genNewSpecialWord()
+    {
+        int index = 0;
+        boolean ok = false;
+        
+        while(!ok)
+        {
+            index = this.gen.nextInt(this.totalSpecialWordNum);
+            
+            if(checkRepeatSpecial[index]) //already has generate
+            {
+                continue;
+            }
+            else
+            {
+                this.realStr = specialWordList.getWord(index);
+                this.leftStr = realStr;
+                checkRepeatSpecial[index] = true;
+                this.userCurIndex = 0;
+                this.userCurStr = "";
+                ok = true;
+            }
+        }
+        hasSpecialWord = true;
         setTextColor();
     }
     
@@ -342,7 +377,11 @@ public class PlayingPanel extends javax.swing.JPanel {
         userApBar.setValue(userAp);
         enemyApBar.setValue(enemyAp);
         
-        if(userAp >= 100) setApBar("hero", "full");
+        if(userAp >= 100 && notFull)
+        {
+            setApBar("hero", "full");
+            notFull = false;
+        }
         if(enemyAp >= 100) setApBar("enemy", "full");
     }
     
@@ -356,19 +395,27 @@ public class PlayingPanel extends javax.swing.JPanel {
     
     public void genNext()
     {
-        genNewWord();
+        if(inSpecial)
+        {
+            genNewSpecialWord();
+        }
+        else
+        {
+            genNewWord();
+            hasSpecialWord = false;            
+        }
         enemyThd.setStartTime();
         this.typeOk = true;
         setEnemyAtkMode(true);
     }
     
-    public void StartEnemyBall()
+    public void StartEnemyBall(String type)
     {
         userBallX = userBallLabel.getX();
         userBallY = userBallLabel.getY();
         enemyBallX = enemyBallLabel.getX();
         enemyBallY = enemyBallLabel.getY();
-        BallFlyingThd ball = new BallFlyingThd("enemy", "normal", userBallX, userBallY, enemyBallX, enemyBallY);
+        BallFlyingThd ball = new BallFlyingThd("enemy", type, userBallX, userBallY, enemyBallX, enemyBallY);
         ball.start();
     }
     
@@ -465,19 +512,28 @@ public class PlayingPanel extends javax.swing.JPanel {
             
             if( userCurIndex == realStr.length() ) //next one
             {
+                UserAtkThd attack;
+                BallFlyingThd ball;
                 userBallX = userBallLabel.getX();
                 userBallY = userBallLabel.getY();
                 enemyBallX = enemyBallLabel.getX();
                 enemyBallY = enemyBallLabel.getY();
+                
                 this.typeOk = false;
                 setEnemyAtkMode(false);
-                               
-                UserAtkThd attack = new UserAtkThd("normal");
-                BallFlyingThd ball = new BallFlyingThd("hero", "normal", userBallX, userBallY, enemyBallX, enemyBallY);
-               //  Icon test = new javax.swing.ImageIcon(getClass().getResource("/panel/image/normalAttack_freeze.gif"));
-                //PlayingPanel.getInstance().getIconLabel("hero").setIcon(test);
                 
-                //System.out.println(userBallX +" "+ userBallY +" "+ enemyBallX +" "+ enemyBallY);
+                if(hasSpecialWord)
+                {
+                    attack = new UserAtkThd("special");
+                    ball = new BallFlyingThd("hero", "special", userBallX, userBallY, enemyBallX, enemyBallY);
+                    setApBar("hero", "empty"); //wait to move to other place
+                }
+                else
+                {
+                    attack = new UserAtkThd("normal");
+                    ball = new BallFlyingThd("hero", "normal", userBallX, userBallY, enemyBallX, enemyBallY);
+                }
+                
                 attack.start();
                 ball.start();
             }
@@ -486,7 +542,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         if(keyNum == KeyEvent.VK_SPACE && userAp >= 100 && !inSpecial)
         {
             inSpecial = true;
-            setApBar("hero", "empty");
+            userApBar.setIndeterminate(false);
         }
     }//GEN-LAST:event_formKeyPressed
    
@@ -595,12 +651,14 @@ class ComputerAtkThread extends Thread
         PlayingPanel.getInstance().setUserAtkMode(false); //disable user atk
         
         turnAttacking();
-        PlayingPanel.getInstance().StartEnemyBall();
+        PlayingPanel.getInstance().StartEnemyBall(this.atkType);
+        
         try {
             Thread.sleep(1000);
         } catch (InterruptedException ex) {
             Logger.getLogger(ComputerAtkThread.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         turnStanding();
     }
     
@@ -610,9 +668,6 @@ class ComputerAtkThread extends Thread
         {
             public void run() 
             {
-                // Here, we can safely update the GUI
-                // because we'll be called from the
-                // event dispatch thread
                 PlayingPanel.getInstance().getEnemy().LaunchAtk(atkType); 
             }
         });
@@ -624,9 +679,6 @@ class ComputerAtkThread extends Thread
         {
             public void run() 
             {
-                // Here, we can safely update the GUI
-                // because we'll be called from the
-                // event dispatch thread
                 PlayingPanel.getInstance().getEnemy().ToStand();
             }
         });
@@ -645,12 +697,13 @@ class UserAtkThd extends Thread
     public void run()
     {
         turnAttacking();
-         try {
-            //System.out.println("in sleep");
+        
+        try {
             Thread.sleep(1000);
         } catch (InterruptedException ex) {
             Logger.getLogger(UserAtkThd.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         turnStanding();       
     }
 
@@ -660,9 +713,6 @@ class UserAtkThd extends Thread
         {
             public void run() 
             {
-                // Here, we can safely update the GUI
-                // because we'll be called from the
-                // event dispatch thread
                 PlayingPanel.getInstance().getHero().LaunchAtk(atkType);
             }
         });
@@ -674,9 +724,6 @@ class UserAtkThd extends Thread
         {
             public void run() 
             {
-                // Here, we can safely update the GUI
-                // because we'll be called from the
-                // event dispatch thread
                 PlayingPanel.getInstance().getHero().ToStand();
             }
         });
@@ -708,18 +755,18 @@ class BallFlyingThd extends Thread
             if(this.role.equals("hero"))
             {
                 startBall();
-
+                
                 while(ux <= ex)
                 {
                     makeBallFly();
                     Thread.sleep(25);
                     ux += 10;
                 }
-                
+               
                 BallHit();
                 hurtEnemy();
             }
-            else
+            else //enemy attack
             {
                 startBall();
                 
@@ -746,9 +793,6 @@ class BallFlyingThd extends Thread
         {
             public void run() 
             {
-                // Here, we can safely update the GUI
-                // because we'll be called from the
-                // event dispatch thread
                 if(role.equals("hero"))
                 {
                     PlayingPanel.getInstance().getHero().setBallFlying(atkType);
@@ -767,9 +811,6 @@ class BallFlyingThd extends Thread
         {
             public void run() 
             {
-                // Here, we can safely update the GUI
-                // because we'll be called from the
-                // event dispatch thread
                 if(role.equals("hero"))
                 {
                     PlayingPanel.getInstance().getUserBallIconLabel().setLocation(ux, uy);
@@ -788,29 +829,42 @@ class BallFlyingThd extends Thread
         {
             public void run() 
             {
-                // Here, we can safely update the GUI
-                // because we'll be called from the
-                // event dispatch thread
                 if(role.equals("hero"))
                 {
-                    PlayingPanel.getInstance().getHero().setBallHitting();
+                    PlayingPanel.getInstance().getHero().setBallHitting(atkType);
                     PlayingPanel.getInstance().getEnemy().GetHurt(atkType);
                     
-                    BallHitThread hit = new BallHitThread("hero");
-                    HurtingThread hurt = new HurtingThread("enemy");
+                    if(atkType.equals("special"))
+                    {
+                        KeepFlyingThread fly = new KeepFlyingThread("hero", ux, uy, ex, ey);
+                        fly.start();
+                    }
+                    else
+                    {
+                        BallHitThread hit = new BallHitThread("hero");
+                        hit.start();
+                    }
                     
-                    hit.start();
+                    HurtingThread hurt = new HurtingThread("enemy");
                     hurt.start();
                 }
                 else
                 {
-                    PlayingPanel.getInstance().getEnemy().setBallHitting();
+                    PlayingPanel.getInstance().getEnemy().setBallHitting(atkType);
                     PlayingPanel.getInstance().getHero().GetHurt(atkType);
                     
-                    BallHitThread hit = new BallHitThread("enemy");
-                    HurtingThread hurt = new HurtingThread("hero");
+                    if(atkType.equals("special"))
+                    {
+                        KeepFlyingThread fly = new KeepFlyingThread("enemy", ux, uy, ex, ey);
+                        fly.start();
+                    }
+                    else
+                    {
+                        BallHitThread hit = new BallHitThread("enemy");
+                        hit.start();
+                    }
                     
-                    hit.start();
+                    HurtingThread hurt = new HurtingThread("hero");
                     hurt.start();
                 }
             }
@@ -823,9 +877,6 @@ class BallFlyingThd extends Thread
         {
             public void run() 
             {
-                // Here, we can safely update the GUI
-                // because we'll be called from the
-                // event dispatch thread
                 PlayingPanel.getInstance().HurtEnemy();
             }
         });
@@ -838,10 +889,6 @@ class BallFlyingThd extends Thread
         {
             public void run() 
             {
-                // Here, we can safely update the GUI
-                // because we'll be called from the
-                // event dispatch thread
-                
                 PlayingPanel.getInstance().setUserHp(nowUserHp);
                 PlayingPanel.getInstance().setAp("enemy");
             }
@@ -852,6 +899,7 @@ class BallFlyingThd extends Thread
 class BallHitThread extends Thread
 {
     String role;
+    
     public BallHitThread(String r)
     {
         this.role = r;
@@ -863,7 +911,7 @@ class BallHitThread extends Thread
         } catch (InterruptedException ex) {
             Logger.getLogger(BallHitThread.class.getName()).log(Level.SEVERE, null, ex);
         }
-        stopBallHit();
+        stopBallHit();       
     }
     
     private void stopBallHit()
@@ -872,10 +920,6 @@ class BallHitThread extends Thread
         {
             public void run() 
             {
-                // Here, we can safely update the GUI
-                // because we'll be called from the
-                // event dispatch thread
-                
                 if(role.equals("hero"))
                 {
                     PlayingPanel.getInstance().getEnemyBallIconLabel().setIcon(null);
@@ -888,7 +932,7 @@ class BallHitThread extends Thread
                 }
             }
         });
-    }
+    }  
 }
 
 class HurtingThread extends Thread
@@ -906,7 +950,7 @@ class HurtingThread extends Thread
         } catch (InterruptedException ex) {
             Logger.getLogger(BallHitThread.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+     
         stopHurting();
     }
     
@@ -916,10 +960,6 @@ class HurtingThread extends Thread
         {
             public void run() 
             {
-                // Here, we can safely update the GUI
-                // because we'll be called from the
-                // event dispatch thread
-                
                 if(role.equals("hero"))
                 {
                     PlayingPanel.getInstance().getHero().ToStand();
@@ -931,6 +971,97 @@ class HurtingThread extends Thread
                 {
                     PlayingPanel.getInstance().getEnemy().ToStand();
                     PlayingPanel.getInstance().genNext(); //gen new word, re-enable attack mode
+                }
+            }
+        });
+    }
+}
+
+class KeepFlyingThread extends Thread
+{
+    String role;
+    int ux;
+    int ex;
+    int uy;
+    int ey;
+    
+    public KeepFlyingThread(String r, int x1, int y1, int x2, int y2)
+    {
+        this.role = r;
+        this.ux = x1;
+        this.ex = x2;
+        this.uy = y1;
+        this.ey = y2;
+    }
+    
+    public void run()
+    {
+        if(role.equals("hero"))
+        {
+            while(ux <= 800)
+            {
+                flying();
+                
+                try {
+                    Thread.sleep(25);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(BallFlyingThd.class.getName()).log(Level.SEVERE, null, ex);
+                }
+
+                ux += 10;
+            }
+        }
+        else
+        {
+            while(ex >= -200)
+            {
+                flying();
+                
+                try {
+                    Thread.sleep(25);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(BallFlyingThd.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+                ex -= 10;
+            }
+        }
+        clear();
+    }
+    
+    private void flying()
+    {
+        SwingUtilities.invokeLater(new Runnable() 
+        {
+            public void run() 
+            {
+                if(role.equals("hero"))
+                {
+                    PlayingPanel.getInstance().getUserBallIconLabel().setLocation(ux, uy);
+                }
+                else
+                {
+                    PlayingPanel.getInstance().getEnemyBallIconLabel().setLocation(ex, ey);
+                }
+            }
+        });
+    }
+    
+    private void clear()
+    {
+        SwingUtilities.invokeLater(new Runnable() 
+        {
+            public void run() 
+            {
+                if(role.equals("hero"))
+                {
+                    PlayingPanel.getInstance().getUserBallIconLabel().setIcon(null);
+                    PlayingPanel.getInstance().getUserBallIconLabel().revalidate();
+                }
+                else
+                {
+                    PlayingPanel.getInstance().getEnemyBallIconLabel().setIcon(null);
+                    PlayingPanel.getInstance().getEnemyBallIconLabel().revalidate();
                 }
             }
         });
