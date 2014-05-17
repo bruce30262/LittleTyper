@@ -65,7 +65,8 @@ public class WordList {
             String singleWord = "";
             while ( (singleWord = br.readLine()) != null )
             {
-                this.allWord.add(singleWord);
+                if(singleWord.length() > 0)
+                    this.allWord.add(singleWord);
             }
             this.fr.close();
         }
