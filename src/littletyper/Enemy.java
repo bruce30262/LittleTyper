@@ -32,6 +32,7 @@ public class Enemy {
     private Music atk_normal_sound;
     private Music atk_special_sound;
     private Music ball_hit_sound;
+    private Music special_ball_hit_sound;
     
     public Enemy(String roleName)
     {
@@ -83,15 +84,22 @@ public class Enemy {
         }
     }
     
-    public void setBallHitting()
+    public void setBallHitting(String type)
     {
-        PlayingPanel.getInstance().getEnemyBallIconLabel().setIcon(null);
-        PlayingPanel.getInstance().getEnemyBallIconLabel().revalidate(); // **IMPORTANT** to call revalidate() to cause JLabel to resize and be repainted.
+        if(type.equals("normal"))
+        {
+            PlayingPanel.getInstance().getEnemyBallIconLabel().setIcon(null);
+            PlayingPanel.getInstance().getEnemyBallIconLabel().revalidate(); // **IMPORTANT** to call revalidate() to cause JLabel to resize and be repainted.
                
-        ball_hit_sound.playOnce();
-        PlayingPanel.getInstance().getUserBallIconLabel().setIcon(ball_normal_hit_icon);
+            ball_hit_sound.playOnce();
+            PlayingPanel.getInstance().getUserBallIconLabel().setIcon(ball_normal_hit_icon);
+        }
+        else //special attack
+        {
+            special_ball_hit_sound.playOnce();
+        }
     }
-    
+       
     private void loadImage()
     {
         stand_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/stand_"+this.name+"_reverse.gif")); 
@@ -112,6 +120,18 @@ public class Enemy {
         atk_normal_sound = new Music("atk_normal_"+this.name+".wav");
         atk_special_sound = new Music("atk_special_"+this.name+".wav");
         ball_hit_sound = new Music("ball_hit_"+this.name+".wav");
+        
+        if(name.equals("freeze"))
+        {
+            special_ball_hit_sound = new Music("special_ball_hit_sound1.wav");
+        }
+        else if(name.equals("john") || name.equals("woody"))
+        {
+            special_ball_hit_sound = new Music("special_ball_hit_sound2.wav");
+        }
+        else
+        {
+            special_ball_hit_sound = new Music("special_ball_hit_sound3.wav");
+        }
     }
-    
 }
