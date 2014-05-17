@@ -239,6 +239,7 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
             }
             else if(this.mode.equals("host"))
             { 
+                HostPanel.getInstance().setRole(headIcon[cnt], roleName[cnt], cnt);
                 MainFrame.getInstance().SwitchPanel("host");
             }
             else
@@ -320,6 +321,7 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
         }
         else if(this.mode.equals("host"))
         { 
+            HostPanel.getInstance().setRole(headIcon[cnt], roleName[cnt], cnt);
             MainFrame.getInstance().SwitchPanel("host");
         }
         else
