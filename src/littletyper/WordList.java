@@ -39,6 +39,21 @@ public class WordList {
             path = "dic" + File.separator + "hardDic.txt";
             getFile(path);
         }
+        else if(this.diffy.equals("specialeasy"))
+        {
+            path = "dic" + File.separator + "special_easy.txt";
+            getFile(path);
+        }
+        else if(this.diffy.equals("specialmedium"))
+        {
+            path = "dic" + File.separator + "special_mid.txt";
+            getFile(path);
+        }
+        else if(this.diffy.equals("specialexpert"))
+        {
+            path = "dic" + File.separator + "special_hard.txt";
+            getFile(path);
+        }
     }
     
     private void getFile(String fileName)
