@@ -244,6 +244,7 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
             }
             else
             {
+                ClientPanel.getInstance().setRole(headIcon[cnt], roleName[cnt], cnt);
                 MainFrame.getInstance().SwitchPanel("client");
             }
         }
@@ -326,6 +327,7 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
         }
         else
         {
+            ClientPanel.getInstance().setRole(headIcon[cnt], roleName[cnt], cnt);
             MainFrame.getInstance().SwitchPanel("client");
         }
     }//GEN-LAST:event_jButton2ActionPerformed

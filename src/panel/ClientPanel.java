@@ -7,6 +7,8 @@
 package panel;
 import frame.MainFrame;
 import panel.HostOrClientPanel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -15,6 +17,9 @@ import panel.HostOrClientPanel;
 public class ClientPanel extends javax.swing.JPanel {
 
     private static ClientPanel cpSingle = null;
+    int roleId;
+    String roleName;
+    
     /**
      * Creates new form ClientPanel
      */
@@ -29,6 +34,14 @@ public class ClientPanel extends javax.swing.JPanel {
             cpSingle = new ClientPanel();
         }
         return cpSingle;
+    }
+    
+    public void setRole(Icon icon, String name, int id)
+    {
+        roleId = id;
+        roleName = name;
+        choseLabel.setIcon(icon);
+        choseNameLabel.setText(name);
     }
 
     /**
@@ -45,12 +58,15 @@ public class ClientPanel extends javax.swing.JPanel {
         jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        choseLabel = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        choseNameLabel = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Impact", 0, 48)); // NOI18N
         jLabel1.setText("Connection");
 
-        jLabel2.setFont(new java.awt.Font("新細明體", 1, 36)); // NOI18N
-        jLabel2.setText("Host IP：");
+        jLabel2.setFont(new java.awt.Font("Impact", 0, 36)); // NOI18N
+        jLabel2.setText("Host IP:");
 
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -58,8 +74,21 @@ public class ClientPanel extends javax.swing.JPanel {
             }
         });
 
-        jButton1.setFont(new java.awt.Font("Arial", 0, 36)); // NOI18N
+        jButton1.setFont(new java.awt.Font("Impact", 0, 36)); // NOI18N
         jButton1.setText("Connect");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jButton1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jButton1MouseExited(evt);
+            }
+        });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton3.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
         jButton3.setText("Back");
@@ -77,6 +106,16 @@ public class ClientPanel extends javax.swing.JPanel {
             }
         });
 
+        choseLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/head_freeze.png"))); // NOI18N
+
+        jLabel3.setFont(new java.awt.Font("Impact", 0, 36)); // NOI18N
+        jLabel3.setText("Character  :");
+
+        choseNameLabel.setFont(new java.awt.Font("Impact", 0, 36)); // NOI18N
+        choseNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        choseNameLabel.setText("Freeze");
+        choseNameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -85,32 +124,49 @@ public class ClientPanel extends javax.swing.JPanel {
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(261, Short.MAX_VALUE)
+                .addContainerGap(284, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(302, 302, 302))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(227, 227, 227))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(27, 27, 27)
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(35, 35, 35)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(choseNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(choseLabel))
+                                .addGap(25, 25, 25)))
+                        .addGap(228, 228, 228))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButton1)
-                        .addGap(341, 341, 341))))
+                        .addGap(330, 330, 330))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(63, 63, 63)
                 .addComponent(jLabel1)
-                .addGap(125, 125, 125)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(choseLabel))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(choseNameLabel)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(27, 27, 27)
+                .addGap(43, 43, 43)
                 .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 176, Short.MAX_VALUE)
+                .addGap(23, 23, 23)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -135,12 +191,29 @@ public class ClientPanel extends javax.swing.JPanel {
         ChoseCharacterPanel.getInstance().choseInit();
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseEntered
+        // TODO add your handling code here:
+        HostOrClientPanel.changeButtonTextColor(this.jButton1, "red");
+    }//GEN-LAST:event_jButton1MouseEntered
+
+    private void jButton1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseExited
+        // TODO add your handling code here:
+        HostOrClientPanel.changeButtonTextColor(this.jButton1, "black");
+    }//GEN-LAST:event_jButton1MouseExited
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel choseLabel;
+    private javax.swing.JLabel choseNameLabel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
 }
