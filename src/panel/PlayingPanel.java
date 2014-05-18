@@ -70,6 +70,7 @@ public class PlayingPanel extends javax.swing.JPanel {
     private boolean hasSpecialWord = false;
     private boolean notFull = true;
     private int specialInterrupt = 0;
+    private int specialInterrupt_enemy = 0;
     
     private Hero hero;
     private String heroName = "";
@@ -424,6 +425,25 @@ public class PlayingPanel extends javax.swing.JPanel {
         enemyRealHp -= 5;
         enemyHpBar.setValue(enemyFakeHp);
         setAp("hero");
+        
+        if(enemyThd.checkSpecialAtking())
+        {
+            specialInterrupt_enemy++;
+            if(specialInterrupt_enemy == 2)
+            {
+                specialInterrupt_enemy = 0;
+                enemyThd.setTick(this.atkTick);
+                enemyThd.setAtkType("normal");
+                enemyThd.setSpecialAtking(false);
+                enemyThd.setStartTime();
+                setApBar("enemy", "empty");
+            }
+        }
+    }
+    
+    public void InitSpecialInterruptEnemy()
+    {
+        this.specialInterrupt_enemy = 0;
     }
     
     public void HurtUser()
@@ -798,6 +818,7 @@ class ComputerAtkThread extends Thread
                 
                 if(atkType.equals("special"))
                 {
+                    PlayingPanel.getInstance().InitSpecialInterruptEnemy();
                     PlayingPanel.getInstance().setApBar("enemy", "empty");
                 }
             }
