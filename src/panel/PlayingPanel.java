@@ -69,6 +69,7 @@ public class PlayingPanel extends javax.swing.JPanel {
     private boolean inSpecial = false;
     private boolean hasSpecialWord = false;
     private boolean notFull = true;
+    private int specialInterrupt = 0;
     
     private Hero hero;
     private String heroName = "";
@@ -92,6 +93,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         computerEnemyName[2] = "Sorcerer";
         computerEnemyName[3] = "Frizen";
         computerEnemyName[4] = "Julian";
+       
     }
     
     public static PlayingPanel getInstance()
@@ -278,6 +280,7 @@ public class PlayingPanel extends javax.swing.JPanel {
             }
         }
         hasSpecialWord = true;
+        specialInterrupt = 0;
         setTextColor();
     }
     
@@ -344,6 +347,11 @@ public class PlayingPanel extends javax.swing.JPanel {
         this.typeOk = value;
         if(value) //enable attack
         {
+            if(specialInterrupt == 2)
+            {
+                genNewWord();
+                specialInterrupt = 0;
+            }
             setTextColor();
         }
         else //disable attack
@@ -393,11 +401,31 @@ public class PlayingPanel extends javax.swing.JPanel {
         setAp("hero");
     }
     
+    public void HurtUser()
+    {
+        int nowUserHp = PlayingPanel.getInstance().getUserHp() - 5;
+        setUserHp(nowUserHp);
+        setAp("enemy");
+        
+        if(hasSpecialWord)
+        {
+            specialInterrupt++;
+            if(specialInterrupt == 2)
+            {
+                setApBar("hero", "empty");
+                inSpecial = false;
+                hasSpecialWord = false;
+            }
+        }
+            
+    }
+    
     public void genNext()
     {
         if(inSpecial)
         {
             genNewSpecialWord();
+            specialInterrupt = 0;
         }
         else
         {
@@ -415,6 +443,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         userBallY = userBallLabel.getY();
         enemyBallX = enemyBallLabel.getX();
         enemyBallY = enemyBallLabel.getY();
+        enemyBallY = enemy.AdjustY(enemyBallY);
         BallFlyingThd ball = new BallFlyingThd("enemy", type, userBallX, userBallY, enemyBallX, enemyBallY);
         ball.start();
     }
@@ -518,17 +547,31 @@ public class PlayingPanel extends javax.swing.JPanel {
                 userBallY = userBallLabel.getY();
                 enemyBallX = enemyBallLabel.getX();
                 enemyBallY = enemyBallLabel.getY();
-                
+                                
                 this.typeOk = false;
                 setEnemyAtkMode(false);
                 
-                if(hasSpecialWord)
+                if(hasSpecialWord) //special sttack
                 {
+                    userBallY = hero.AdjustY(userBallY);
+                    if(hero.getName().equals("freeze") || hero.getName().equals("firen"))
+                    {
+                        enemyBallX -= 150;
+                    }
+                    else if(hero.getName().equals("woody"))
+                    {
+                        enemyBallX -= 175;
+                    }
+                    else if(hero.getName().equals("john"))
+                    {
+                        enemyBallX -= 50;
+                    }
+                    
                     attack = new UserAtkThd("special");
                     ball = new BallFlyingThd("hero", "special", userBallX, userBallY, enemyBallX, enemyBallY);
                     setApBar("hero", "empty"); //wait to move to other place
                 }
-                else
+                else //normal attack
                 {
                     attack = new UserAtkThd("normal");
                     ball = new BallFlyingThd("hero", "normal", userBallX, userBallY, enemyBallX, enemyBallY);
@@ -884,13 +927,11 @@ class BallFlyingThd extends Thread
     
     private void hurtUser()
     {
-        int nowUserHp = PlayingPanel.getInstance().getUserHp() - 5;
         SwingUtilities.invokeLater(new Runnable() 
         {
             public void run() 
             {
-                PlayingPanel.getInstance().setUserHp(nowUserHp);
-                PlayingPanel.getInstance().setAp("enemy");
+                PlayingPanel.getInstance().HurtUser();
             }
         });
     }
