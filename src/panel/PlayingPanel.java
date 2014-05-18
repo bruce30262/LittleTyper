@@ -40,6 +40,7 @@ public class PlayingPanel extends javax.swing.JPanel {
     
     private String curDiffy;
     private String[] computerEnemyName;
+    private long[] computerEnemyTick;
     private String whoAmI = "";
     private int roleId;
     private int totalWordNum;
@@ -92,6 +93,13 @@ public class PlayingPanel extends javax.swing.JPanel {
         computerEnemyName[2] = "Sorcerer";
         computerEnemyName[3] = "Frizen";
         computerEnemyName[4] = "Julian";
+        
+        computerEnemyTick = new long[5];
+        computerEnemyTick[0] = 4500;
+        computerEnemyTick[1] = 4000;
+        computerEnemyTick[2] = 3500;
+        computerEnemyTick[3] = 3000;
+        computerEnemyTick[4] = 2500;
     }
     
     public static PlayingPanel getInstance()
@@ -120,9 +128,8 @@ public class PlayingPanel extends javax.swing.JPanel {
         userHpBar.setValue(userHp);
         userApBar.setValue(userAp);
         
-        stage = 1;
-        atkTick = 3000;
-        
+        stage = 4;
+               
         heroName = ChoseCharacterPanel.getInstance().getRoleName();
         
         hero = new Hero(heroName);
@@ -131,6 +138,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         if(whoAmI.equals("single"))
         {
             enemyName = computerEnemyName[stage-1];
+            atkTick = computerEnemyTick[stage-1];
         }
         enemy = new Enemy(enemyName);
         enemy.ToStand();
@@ -167,7 +175,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         userWordLabel.setText("");
     }
     
-    private void setApBar(String role, String flag)
+    public void setApBar(String role, String flag)
     {
         if(flag.equals("full"))
         {
@@ -323,6 +331,11 @@ public class PlayingPanel extends javax.swing.JPanel {
         return this.hero;
     }
     
+    public String getWhoAmI()
+    {
+        return this.whoAmI;
+    }
+    
     public Enemy getEnemy()
     {
         return this.enemy;
@@ -386,7 +399,23 @@ public class PlayingPanel extends javax.swing.JPanel {
             setApBar("hero", "full");
             notFull = false;
         }
-        if(enemyAp >= 100) setApBar("enemy", "full");
+        if(enemyAp >= 100)
+        {
+            if(whoAmI.equals("single"))
+            {
+                if(enemyThd.checkSpecialAtking())
+                {
+                    return;
+                }
+            }
+            setApBar("enemy", "full");
+        }
+    }
+    
+    public boolean isCPUEnemyApFull()
+    {
+        if(enemyAp >= 100) return true;
+        else return false;        
     }
     
     public void HurtEnemy()
@@ -412,13 +441,24 @@ public class PlayingPanel extends javax.swing.JPanel {
                 hasSpecialWord = false;
             }
         }
+        
+        if(this.whoAmI.equals("single"))
+        {
+            if(enemyThd.checkSpecialAtking())
+            {
+                enemyThd.setTick(this.atkTick);
+                enemyThd.setAtkType("normal");
+                enemyThd.setSpecialAtking(false);
+                enemyThd.setStartTime();
+            }
+        }
     }
     
     public void genNext()
     {
         genNewWord();
         hasSpecialWord = false;            
-        enemyThd.setStartTime();
+        //enemyThd.setStartTime();
         this.typeOk = true;
         setEnemyAtkMode(true);
     }
@@ -429,11 +469,25 @@ public class PlayingPanel extends javax.swing.JPanel {
         userBallY = userBallLabel.getY();
         enemyBallX = enemyBallLabel.getX();
         enemyBallY = enemyBallLabel.getY();
-        enemyBallY = enemy.AdjustY(enemyBallY);
+               
+        if(type.equals("special"))
+        {
+            enemyBallY = enemy.AdjustY(enemyBallY);
+        }
+        
         BallFlyingThd ball = new BallFlyingThd("enemy", type, userBallX, userBallY, enemyBallX, enemyBallY);
         ball.start();
     }
     
+    public void genEnemySpecialAtk()
+    {
+        boolean check = enemyThd.initSpecialAtk();
+        
+        if(check)
+        {
+            enemyApBar.setIndeterminate(false);
+        }
+    }   
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -555,7 +609,7 @@ public class PlayingPanel extends javax.swing.JPanel {
                     
                     attack = new UserAtkThd("special");
                     ball = new BallFlyingThd("hero", "special", userBallX, userBallY, enemyBallX, enemyBallY);
-                    setApBar("hero", "empty"); //wait to move to other place
+                    setApBar("hero", "empty"); 
                 }
                 else //normal attack
                 {
@@ -599,7 +653,9 @@ class ComputerAtkThread extends Thread
     long tick;
     volatile boolean canAtk;
     volatile boolean atking;
+    volatile boolean atking_special;
     String atkType;
+    Random gen;
     
     public ComputerAtkThread(long tk)
     {
@@ -610,6 +666,8 @@ class ComputerAtkThread extends Thread
         this.canAtk = true;
         this.atkType = "normal";
         this.atking= false;
+        this.atking_special = false;
+        gen = new Random();
     }
     
     public void run() 
@@ -676,6 +734,41 @@ class ComputerAtkThread extends Thread
         this.atking = value;
     }
     
+     public void setTick(long value)
+    {
+        this.tick = value;
+    }
+    
+    public boolean checkSpecialAtking()
+    {
+        return this.atking_special;
+    }
+    
+    public void setSpecialAtking(boolean v)
+    {
+        this.atking_special = v;
+    }
+    
+    public boolean initSpecialAtk()
+    {
+        if(!this.atking_special) //can generate special attack
+        {
+            boolean yes = gen.nextBoolean();
+            if(yes) //generate special attack
+            {
+                this.tick += 2000;
+                this.atkType = "special";
+                this.atking_special = true;
+                startTime = System.currentTimeMillis();
+                endTime = System.currentTimeMillis();
+                
+                return true;
+            }
+            else return false;
+        } 
+        else return false;
+    }    
+    
     private void Attacking()
     {
         if(!this.canAtk) return;
@@ -700,7 +793,12 @@ class ComputerAtkThread extends Thread
         {
             public void run() 
             {
-                PlayingPanel.getInstance().getEnemy().LaunchAtk(atkType); 
+                PlayingPanel.getInstance().getEnemy().LaunchAtk(atkType);
+                
+                if(atkType.equals("special"))
+                {
+                    PlayingPanel.getInstance().setApBar("enemy", "empty");
+                }
             }
         });
     }
@@ -1001,6 +1099,15 @@ class HurtingThread extends Thread
                 {
                     PlayingPanel.getInstance().getEnemy().ToStand();
                     PlayingPanel.getInstance().genNext(); //gen new word, re-enable attack mode
+                }
+                              
+                String id = PlayingPanel.getInstance().getWhoAmI();
+                if(id.equals("single"))
+                {
+                    if(PlayingPanel.getInstance().isCPUEnemyApFull())
+                    {
+                        PlayingPanel.getInstance().genEnemySpecialAtk();
+                    }
                 }
             }
         });
