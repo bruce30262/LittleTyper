@@ -66,7 +66,6 @@ public class PlayingPanel extends javax.swing.JPanel {
     private int stage;
     
     private boolean typeOk = true;
-    private boolean inSpecial = false;
     private boolean hasSpecialWord = false;
     private boolean notFull = true;
     private int specialInterrupt = 0;
@@ -93,7 +92,6 @@ public class PlayingPanel extends javax.swing.JPanel {
         computerEnemyName[2] = "Sorcerer";
         computerEnemyName[3] = "Frizen";
         computerEnemyName[4] = "Julian";
-       
     }
     
     public static PlayingPanel getInstance()
@@ -198,7 +196,6 @@ public class PlayingPanel extends javax.swing.JPanel {
                 userApBar.setIndeterminate(false);
                 userApBar.setValue(userAp);
                 
-                inSpecial = false;
                 notFull = true;
             }
             else
@@ -227,7 +224,6 @@ public class PlayingPanel extends javax.swing.JPanel {
         
         enemyApBar.setUI(new BasicProgressBarUI() );
         enemyApBar.setForeground(Color.BLUE);
-        //userApBar.selectionForeground(Color.BLUE);
     }
     
     private void genNewWord()
@@ -413,25 +409,15 @@ public class PlayingPanel extends javax.swing.JPanel {
             if(specialInterrupt == 2)
             {
                 setApBar("hero", "empty");
-                inSpecial = false;
                 hasSpecialWord = false;
             }
         }
-            
     }
     
     public void genNext()
     {
-        if(inSpecial)
-        {
-            genNewSpecialWord();
-            specialInterrupt = 0;
-        }
-        else
-        {
-            genNewWord();
-            hasSpecialWord = false;            
-        }
+        genNewWord();
+        hasSpecialWord = false;            
         enemyThd.setStartTime();
         this.typeOk = true;
         setEnemyAtkMode(true);
@@ -582,10 +568,13 @@ public class PlayingPanel extends javax.swing.JPanel {
             }
         }   
         
-        if(keyNum == KeyEvent.VK_SPACE && userAp >= 100 && !inSpecial)
+        if(keyNum == KeyEvent.VK_SPACE && userAp >= 100 )
         {
-            inSpecial = true;
-            userApBar.setIndeterminate(false);
+            if(!hasSpecialWord)
+            {
+                genNewSpecialWord();
+                userApBar.setIndeterminate(false);
+            }
         }
     }//GEN-LAST:event_formKeyPressed
    
