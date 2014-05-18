@@ -99,6 +99,51 @@ public class Enemy {
             special_ball_hit_sound.playOnce();
         }
     }
+    
+    public int AdjustY(int y)
+    {
+        if(name.equals("freeze"))
+        {
+            return y-50;
+        }
+        else if(name.equals("firen"))
+        {
+            return y-50;
+        }
+        else if(name.equals("davis"))
+        {
+            return y-25;
+        }
+        else if(name.equals("woody"))
+        {
+            return y-75;
+        }
+        else if(name.equals("jack"))
+        {
+            return y-25;
+        }
+        else if(name.equals("sorcerer"))
+        {
+            return y-25;
+        }
+        else if(name.equals("frizen"))
+        {
+            return y-50;
+        }
+        else if(name.equals("julian"))
+        {
+            return y-75;
+        }
+        else
+        {
+            return y;
+        }
+    }
+    
+    public String getName()
+    {
+        return this.name;
+    }
        
     private void loadImage()
     {

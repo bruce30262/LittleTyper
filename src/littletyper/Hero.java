@@ -101,6 +101,35 @@ public class Hero {
         }
     }
     
+     public int AdjustY(int y)
+    {
+        if(name.equals("freeze"))
+        {
+            return y-50;
+        }
+        else if(name.equals("firen"))
+        {
+            return y-50;
+        }
+        else if(name.equals("davis"))
+        {
+            return y-25;
+        }
+        else if(name.equals("woody"))
+        {
+            return y-75;
+        }
+        else
+        {
+            return y;
+        }
+    }
+     
+    public String getName()
+    {
+        return this.name;
+    }
+    
     private void loadImage()
     {
         stand_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/stand_"+this.name+".gif")); 
