@@ -128,7 +128,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         userHpBar.setValue(userHp);
         userApBar.setValue(userAp);
         
-        stage = 4;
+        stage = 1;
                
         heroName = ChoseCharacterPanel.getInstance().getRoleName();
         
@@ -651,6 +651,7 @@ class ComputerAtkThread extends Thread
     long startTime;
     long endTime;
     long tick;
+    long tempEndTime;
     volatile boolean canAtk;
     volatile boolean atking;
     volatile boolean atking_special;
@@ -684,7 +685,7 @@ class ComputerAtkThread extends Thread
                     }
                     else
                     {
-                        startTime = System.currentTimeMillis();
+                        startTime = System.currentTimeMillis() - (endTime - startTime);
                         endTime = System.currentTimeMillis();
                     }
                     continue;
