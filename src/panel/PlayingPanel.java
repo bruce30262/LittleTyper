@@ -65,6 +65,7 @@ public class PlayingPanel extends javax.swing.JPanel {
     private ComputerAtkThread enemyThd;
     private long atkTick;
     private int stage;
+    private int lostHp = 0;
     
     private boolean typeOk = true;
     private boolean hasSpecialWord = false;
@@ -114,7 +115,7 @@ public class PlayingPanel extends javax.swing.JPanel {
     
     public void setDifficulty(String d)
     {
-        this.curDiffy = d;
+        this.curDiffy = d.toLowerCase();
         this.whoAmI = ChoseCharacterPanel.getInstance().getMode();
         wordList = new WordList(d);
         specialWordList = new WordList("special"+d);
@@ -294,21 +295,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         this.setFocusable(true);
         this.requestFocusInWindow();
     }
-    
-    public int getUserHp()
-    {
-        return this.userHp;
-        
-        /*if(role.equals("hero"))
-        {
-            return this.userHp;
-        }
-        else
-        {
-            return this.userHp;
-        }*/
-    }
-    
+      
     public void setUserHp(int hp)
     {
         this.userHp = hp;
@@ -421,37 +408,31 @@ public class PlayingPanel extends javax.swing.JPanel {
     
     public void HurtEnemy()
     {
-        enemyFakeHp += 5;
-        enemyRealHp -= 5;
+        enemyFakeHp += lostHp;
+        enemyRealHp -= lostHp;
         enemyHpBar.setValue(enemyFakeHp);
         setAp("hero");
         
-        if(enemyThd.checkSpecialAtking())
+        if(whoAmI.equals("single"))
         {
-            specialInterrupt_enemy++;
-            if(specialInterrupt_enemy == 2)
+            if(enemyThd.checkSpecialAtking())
             {
-                specialInterrupt_enemy = 0;
-                enemyThd.setTick(this.atkTick);
-                enemyThd.setAtkType("normal");
-                enemyThd.setSpecialAtking(false);
-                enemyThd.setStartTime();
-                setApBar("enemy", "empty");
+                specialInterrupt_enemy++;
+                if(specialInterrupt_enemy == 2)
+                {
+                    specialInterrupt_enemy = 0;
+                    enemyThd.setTick(this.atkTick);
+                    enemyThd.setAtkType("normal");
+                    enemyThd.setSpecialAtking(false);
+                    enemyThd.resetTimeGape();
+                    setApBar("enemy", "empty");
+                }
             }
         }
     }
     
-    public void InitSpecialInterruptEnemy()
-    {
-        this.specialInterrupt_enemy = 0;
-    }
-    
     public void HurtUser()
     {
-        int nowUserHp = PlayingPanel.getInstance().getUserHp() - 5;
-        setUserHp(nowUserHp);
-        setAp("enemy");
-        
         if(hasSpecialWord)
         {
             specialInterrupt++;
@@ -466,21 +447,66 @@ public class PlayingPanel extends javax.swing.JPanel {
         {
             if(enemyThd.checkSpecialAtking())
             {
+                if(curDiffy.equals("easy"))
+                {
+                    userHp -= 30;
+                }
+                else if(curDiffy.equals("medium"))
+                {
+                    userHp -= 35;
+                }
+                else
+                {
+                    userHp -= 37;
+                }
+                
+                setUserHp(userHp);
+                setAp("enemy");
+                
                 enemyThd.setTick(this.atkTick);
                 enemyThd.setAtkType("normal");
                 enemyThd.setSpecialAtking(false);
                 enemyThd.setStartTime();
             }
+            else
+            {
+                int temp = 0;
+                if(curDiffy.equals("easy"))
+                {
+                    temp = gen.nextInt(4) + 3;
+                }
+                else if(curDiffy.equals("medium"))
+                {
+                    temp = gen.nextInt(1) + 5;
+                }
+                else
+                {
+                    temp = gen.nextInt(8) + 5;
+                }
+                
+                userHp -= temp;
+                setUserHp(userHp);
+                setAp("enemy");
+            }
         }
+    }
+    
+    public void InitSpecialInterruptEnemy()
+    {
+        this.specialInterrupt_enemy = 0;
     }
     
     public void genNext()
     {
         genNewWord();
         hasSpecialWord = false;            
-        //enemyThd.setStartTime();
-        this.typeOk = true;
-        setEnemyAtkMode(true);
+        
+        this.typeOk = true; //let user can type
+        if(whoAmI.equals("single")) // load time gape
+        {
+            enemyThd.loadTimeGape();
+        }
+        setEnemyAtkMode(true); //let enemy can attack
     }
     
     public void StartEnemyBall(String type)
@@ -609,6 +635,10 @@ public class PlayingPanel extends javax.swing.JPanel {
                 enemyBallY = enemyBallLabel.getY();
                                 
                 this.typeOk = false;
+                if(whoAmI.equals("single"))
+                {
+                    enemyThd.saveTimeGape();
+                }
                 setEnemyAtkMode(false);
                 
                 if(hasSpecialWord) //special sttack
@@ -630,11 +660,25 @@ public class PlayingPanel extends javax.swing.JPanel {
                     attack = new UserAtkThd("special");
                     ball = new BallFlyingThd("hero", "special", userBallX, userBallY, enemyBallX, enemyBallY);
                     setApBar("hero", "empty"); 
+                    lostHp = 20 + realStr.length();
                 }
                 else //normal attack
                 {
                     attack = new UserAtkThd("normal");
                     ball = new BallFlyingThd("hero", "normal", userBallX, userBallY, enemyBallX, enemyBallY);
+                    
+                    if(curDiffy.equals("easy"))
+                    {
+                        lostHp = realStr.length() + 2;
+                    }
+                    else if(curDiffy.equals("medium"))
+                    {
+                        lostHp = realStr.length();
+                    }
+                    else
+                    {
+                        lostHp = realStr.length() - 2;
+                    }
                 }
                 
                 attack.start();
@@ -671,7 +715,7 @@ class ComputerAtkThread extends Thread
     long startTime;
     long endTime;
     long tick;
-    long tempEndTime;
+    long tempTimeGape;
     volatile boolean canAtk;
     volatile boolean atking;
     volatile boolean atking_special;
@@ -697,7 +741,6 @@ class ComputerAtkThread extends Thread
         {
             while( (endTime - startTime) < this.tick)
             {
-                //System.out.println((endTime - startTime));
                 if(!terminate)
                 {
                     if(this.canAtk && !this.atking)
@@ -751,6 +794,18 @@ class ComputerAtkThread extends Thread
         this.canAtk = value;
     }
     
+    public void saveTimeGape()
+    {
+        this.tempTimeGape = endTime - startTime;
+    }
+    
+    public void loadTimeGape()
+    {
+        this.startTime =  System.currentTimeMillis();
+        this.endTime = startTime + tempTimeGape;
+        //System.out.println("end: "+endTime + "  start: "+startTime + " gape: "+tempTimeGape);
+    }
+    
     public void setAtking(boolean value)
     {
         this.atking = value;
@@ -769,6 +824,11 @@ class ComputerAtkThread extends Thread
     public void setSpecialAtking(boolean v)
     {
         this.atking_special = v;
+    }
+    
+    public void resetTimeGape()
+    {
+        this.tempTimeGape = 0;
     }
     
     public boolean initSpecialAtk()
@@ -790,7 +850,7 @@ class ComputerAtkThread extends Thread
         } 
         else return false;
     }    
-    
+   
     private void Attacking()
     {
         if(!this.canAtk) return;
@@ -990,16 +1050,17 @@ class BallFlyingThd extends Thread
                     if(atkType.equals("special"))
                     {
                         KeepFlyingThread fly = new KeepFlyingThread("hero", ux, uy, ex, ey);
+                        HurtingThread hurt = new HurtingThread("enemy", "special");
                         fly.start();
+                        hurt.start();
                     }
                     else
                     {
                         BallHitThread hit = new BallHitThread("hero");
+                        HurtingThread hurt = new HurtingThread("enemy", "normal");
                         hit.start();
+                        hurt.start();
                     }
-                    
-                    HurtingThread hurt = new HurtingThread("enemy");
-                    hurt.start();
                 }
                 else
                 {
@@ -1009,16 +1070,17 @@ class BallFlyingThd extends Thread
                     if(atkType.equals("special"))
                     {
                         KeepFlyingThread fly = new KeepFlyingThread("enemy", ux, uy, ex, ey);
+                        HurtingThread hurt = new HurtingThread("hero", "special");
                         fly.start();
+                        hurt.start();
                     }
                     else
                     {
                         BallHitThread hit = new BallHitThread("enemy");
+                        HurtingThread hurt = new HurtingThread("hero", "normal");
                         hit.start();
+                        hurt.start();
                     }
-                    
-                    HurtingThread hurt = new HurtingThread("hero");
-                    hurt.start();
                 }
             }
         });
@@ -1089,9 +1151,11 @@ class BallHitThread extends Thread
 class HurtingThread extends Thread
 {
     String role;
-    public HurtingThread(String r)
+    String atkType;
+    public HurtingThread(String r, String t)
     {
         this.role = r;
+        this.atkType = t;
     }
     
     public void run()
@@ -1123,14 +1187,21 @@ class HurtingThread extends Thread
                 if(role.equals("hero"))
                 {
                     PlayingPanel.getInstance().getHero().ToStand();
-                    PlayingPanel.getInstance().setUserAtkMode(true); //re-enable attack mode
-                    PlayingPanel.getInstance().setEnemyAtkMode(true); //re-enable attack mode
-                    PlayingPanel.getInstance().setEnemyAtking(false); 
+                    
+                    if(atkType.equals("normal"))
+                    {
+                        PlayingPanel.getInstance().setUserAtkMode(true); //re-enable attack mode
+                        PlayingPanel.getInstance().setEnemyAtkMode(true); //re-enable attack mode
+                        PlayingPanel.getInstance().setEnemyAtking(false); 
+                    }
                 }
                 else
                 {
                     PlayingPanel.getInstance().getEnemy().ToStand();
-                    PlayingPanel.getInstance().genNext(); //gen new word, re-enable attack mode
+                    if(atkType.equals("normal"))
+                    {
+                        PlayingPanel.getInstance().genNext(); //gen new word, re-enable attack mode
+                    }
                 }
             }
         });
@@ -1217,11 +1288,17 @@ class KeepFlyingThread extends Thread
                 {
                     PlayingPanel.getInstance().getUserBallIconLabel().setIcon(null);
                     PlayingPanel.getInstance().getUserBallIconLabel().revalidate();
+                    
+                    PlayingPanel.getInstance().genNext(); //gen new word, re-enable attack mode
                 }
                 else
                 {
                     PlayingPanel.getInstance().getEnemyBallIconLabel().setIcon(null);
                     PlayingPanel.getInstance().getEnemyBallIconLabel().revalidate();
+                    
+                    PlayingPanel.getInstance().setUserAtkMode(true); //re-enable attack mode
+                    PlayingPanel.getInstance().setEnemyAtkMode(true); //re-enable attack mode
+                    PlayingPanel.getInstance().setEnemyAtking(false); 
                 }
             }
         });
