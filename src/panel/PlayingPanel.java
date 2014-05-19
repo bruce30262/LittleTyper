@@ -79,6 +79,9 @@ public class PlayingPanel extends javax.swing.JPanel {
     private Enemy enemy;
     private String enemyName = "";
     
+    private Music stageWinMusic = new Music("stage_win_1.wav");
+    private Music loseMusic = new Music("lose.wav");
+    
     private int userBallX;
     private int userBallY;
     private int enemyBallX;
@@ -130,7 +133,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         userHpBar.setValue(userHp);
         userApBar.setValue(userAp);
         
-        stage = 5 ;
+        stage = 4 ;
                
         heroName = ChoseCharacterPanel.getInstance().getRoleName();
         
@@ -339,6 +342,55 @@ public class PlayingPanel extends javax.swing.JPanel {
         return this.enemyBallLabel;
     }
     
+    public Music getStageWinMusic()
+    {
+        return this.stageWinMusic;
+    }
+    
+    public Music getLoseMusic()
+    {
+        return this.loseMusic;
+    }
+    
+    public int getHp(String role)
+    {
+        if(role.equals("hero"))
+        {
+            return this.userHp;
+        }
+        else
+        {
+            return this.enemyRealHp;
+        }
+    }
+    
+    public void EnemyDeath()
+    {
+        setApBar("enemy", "empty");
+        setUserAtkMode(false);
+        if(whoAmI.equals("single"))
+        {
+            enemyThd.setTerminate(true);
+            DeathThread dead = new DeathThread("win"); //user win
+            enemy.PlayDeath();
+            dead.start();
+        }
+    }
+    
+    public void HeroDeath()
+    {
+        setApBar("hero", "empty");
+        setUserAtkMode(false);
+        if(whoAmI.equals("single"))
+        {
+            enemyThd.setTerminate(true);
+            enemyThd.setCanAtk(false);
+            DeathThread dead = new DeathThread("lose"); //user win
+            hero.PlayDeath();
+            dead.start();
+        }
+    }
+    
     public void setUserAtkMode(boolean value)
     {
         this.typeOk = value;
@@ -412,7 +464,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         enemyRealHp -= lostHp;
         enemyHpBar.setValue(enemyFakeHp);
         setAp("hero");
-        
+                
         if(whoAmI.equals("single"))
         {
             if(enemyThd.checkSpecialAtking())
@@ -433,16 +485,6 @@ public class PlayingPanel extends javax.swing.JPanel {
     
     public void HurtUser()
     {
-        if(hasSpecialWord)
-        {
-            specialInterrupt++;
-            if(specialInterrupt == 2)
-            {
-                setApBar("hero", "empty");
-                hasSpecialWord = false;
-            }
-        }
-        
         if(this.whoAmI.equals("single"))
         {
             if(enemyThd.checkSpecialAtking())
@@ -487,6 +529,16 @@ public class PlayingPanel extends javax.swing.JPanel {
                 userHp -= temp;
                 setUserHp(userHp);
                 setAp("enemy");
+            }
+        }
+        
+        if(hasSpecialWord)
+        {
+            specialInterrupt++;
+            if(specialInterrupt == 2)
+            {
+                setApBar("hero", "empty");
+                hasSpecialWord = false;
             }
         }
     }
@@ -975,9 +1027,6 @@ class BallFlyingThd extends Thread
                     Thread.sleep(25);
                     ux += 10;
                 }
-               
-                BallHit();
-                hurtEnemy();
             }
             else //enemy attack
             {
@@ -989,10 +1038,9 @@ class BallFlyingThd extends Thread
                     Thread.sleep(25);
                     ex -= 10;
                 }
-                
-                BallHit();
-                hurtUser();
             }
+            
+            BallHit();
         }
         catch(Exception e)
         {
@@ -1046,6 +1094,23 @@ class BallFlyingThd extends Thread
                 {
                     PlayingPanel.getInstance().getHero().setBallHitting(atkType);
                     PlayingPanel.getInstance().getEnemy().GetHurt(atkType);
+                    PlayingPanel.getInstance().HurtEnemy();
+                    
+                    if(PlayingPanel.getInstance().getHp("enemy") <= 0) //enemy death
+                    {
+                        PlayingPanel.getInstance().EnemyDeath();
+                        if(atkType.equals("normal"))
+                        {
+                            BallHitThread hit = new BallHitThread("hero");
+                            hit.start();
+                        }
+                        else
+                        {
+                            KeepFlyingThread fly = new KeepFlyingThread("hero", ux, uy, ex, ey);
+                            fly.start();
+                        }
+                        return;
+                    }
                     
                     if(atkType.equals("special"))
                     {
@@ -1066,6 +1131,23 @@ class BallFlyingThd extends Thread
                 {
                     PlayingPanel.getInstance().getEnemy().setBallHitting(atkType);
                     PlayingPanel.getInstance().getHero().GetHurt(atkType);
+                    PlayingPanel.getInstance().HurtUser();
+                                       
+                    if(PlayingPanel.getInstance().getHp("hero") <= 0) //hero death
+                    {
+                        PlayingPanel.getInstance().HeroDeath();
+                        if(atkType.equals("normal"))
+                        {
+                            BallHitThread hit = new BallHitThread("enemy");
+                            hit.start();
+                        }
+                        else
+                        {
+                            KeepFlyingThread fly = new KeepFlyingThread("enemy", ux, uy, ex, ey);
+                            fly.start();
+                        }
+                        return;
+                    }
                     
                     if(atkType.equals("special"))
                     {
@@ -1084,29 +1166,7 @@ class BallFlyingThd extends Thread
                 }
             }
         });
-    }
-    
-    private void hurtEnemy()
-    {
-        SwingUtilities.invokeLater(new Runnable() 
-        {
-            public void run() 
-            {
-                PlayingPanel.getInstance().HurtEnemy();
-            }
-        });
-    }
-    
-    private void hurtUser()
-    {
-        SwingUtilities.invokeLater(new Runnable() 
-        {
-            public void run() 
-            {
-                PlayingPanel.getInstance().HurtUser();
-            }
-        });
-    }
+    }    
 }
 
 class BallHitThread extends Thread
@@ -1289,16 +1349,82 @@ class KeepFlyingThread extends Thread
                     PlayingPanel.getInstance().getUserBallIconLabel().setIcon(null);
                     PlayingPanel.getInstance().getUserBallIconLabel().revalidate();
                     
-                    PlayingPanel.getInstance().genNext(); //gen new word, re-enable attack mode
+                    if(PlayingPanel.getInstance().getHp("enemy") <= 0)
+                    {
+                        return; 
+                    }
+                    else
+                    {
+                        PlayingPanel.getInstance().genNext();//gen new word, re-enable attack mode
+                    }
                 }
                 else
                 {
                     PlayingPanel.getInstance().getEnemyBallIconLabel().setIcon(null);
                     PlayingPanel.getInstance().getEnemyBallIconLabel().revalidate();
                     
-                    PlayingPanel.getInstance().setUserAtkMode(true); //re-enable attack mode
-                    PlayingPanel.getInstance().setEnemyAtkMode(true); //re-enable attack mode
-                    PlayingPanel.getInstance().setEnemyAtking(false); 
+                    if(PlayingPanel.getInstance().getHp("hero") <= 0)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        PlayingPanel.getInstance().setUserAtkMode(true); //re-enable attack mode
+                        PlayingPanel.getInstance().setEnemyAtkMode(true); //re-enable attack mode
+                        PlayingPanel.getInstance().setEnemyAtking(false);
+                    }
+                }
+            }
+        });
+    }
+}
+
+class DeathThread extends Thread
+{
+    String winOrLose;
+    public DeathThread(String value)
+    {
+        this.winOrLose = value;
+    }
+    
+    public void run()
+    {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(DeathThread.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        notMove();
+        
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(DeathThread.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        if(winOrLose.equals("win"))
+        {
+            PlayingPanel.getInstance().getStageWinMusic().playOnce();
+        }
+        else
+        {
+            PlayingPanel.getInstance().getLoseMusic().playOnce();
+        }
+    }
+    
+    private void notMove()
+    {
+        SwingUtilities.invokeLater(new Runnable() 
+        {
+            public void run() 
+            {
+                if(winOrLose.equals("win"))
+                {
+                    PlayingPanel.getInstance().getEnemy().NotMoving();
+                }
+                else
+                {
+                    PlayingPanel.getInstance().getHero().NotMoving();
                 }
             }
         });
