@@ -36,6 +36,7 @@ public class Enemy {
     private Music atk_special_sound;
     private Music ball_hit_sound;
     private Music special_ball_hit_sound;
+    private Music dead_sound;
     
     public Enemy(String roleName)
     {
@@ -147,6 +148,17 @@ public class Enemy {
     {
         return this.name;
     }
+    
+    public void PlayDeath()
+    {
+        PlayingPanel.getInstance().getIconLabel("enemy").setIcon(deathing_icon);
+        dead_sound.playOnce();
+    }
+    
+    public void NotMoving()
+    {
+         PlayingPanel.getInstance().getIconLabel("enemy").setIcon(death_icon);
+    }
        
     private void loadImage()
     {
@@ -171,6 +183,7 @@ public class Enemy {
         atk_normal_sound = new Music("atk_normal_"+this.name+".wav");
         atk_special_sound = new Music("atk_special_"+this.name+".wav");
         ball_hit_sound = new Music("ball_hit_"+this.name+".wav");
+        dead_sound = new Music("death.wav");
         
         if(name.equals("freeze"))
         {

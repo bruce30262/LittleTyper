@@ -38,6 +38,7 @@ public class Hero {
     private Music atk_special_sound;
     private Music ball_hit_sound;
     private Music special_ball_hit_sound;
+    private Music dead_sound;
     
     public Hero(String roleName)
     {
@@ -151,11 +152,23 @@ public class Hero {
         deathing_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/dead_"+this.name+".gif")); 
     }
     
+    public void PlayDeath()
+    {
+        PlayingPanel.getInstance().getIconLabel("hero").setIcon(deathing_icon);
+        dead_sound.playOnce();
+    }
+    
+    public void NotMoving()
+    {
+         PlayingPanel.getInstance().getIconLabel("hero").setIcon(death_icon);
+    }
+    
     private void loadSoundtrack()
     {
         atk_normal_sound = new Music("atk_normal_"+this.name+".wav");
         atk_special_sound = new Music("atk_special_"+this.name+".wav");
         ball_hit_sound = new Music("ball_hit_"+this.name+".wav");
+        dead_sound = new Music("death.wav");
         
         if(name.equals("freeze"))
         {
