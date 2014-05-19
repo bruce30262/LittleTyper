@@ -6,6 +6,7 @@
 
 package panel;
 
+import frame.MainFrame;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.util.List;
@@ -42,7 +43,6 @@ public class PlayingPanel extends javax.swing.JPanel {
     private String[] computerEnemyName;
     private long[] computerEnemyTick;
     private String whoAmI = "";
-    private int roleId;
     private int totalWordNum;
     private int totalSpecialWordNum;
     private WordList wordList;
@@ -80,6 +80,7 @@ public class PlayingPanel extends javax.swing.JPanel {
     private String enemyName = "";
     
     private Music stageWinMusic = new Music("stage_win_1.wav");
+    private Music finalWinMusic = new Music("stage_win_2.wav");
     private Music loseMusic = new Music("lose.wav");
     
     private int userBallX;
@@ -133,11 +134,54 @@ public class PlayingPanel extends javax.swing.JPanel {
         userHpBar.setValue(userHp);
         userApBar.setValue(userAp);
         
-        stage = 4 ;
+        this.stage = 1 ;
                
         heroName = ChoseCharacterPanel.getInstance().getRoleName();
         
         hero = new Hero(heroName);
+        hero.ToStand();
+        
+        if(whoAmI.equals("single"))
+        {
+            enemyName = computerEnemyName[stage-1];
+            atkTick = computerEnemyTick[stage-1];
+        }
+        enemy = new Enemy(enemyName);
+        enemy.ToStand();
+        
+        genNewWord();
+        if(whoAmI.equals("single"))
+        {
+            enemyThd = new ComputerAtkThread(atkTick);
+            enemyThd.start();
+        }
+    }
+    
+    public void setStage(int s)
+    {
+        stageWinMusic.stop();
+        
+        this.stage = s; //set stage
+        clearRepeat(); // clear word list
+        
+        userHp = 100;
+        userAp = 0; // user angry point
+        enemyFakeHp = 0;
+        enemyRealHp = 100;
+        enemyAp = 0;
+        
+        userHpBar.setValue(userHp);
+        enemyHpBar.setValue(enemyFakeHp);
+        
+        setApBar("hero", "empty");
+        setApBar("enemy", "empty");
+              
+        this.hasSpecialWord = false;
+        setUserAtkMode(true);
+        this.notFull = true;
+        this.specialInterrupt = 0;
+        this.specialInterrupt_enemy = 0;
+      
         hero.ToStand();
         
         if(whoAmI.equals("single"))
@@ -347,9 +391,19 @@ public class PlayingPanel extends javax.swing.JPanel {
         return this.stageWinMusic;
     }
     
+    public Music getFinalWinMusic()
+    {
+        return this.finalWinMusic;
+    }
+    
     public Music getLoseMusic()
     {
         return this.loseMusic;
+    }
+    
+    public int getStageNum()
+    {
+        return this.stage;
     }
     
     public int getHp(String role)
@@ -385,7 +439,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         {
             enemyThd.setTerminate(true);
             enemyThd.setCanAtk(false);
-            DeathThread dead = new DeathThread("lose"); //user win
+            DeathThread dead = new DeathThread("lose"); //user lose
             hero.PlayDeath();
             dead.start();
         }
@@ -616,7 +670,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         userWordLabel.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         userWordLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         userWordLabel.setText("   ");
-        add(userWordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(117, 314, 151, 35));
+        add(userWordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(58, 314, 240, 35));
 
         enemyHpBar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         enemyHpBar.setFocusable(false);
@@ -1402,14 +1456,7 @@ class DeathThread extends Thread
             Logger.getLogger(DeathThread.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        if(winOrLose.equals("win"))
-        {
-            PlayingPanel.getInstance().getStageWinMusic().playOnce();
-        }
-        else
-        {
-            PlayingPanel.getInstance().getLoseMusic().playOnce();
-        }
+        Switch();
     }
     
     private void notMove()
@@ -1425,6 +1472,34 @@ class DeathThread extends Thread
                 else
                 {
                     PlayingPanel.getInstance().getHero().NotMoving();
+                }
+            }
+        });
+    }
+    
+    private void Switch()
+    {
+        SwingUtilities.invokeLater(new Runnable() 
+        {
+            public void run() 
+            {
+                if(winOrLose.equals("win"))
+                {
+                    if(PlayingPanel.getInstance().getStageNum() == 5)
+                    {
+                        PlayingPanel.getInstance().getFinalWinMusic().playOnce();
+                        //switch to ending
+                    }
+                    else
+                    {
+                        PlayingPanel.getInstance().getStageWinMusic().playOnce();
+                        MainFrame.getInstance().SwitchPanel("youWin");
+                    }
+                }
+                else
+                {
+                    PlayingPanel.getInstance().getLoseMusic().playOnce();
+                    MainFrame.getInstance().SwitchPanel("youLose");
                 }
             }
         });

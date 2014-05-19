@@ -5,6 +5,7 @@
  */
 
 package panel;
+import frame.MainFrame;
 
 /**
  *
@@ -89,7 +90,11 @@ public class YouWinPanel extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
-        
+        int curStage = PlayingPanel.getInstance().getStageNum();
+        curStage++;
+        PlayingPanel.getInstance().setStage(curStage);
+        MainFrame.getInstance().SwitchPanel("playing");
+        PlayingPanel.getInstance().getFocus();
     }//GEN-LAST:event_jButton2ActionPerformed
 
 
