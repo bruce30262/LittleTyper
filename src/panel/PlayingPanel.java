@@ -129,7 +129,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         userHpBar.setValue(userHp);
         userApBar.setValue(userAp);
         
-        stage = 1;
+        stage = 5 ;
                
         heroName = ChoseCharacterPanel.getInstance().getRoleName();
         
@@ -697,6 +697,7 @@ class ComputerAtkThread extends Thread
         {
             while( (endTime - startTime) < this.tick)
             {
+                //System.out.println((endTime - startTime));
                 if(!terminate)
                 {
                     if(this.canAtk && !this.atking)
@@ -1110,6 +1111,15 @@ class HurtingThread extends Thread
         {
             public void run() 
             {
+                String id = PlayingPanel.getInstance().getWhoAmI();
+                if(id.equals("single"))
+                {
+                    if(PlayingPanel.getInstance().isCPUEnemyApFull())
+                    {
+                        PlayingPanel.getInstance().genEnemySpecialAtk();
+                    }
+                }
+                
                 if(role.equals("hero"))
                 {
                     PlayingPanel.getInstance().getHero().ToStand();
@@ -1121,15 +1131,6 @@ class HurtingThread extends Thread
                 {
                     PlayingPanel.getInstance().getEnemy().ToStand();
                     PlayingPanel.getInstance().genNext(); //gen new word, re-enable attack mode
-                }
-                              
-                String id = PlayingPanel.getInstance().getWhoAmI();
-                if(id.equals("single"))
-                {
-                    if(PlayingPanel.getInstance().isCPUEnemyApFull())
-                    {
-                        PlayingPanel.getInstance().genEnemySpecialAtk();
-                    }
                 }
             }
         });
