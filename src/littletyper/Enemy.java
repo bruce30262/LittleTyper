@@ -28,6 +28,9 @@ public class Enemy {
     private Icon ball_normal_flying_icon;
     private Icon ball_normal_hit_icon;
     private Icon ball_special_flying_icon;
+    
+    private Icon death_icon;
+    private Icon deathing_icon;
         
     private Music atk_normal_sound;
     private Music atk_special_sound;
@@ -158,6 +161,9 @@ public class Enemy {
         ball_normal_flying_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/normalBall_"+this.name+"_reverse.gif")); 
         ball_normal_hit_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/normalBallHit_"+this.name+"_reverse.gif")); 
         ball_special_flying_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/specialBall_"+this.name+"_reverse.gif")); 
+        
+        death_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/dead_"+this.name+"_reverse.png")); 
+        deathing_icon = new javax.swing.ImageIcon(getClass().getResource("/panel/image/dead_"+this.name+"_reverse.gif"));
     }
     
     private void loadSoundtrack()
