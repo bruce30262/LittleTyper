@@ -72,6 +72,6 @@ class Data implements java.io.Serializable
     {
         this.userName = u;
         this.character = c;
-        finalScore = s;
+        this.finalScore = s;
     }
 }
