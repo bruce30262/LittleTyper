@@ -61,6 +61,7 @@ public class PlayingPanel extends javax.swing.JPanel {
     private int enemyFakeHp = 0;
     private int enemyRealHp = 100;
     private int enemyAp = 0;
+    private int score = 0;
    
     private ComputerAtkThread enemyThd;
     private long atkTick;
@@ -154,6 +155,15 @@ public class PlayingPanel extends javax.swing.JPanel {
         {
             enemyThd = new ComputerAtkThread(atkTick);
             enemyThd.start();
+        }
+        
+        if(whoAmI.equals("single"))
+        {
+            userScoreLabel.setVisible(true);
+        }
+        else
+        {
+            userScoreLabel.setVisible(false);
         }
     }
     
@@ -366,6 +376,11 @@ public class PlayingPanel extends javax.swing.JPanel {
         return this.hero;
     }
     
+    public int getScore()
+    {
+        return this.score;
+    }
+    
     public String getWhoAmI()
     {
         return this.whoAmI;
@@ -416,6 +431,15 @@ public class PlayingPanel extends javax.swing.JPanel {
         {
             return this.enemyRealHp;
         }
+    }
+    
+    public void SetHpScore()
+    {
+        userHp--;
+        userHpBar.setValue(userHp);
+        score++;
+        String curScore = String.valueOf(score);
+        userScoreLabel.setText(curScore);
     }
     
     public void EnemyDeath()
@@ -659,6 +683,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         enemyIconLabel = new javax.swing.JLabel();
         userBallLabel = new javax.swing.JLabel();
         enemyBallLabel = new javax.swing.JLabel();
+        userScoreLabel = new javax.swing.JLabel();
 
         addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -714,6 +739,10 @@ public class PlayingPanel extends javax.swing.JPanel {
         enemyBallLabel.setText("   ");
         enemyBallLabel.setDoubleBuffered(true);
         add(enemyBallLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 380, -1, -1));
+
+        userScoreLabel.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
+        userScoreLabel.setText("0");
+        add(userScoreLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 240, 30));
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
@@ -749,6 +778,13 @@ public class PlayingPanel extends javax.swing.JPanel {
                 
                 if(hasSpecialWord) //special sttack
                 {
+                    if(whoAmI.equals("single"))
+                    {
+                        score += 2000;
+                        String curScore = String.valueOf(score);
+                        userScoreLabel.setText(curScore);
+                    }
+                    
                     userBallY = hero.AdjustY(userBallY);
                     if(hero.getName().equals("freeze") || hero.getName().equals("firen"))
                     {
@@ -770,6 +806,13 @@ public class PlayingPanel extends javax.swing.JPanel {
                 }
                 else //normal attack
                 {
+                     if(whoAmI.equals("single"))
+                     {
+                        score += realStr.length() * 100;
+                        String curScore = String.valueOf(score);
+                        userScoreLabel.setText(curScore);
+                     }
+                    
                     attack = new UserAtkThd("normal");
                     ball = new BallFlyingThd("hero", "normal", userBallX, userBallY, enemyBallX, enemyBallY);
                     
@@ -811,6 +854,7 @@ public class PlayingPanel extends javax.swing.JPanel {
     private javax.swing.JLabel userBallLabel;
     private javax.swing.JProgressBar userHpBar;
     private javax.swing.JLabel userIconLabel;
+    private javax.swing.JLabel userScoreLabel;
     private javax.swing.JLabel userWordLabel;
     // End of variables declaration//GEN-END:variables
 }
@@ -1456,7 +1500,37 @@ class DeathThread extends Thread
             Logger.getLogger(DeathThread.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        Switch();
+        if(PlayingPanel.getInstance().getWhoAmI().equals("single")) //single mode
+        {
+            if(winOrLose.equals("win")) //win, then caculate the blood score
+            {
+                int leftHp = PlayingPanel.getInstance().getHp("hero");
+
+                while(leftHp > 0)
+                {
+                    caculateBloodScore();
+
+                    try {
+                        Thread.sleep(25);
+                    } catch (InterruptedException ex) {
+                        Logger.getLogger(DeathThread.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                    leftHp = PlayingPanel.getInstance().getHp("hero");
+                }
+                
+                try 
+                {
+                    Thread.sleep(2000);
+                } 
+                catch (InterruptedException ex) 
+                {
+                    Logger.getLogger(DeathThread.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            
+            Switch();
+        }
     }
     
     private void notMove()
@@ -1473,6 +1547,17 @@ class DeathThread extends Thread
                 {
                     PlayingPanel.getInstance().getHero().NotMoving();
                 }
+            }
+        });
+    }
+    
+    private void caculateBloodScore()
+    {
+        SwingUtilities.invokeLater(new Runnable() 
+        {
+            public void run() 
+            {
+                PlayingPanel.getInstance().SetHpScore();
             }
         });
     }
