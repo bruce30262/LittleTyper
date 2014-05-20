@@ -12,7 +12,8 @@ import java.util.ArrayList;
  *
  * @author BruceChen
  */
-public class RankingList {
+public class RankingList implements java.io.Serializable
+{
     
     private ArrayList ranking; 
     private int newRank;
@@ -62,7 +63,7 @@ public class RankingList {
     }
 }
 
-class Data
+class Data implements java.io.Serializable
 {
     String userName;
     String character;
