@@ -6,13 +6,19 @@
 
 package panel;
 
-import java.awt.Color;
 import frame.MainFrame;
-import panel.HostOrClientPanel;
+import java.awt.Color;
+import java.io.IOException;
 import java.net.InetAddress; 
 import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import littletyper.Connection;
+import panel.HostOrClientPanel;
+import panel.ChoseCharacterPanel;
 
 /**
  *
@@ -22,9 +28,10 @@ public class HostPanel extends javax.swing.JPanel {
 
     
     private static HostPanel hpSingle;
-    String diffy;
-    int roleId;
-    String roleName;
+    private String diffy;
+    private int roleId;
+    private String roleName;
+    
     /**
      * Creates new form HostPanel
      */
@@ -36,8 +43,10 @@ public class HostPanel extends javax.swing.JPanel {
         }catch(Exception e){
             jLabel2.setText("Local IP: not found");
         }
+
     }
     
+   
     public static HostPanel getInstance()
     {
         if(hpSingle == null)
@@ -53,6 +62,15 @@ public class HostPanel extends javax.swing.JPanel {
         roleName = name;
         choseLabel.setIcon(icon);
         choseNameLabel.setText(name);
+    }
+    
+    public void setEnemyInfo(int cnt)
+    { 
+        choseLabel1.setIcon(ChoseCharacterPanel.getInstance().getIcon(cnt));
+        choseNameLabel1.setText(ChoseCharacterPanel.getInstance().getName(cnt));
+        
+        jButton1.setBackground(new java.awt.Color(0, 165, 22));
+        jButton1.setText("   GO!   ");
     }
 
     /**
@@ -71,8 +89,10 @@ public class HostPanel extends javax.swing.JPanel {
         jLabel4 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
         choseLabel = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         choseNameLabel = new javax.swing.JLabel();
+        choseLabel1 = new javax.swing.JLabel();
+        choseNameLabel1 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(800, 600));
 
@@ -122,13 +142,20 @@ public class HostPanel extends javax.swing.JPanel {
 
         choseLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/head_freeze.png"))); // NOI18N
 
-        jLabel3.setFont(new java.awt.Font("Impact", 0, 36)); // NOI18N
-        jLabel3.setText("Character  :");
-
         choseNameLabel.setFont(new java.awt.Font("Impact", 0, 36)); // NOI18N
         choseNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         choseNameLabel.setText("Freeze");
         choseNameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        choseLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/head_empty.png"))); // NOI18N
+
+        choseNameLabel1.setFont(new java.awt.Font("Impact", 0, 36)); // NOI18N
+        choseNameLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        choseNameLabel1.setText("Empty");
+        choseNameLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        jLabel5.setFont(new java.awt.Font("Impact", 0, 48)); // NOI18N
+        jLabel5.setText("VS");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -141,50 +168,63 @@ public class HostPanel extends javax.swing.JPanel {
                         .addComponent(jLabel1)
                         .addGap(165, 165, 165))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(35, 35, 35)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(choseNameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(choseLabel))))
+                                    .addComponent(choseLabel))
+                                .addGap(37, 37, 37)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(choseNameLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(choseLabel1)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(203, 203, 203))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(307, 307, 307))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton1)
+                        .addGap(307, 307, 307))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(259, 259, 259))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addComponent(jLabel1)
-                .addGap(95, 95, 95)
+                .addGap(32, 32, 32)
+                .addComponent(jLabel2)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(63, 63, 63)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(choseLabel)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGap(35, 35, 35)
+                                .addComponent(jLabel5)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(choseNameLabel))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(choseLabel)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(choseNameLabel)
-                .addGap(31, 31, 31)
+                        .addComponent(choseLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(choseNameLabel1)))
+                .addGap(33, 33, 33)
                 .addComponent(jButton1)
-                .addGap(16, 16, 16)
-                .addComponent(jLabel2))
+                .addGap(61, 61, 61))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -220,13 +260,15 @@ public class HostPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel choseLabel;
+    private javax.swing.JLabel choseLabel1;
     private javax.swing.JLabel choseNameLabel;
+    private javax.swing.JLabel choseNameLabel1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton3;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     // End of variables declaration//GEN-END:variables
 }

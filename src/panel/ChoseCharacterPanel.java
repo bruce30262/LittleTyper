@@ -11,12 +11,15 @@ import frame.MainFrame;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.border.Border;
+import littletyper.Connection;
 import littletyper.Music;
 import panel.HostOrClientPanel;
 
@@ -53,6 +56,16 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
             characterSingle = new ChoseCharacterPanel();
         }
         return characterSingle;
+    }
+    
+    public Icon getIcon(int cnt)
+    {
+        return headIcon[cnt];
+    }
+    
+    public String getName(int cnt)
+    {
+        return roleName[cnt];
     }
 
     /**
@@ -324,10 +337,14 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
         { 
             HostPanel.getInstance().setRole(headIcon[cnt], roleName[cnt], cnt);
             MainFrame.getInstance().SwitchPanel("host");
+            Connection.getInstance().saveMyInfo(cnt);
+            Connection.getInstance().connect("server","");
+
         }
         else
         {
             ClientPanel.getInstance().setRole(headIcon[cnt], roleName[cnt], cnt);
+            Connection.getInstance().saveMyInfo(cnt);
             MainFrame.getInstance().SwitchPanel("client");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
