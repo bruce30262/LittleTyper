@@ -7,7 +7,16 @@
 package panel;
 
 import frame.MainFrame;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import littletyper.LittleTyper;
+import littletyper.RankingList;
 
 /**
  *
@@ -19,9 +28,22 @@ public class RankingPanel extends javax.swing.JPanel {
      * Creates new form RankingPanel
      */
     private static RankingPanel rankSingle;
+
+    private RankingList easyRank;
+    private RankingList mediumRank;
+    private RankingList expertRank;
     
     private RankingPanel() {
         initComponents();
+        checkDir();
+        
+        easyRank = new RankingList();
+        mediumRank = new RankingList();
+        expertRank = new RankingList();
+        
+        checkRankFile("easy");
+        checkRankFile("medium");
+        checkRankFile("expert");
     }
     
     public static RankingPanel getInstance()
@@ -31,6 +53,78 @@ public class RankingPanel extends javax.swing.JPanel {
             rankSingle = new RankingPanel();
         }
         return rankSingle;
+    }
+    
+    private void checkDir()
+    {
+        File dir = new File("rank");
+        if(!dir.exists()) //rank directory don't exist
+        {
+            dir.mkdir();
+        }
+    }
+    
+    private void checkRankFile(String diff)
+    {
+        String path = "rank" + File.separator + diff + "Rank.dat";
+        
+        File file = new File(path);
+                
+        if(!file.exists()) //if file don't exists
+        {
+            try 
+            {
+                FileOutputStream fos = new FileOutputStream(file);
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+                
+                if(diff.equals("easy"))
+                {
+                    oos.writeObject(easyRank);
+                }
+                else if(diff.equals("medium"))
+                {
+                    oos.writeObject(mediumRank);
+                }
+                else
+                {
+                    oos.writeObject(expertRank);
+                }
+                        
+                oos.flush();
+                oos.close();
+            } 
+            catch (Exception e) 
+            {
+                e.printStackTrace();
+            }
+        }
+        else //if file exists
+        {
+            try
+            {
+                FileInputStream fis = new FileInputStream(file);
+                ObjectInputStream ois = new ObjectInputStream(fis);
+                
+                if(diff.equals("easy"))
+                {
+                    easyRank = (RankingList) ois.readObject();
+                }
+                else if(diff.equals("medium"))
+                {
+                    mediumRank = (RankingList) ois.readObject();
+                }
+                else
+                {
+                    expertRank = (RankingList) ois.readObject();
+                }
+                
+                ois.close();
+            }
+            catch (Exception e) 
+            {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**

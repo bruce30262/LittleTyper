@@ -14,7 +14,6 @@ import java.util.ArrayList;
  */
 public class RankingList implements java.io.Serializable
 {
-    
     private ArrayList ranking; 
     private int newRank;
     
