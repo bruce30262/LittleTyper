@@ -56,9 +56,9 @@ public class RankingList implements java.io.Serializable
     {
         Data data = new Data(u, c, s);
         ranking.add(newRank, data);
-        if(ranking.size() == 6)
+        if(ranking.size() == 4)
         {
-            ranking.remove(5);
+            ranking.remove(3);
         }
     }
 }
