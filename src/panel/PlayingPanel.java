@@ -228,12 +228,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         userWordLabel.setText(String.format("<html><font color='red'>%s</font>%s</html>", 
         this.userCurStr, this.leftStr));
     }
-    
-    private void setVisibleUserWord()
-    {
-        userWordLabel.setText("");
-    }
-    
+   
     public void setApBar(String role, String flag)
     {
         if(flag.equals("full"))
@@ -479,11 +474,12 @@ public class PlayingPanel extends javax.swing.JPanel {
                 genNewWord();
                 specialInterrupt = 0;
             }
+            userWordLabel.setVisible(true);
             setTextColor();
         }
         else //disable attack
         {
-            setVisibleUserWord();
+            userWordLabel.setVisible(false);
         }
     }
     
