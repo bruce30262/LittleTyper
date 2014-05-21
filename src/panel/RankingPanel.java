@@ -15,6 +15,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Icon;
 import littletyper.LittleTyper;
 import littletyper.RankingList;
 
@@ -33,8 +34,11 @@ public class RankingPanel extends javax.swing.JPanel {
     private RankingList mediumRank;
     private RankingList expertRank;
     
+    private Icon[] headIcon;
+    
     private RankingPanel() {
         initComponents();
+        loadHeadImage();
         checkDir();
         
         easyRank = new RankingList();
@@ -124,6 +128,16 @@ public class RankingPanel extends javax.swing.JPanel {
                 e.printStackTrace();
             }
         }
+    }
+    
+    private void loadHeadImage()
+    {
+        headIcon = new Icon[5];
+        headIcon[0] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/head_freeze.png"));
+        headIcon[1] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/head_firen.png"));
+        headIcon[2] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/head_davis.png"));
+        headIcon[3] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/head_john.png"));
+        headIcon[4] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/head_woody.png"));
     }
     
     public RankingList getRankList(String diff)
