@@ -191,7 +191,20 @@ public class StartPanel extends javax.swing.JPanel {
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         // TODO add your handling code here:
+        RankingPanel.getInstance().loadRankFile("easy");
+        RankingPanel.getInstance().loadRankFile("medium");
+        RankingPanel.getInstance().loadRankFile("expert");
+        
+        RankingPanel.getInstance().initRankPanel("easy");
+        RankingPanel.getInstance().initRankPanel("medium");
+        RankingPanel.getInstance().initRankPanel("expert");
+        
+        RankingPanel.getInstance().setRankPanel("easy");
+        RankingPanel.getInstance().setRankPanel("medium");
+        RankingPanel.getInstance().setRankPanel("expert");
+        
         MainFrame.getInstance().SwitchPanel("ranking");
+        RankingPanel.getInstance().setTab("easy");
     }//GEN-LAST:event_jLabel4MouseClicked
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked

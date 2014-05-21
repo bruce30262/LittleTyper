@@ -41,7 +41,7 @@ public class RankingList implements java.io.Serializable
             }
         }
         
-        if(index < 5)
+        if(index < 3)
         {
             newRank = index; //newRank = 4 --> rank 5
             return true;
@@ -60,6 +60,25 @@ public class RankingList implements java.io.Serializable
         {
             ranking.remove(3);
         }
+    }
+    
+    public String getUserName(int pos)
+    {
+        Data cur = ranking.get(pos);
+        return cur.userName;
+    }
+    
+    public int getUserRole(int pos)
+    {
+        Data cur = ranking.get(pos);
+        return cur.heroId;
+    }
+    
+    public String getUserScore(int pos)
+    {
+        Data cur = ranking.get(pos);
+        String ret = String.valueOf(cur.finalScore);
+        return ret;
     }
 }
 

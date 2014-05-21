@@ -132,16 +132,30 @@ public class PlayingPanel extends javax.swing.JPanel {
         this.checkRepeatSpecial = new boolean[this.totalSpecialWordNum];
         clearRepeat();
         
+        this.score = 0;
+        String s = String.valueOf(this.score);
+        userScoreLabel.setText(s);
+        
+        userHp = 100;
+        userAp = 0; // user angry point
+        enemyFakeHp = 0;
+        enemyRealHp = 100;
+        enemyAp = 0;
+        
+        setApBar("hero", "empty");
+        setApBar("enemy", "empty");
         enemyHpBar.setValue(enemyFakeHp);
-        enemyApBar.setValue(enemyAp);
         userHpBar.setValue(userHp);
-        userApBar.setValue(userAp);
+        
+        this.hasSpecialWord = false;
+        setUserAtkMode(true);
+        this.notFull = true;
+        this.specialInterrupt = 0;
+        this.specialInterrupt_enemy = 0;
         
         this.stage = 1 ;
                
         heroName = ChoseCharacterPanel.getInstance().getRoleName();
-        
-        
         hero = new Hero(heroName);
         hero.ToStand();
         
@@ -429,6 +443,16 @@ public class PlayingPanel extends javax.swing.JPanel {
         {
             return this.enemyRealHp;
         }
+    }
+    
+    public String getDiffy()
+    {
+        return this.curDiffy;
+    }
+    
+    public int getRoleId()
+    {
+        return this.roleId;
     }
     
     public void SetHpScore()
@@ -1583,7 +1607,10 @@ class DeathThread extends Thread
                 else
                 {
                     PlayingPanel.getInstance().getLoseMusic().playOnce();
+                    String s = String.valueOf( PlayingPanel.getInstance().getScore() );
+                    YouLosePanel.getInstance().setScoreLabel(s);
                     MainFrame.getInstance().SwitchPanel("youLose");
+                    YouLosePanel.getInstance().StartRank();
                 }
             }
         });

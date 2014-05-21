@@ -217,6 +217,177 @@ public class RankingPanel extends javax.swing.JPanel {
             e.printStackTrace();
         }
     }
+    
+    public void initRankPanel(String diffy)
+    {
+        if(diffy.equals("easy"))
+        {
+            easyHeadLabel1.setIcon(null);
+            easyHeadLabel1.revalidate();
+            easyHeadLabel2.setIcon(null);
+            easyHeadLabel2.revalidate();
+            easyHeadLabel3.setIcon(null);
+            easyHeadLabel3.revalidate();
+            
+            easyNameLabel1.setText("");
+            easyNameLabel2.setText("");
+            easyNameLabel3.setText("");
+            
+            easyScoreLabel1.setText("");
+            easyScoreLabel2.setText("");
+            easyScoreLabel3.setText("");
+        }
+        else if(diffy.equals("medium"))
+        {
+            mediumHeadLabel1.setIcon(null);
+            mediumHeadLabel1.revalidate();
+            mediumHeadLabel2.setIcon(null);
+            mediumHeadLabel2.revalidate();
+            mediumHeadLabel3.setIcon(null);
+            mediumHeadLabel3.revalidate();
+            
+            mediumNameLabel1.setText("");
+            mediumNameLabel2.setText("");
+            mediumNameLabel3.setText("");
+            
+            mediumScoreLabel1.setText("");
+            mediumScoreLabel2.setText("");
+            mediumScoreLabel3.setText("");
+        }
+        else
+        {
+            expertHeadLabel1.setIcon(null);
+            expertHeadLabel1.revalidate();
+            expertHeadLabel2.setIcon(null);
+            expertHeadLabel2.revalidate();
+            expertHeadLabel3.setIcon(null);
+            expertHeadLabel3.revalidate();
+            
+            expertNameLabel1.setText("");
+            expertNameLabel2.setText("");
+            expertNameLabel3.setText("");
+            
+            expertScoreLabel1.setText("");
+            expertScoreLabel2.setText("");
+            expertScoreLabel3.setText("");
+        }
+    }
+    
+    public void setRankPanel(String diffy)
+    {
+        if(diffy.equals("easy"))
+        {
+            for(int i = 0 ; i < easyRank.getSize() ; i++)
+            {
+                String nameStr = easyRank.getUserName(i);
+                int id = easyRank.getUserRole(i);
+                String scoreStr = easyRank.getUserScore(i);
+                
+                if(i == 0)
+                {
+                    easyHeadLabel1.setIcon(headIcon[id]);
+                    easyHeadLabel1.revalidate();
+                    
+                    easyNameLabel1.setText(nameStr);
+                    easyScoreLabel1.setText(scoreStr);
+                }
+                else if(i == 1)
+                {
+                    easyHeadLabel2.setIcon(headIcon[id]);
+                    easyHeadLabel2.revalidate();
+                    
+                    easyNameLabel2.setText(nameStr);
+                    easyScoreLabel2.setText(scoreStr);
+                }
+                else if(i == 2)
+                {
+                    easyHeadLabel3.setIcon(headIcon[id]);
+                    easyHeadLabel3.revalidate();
+                    
+                    easyNameLabel3.setText(nameStr);
+                    easyScoreLabel3.setText(scoreStr);
+                }
+            }            
+        }
+        else if(diffy.equals("medium"))
+        {
+            for(int i = 0 ; i < mediumRank.getSize() ; i++)
+            {
+                String nameStr = mediumRank.getUserName(i);
+                int id = mediumRank.getUserRole(i);
+                String scoreStr = mediumRank.getUserScore(i);
+                
+                if(i == 0)
+                {
+                    mediumHeadLabel1.setIcon(headIcon[id]);
+                    mediumHeadLabel1.revalidate();
+                    
+                    mediumNameLabel1.setText(nameStr);
+                    mediumScoreLabel1.setText(scoreStr);
+                }
+                else if(i == 1)
+                {
+                    mediumHeadLabel2.setIcon(headIcon[id]);
+                    mediumHeadLabel2.revalidate();
+                    
+                    mediumNameLabel2.setText(nameStr);
+                    mediumScoreLabel2.setText(scoreStr);
+                }
+                else if(i == 2)
+                {
+                    mediumHeadLabel3.setIcon(headIcon[id]);
+                    mediumHeadLabel3.revalidate();
+                    
+                    mediumNameLabel3.setText(nameStr);
+                    mediumScoreLabel3.setText(scoreStr);
+                }
+            }       
+        }
+        else
+        {
+            for(int i = 0 ; i < expertRank.getSize() ; i++)
+            {
+                String nameStr = expertRank.getUserName(i);
+                int id = expertRank.getUserRole(i);
+                String scoreStr = expertRank.getUserScore(i);
+                
+                if(i == 0)
+                {
+                    expertHeadLabel1.setIcon(headIcon[id]);
+                    expertHeadLabel1.revalidate();
+                    
+                    expertNameLabel1.setText(nameStr);
+                    expertScoreLabel1.setText(scoreStr);
+                }
+                else if(i == 1)
+                {
+                    expertHeadLabel2.setIcon(headIcon[id]);
+                    expertHeadLabel2.revalidate();
+                    
+                    expertNameLabel2.setText(nameStr);
+                    expertScoreLabel2.setText(scoreStr);
+                }
+                else if(i == 2)
+                {
+                    expertHeadLabel3.setIcon(headIcon[id]);
+                    expertHeadLabel3.revalidate();
+                    
+                    expertNameLabel3.setText(nameStr);
+                    expertScoreLabel3.setText(scoreStr);
+                }
+            }       
+        }
+    }
+    
+    public void setTab(String diffy)
+    {
+        int index = -1;
+        if(diffy.equals("easy")) index = 0;
+        else if(diffy.equals("medium")) index = 1;
+        else index = 2;
+        
+        jTabbedPane2.setSelectedIndex(index);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -763,10 +934,12 @@ public class RankingPanel extends javax.swing.JPanel {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        MainFrame.getInstance().SwitchPanel("start");
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
+        MainFrame.getInstance().SwitchPanel("start");
     }//GEN-LAST:event_jButton5ActionPerformed
 
 
