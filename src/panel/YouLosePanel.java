@@ -195,7 +195,17 @@ public class YouLosePanel extends javax.swing.JPanel {
             curRank.InserNewUser(userName, this.id, this.score);
             RankingPanel.getInstance().saveRankFile(this.diffy);
             
-            RankingPanel.getInstance().setRankPanel(this.diffy);
+            RankingPanel.getInstance().loadRankFile("easy");
+            RankingPanel.getInstance().loadRankFile("medium");
+            RankingPanel.getInstance().loadRankFile("expert");
+
+            RankingPanel.getInstance().initRankPanel("easy");
+            RankingPanel.getInstance().initRankPanel("medium");
+            RankingPanel.getInstance().initRankPanel("expert");
+
+            RankingPanel.getInstance().setRankPanel("easy");
+            RankingPanel.getInstance().setRankPanel("medium");
+            RankingPanel.getInstance().setRankPanel("expert");
             
             inputNameDialog.dispose();
             MainFrame.getInstance().SwitchPanel("ranking");
