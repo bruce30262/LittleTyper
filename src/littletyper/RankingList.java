@@ -7,6 +7,7 @@
 package littletyper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  */
 public class RankingList implements java.io.Serializable
 {
-    private ArrayList ranking; 
+    private List<Data> ranking; 
     private int newRank;
     
     public RankingList()
