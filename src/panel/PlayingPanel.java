@@ -43,6 +43,7 @@ public class PlayingPanel extends javax.swing.JPanel {
     private String[] computerEnemyName;
     private long[] computerEnemyTick;
     private String whoAmI = "";
+    private int roleId;
     private int totalWordNum;
     private int totalSpecialWordNum;
     private WordList wordList;
@@ -121,6 +122,7 @@ public class PlayingPanel extends javax.swing.JPanel {
     public void setDifficulty(String d)
     {
         this.curDiffy = d.toLowerCase();
+        this.roleId = DifficultyPanel.getInstance().getRoleId();
         this.whoAmI = ChoseCharacterPanel.getInstance().getMode();
         wordList = new WordList(d);
         specialWordList = new WordList("special"+d);
@@ -138,6 +140,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         this.stage = 1 ;
                
         heroName = ChoseCharacterPanel.getInstance().getRoleName();
+        
         
         hero = new Hero(heroName);
         hero.ToStand();

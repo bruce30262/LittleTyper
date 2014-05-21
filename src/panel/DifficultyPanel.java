@@ -189,6 +189,11 @@ public class DifficultyPanel extends javax.swing.JPanel {
     {
         return this.roleName;
     }
+    
+    public int getRoleId()
+    {
+        return this.roleId;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel choseLabel;

@@ -52,7 +52,7 @@ public class RankingList implements java.io.Serializable
         }
     }
     
-    public void InserNewUser(String u, String c, int s)
+    public void InserNewUser(String u, int c, int s)
     {
         Data data = new Data(u, c, s);
         ranking.add(newRank, data);
@@ -66,12 +66,12 @@ public class RankingList implements java.io.Serializable
 class Data implements java.io.Serializable
 {
     String userName;
-    String character;
+    int heroId;
     int finalScore;
-    public Data(String u, String c, int s)
+    public Data(String u, int c, int s)
     {
         this.userName = u;
-        this.character = c;
+        this.heroId = c;
         this.finalScore = s;
     }
 }
