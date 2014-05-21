@@ -67,7 +67,6 @@ public class RankingPanel extends javax.swing.JPanel {
     private void checkRankFile(String diff)
     {
         String path = "rank" + File.separator + diff + "Rank.dat";
-        
         File file = new File(path);
                 
         if(!file.exists()) //if file don't exists
@@ -124,6 +123,84 @@ public class RankingPanel extends javax.swing.JPanel {
             {
                 e.printStackTrace();
             }
+        }
+    }
+    
+    public RankingList getRankList(String diff)
+    {
+        if(diff.equals("easy"))
+        {
+            return this.easyRank;
+        }
+        else if(diff.equals("medium"))
+        {
+            return this.mediumRank;
+        }
+        else
+        {
+            return this.expertRank;
+        }
+    }
+    
+    public void saveRankFile(String diff)
+    {
+        String path = "rank" + File.separator + diff + "Rank.dat";
+        File file = new File(path);
+        try 
+        {
+            FileOutputStream fos = new FileOutputStream(file);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+            if(diff.equals("easy"))
+            {
+                oos.writeObject(easyRank);
+            }
+            else if(diff.equals("medium"))
+            {
+                oos.writeObject(mediumRank);
+            }
+            else
+            {
+                oos.writeObject(expertRank);
+            }
+
+            oos.flush();
+            oos.close();
+        } 
+        catch (Exception e) 
+        {
+            e.printStackTrace();
+        }
+    }
+    
+    public void loadRankFile(String diff)
+    {
+        String path = "rank" + File.separator + diff + "Rank.dat";
+        File file = new File(path);
+        
+        try
+        {
+            FileInputStream fis = new FileInputStream(file);
+            ObjectInputStream ois = new ObjectInputStream(fis);
+
+            if(diff.equals("easy"))
+            {
+                easyRank = (RankingList) ois.readObject();
+            }
+            else if(diff.equals("medium"))
+            {
+                mediumRank = (RankingList) ois.readObject();
+            }
+            else
+            {
+                expertRank = (RankingList) ois.readObject();
+            }
+
+            ois.close();
+        }
+        catch (Exception e) 
+        {
+            e.printStackTrace();
         }
     }
 
