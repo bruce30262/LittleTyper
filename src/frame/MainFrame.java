@@ -37,6 +37,7 @@ public class MainFrame extends javax.swing.JFrame {
         this.add(ClientPanel.getInstance(), "client");
         this.add(YouWinPanel.getInstance(), "youWin");
         this.add(YouLosePanel.getInstance(), "youLose");
+        this.add(ClientConnectedPanel.getInstance(), "clientConnected");
     }
     
     public static MainFrame getInstance()

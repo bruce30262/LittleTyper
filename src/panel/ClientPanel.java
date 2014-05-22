@@ -21,15 +21,12 @@ public class ClientPanel extends javax.swing.JPanel {
     private static ClientPanel cpSingle = null;
     private int roleId;
     private String roleName;
-    public Connection connection;
     
     /**
      * Creates new form ClientPanel
      */
     public ClientPanel() {
         initComponents();
-        
-        connection = new Connection();
     }
     
     public static ClientPanel getInstance()

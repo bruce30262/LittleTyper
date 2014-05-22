@@ -5,6 +5,7 @@
  */
 
 package littletyper;
+import frame.MainFrame;
 import java.io.*;
 import java.lang.*;
 import java.net.*;
@@ -12,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import panel.ChoseCharacterPanel;
+import panel.ClientConnectedPanel;
 import panel.ClientPanel;
 import panel.HostPanel;
 
@@ -32,6 +34,7 @@ public class Connection implements java.lang.Runnable
     Thread thread;
     int character1;
     int character2;
+    String diff;
     
     boolean interrupted;
     
@@ -47,6 +50,20 @@ public class Connection implements java.lang.Runnable
     public void saveMyInfo(int cnt)
     {
         character1 = cnt;
+    }
+    
+    public void saveDiff(String d)
+    {
+        diff = d;
+    }
+    
+    public void send(String msg)
+    {
+        try {
+            output.writeObject(msg);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Connection failed.");
+        }
     }
        
     public void connect(String who, String ip) 
@@ -86,32 +103,56 @@ public class Connection implements java.lang.Runnable
             {
                 socket = new Socket(IP, port2);
             }
-            //input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            //output = new DataOutputStream(socket.getOutputStream());
             
             output = new ObjectOutputStream(socket.getOutputStream());
             input = new ObjectInputStream(socket.getInputStream());
-            
+        }catch(Exception ex){
+            if(interrupted == false)    JOptionPane.showMessageDialog(null, "Connection failed.");
+            return;
+        }   
+        
+        try{
             if(isServer == true) 
             {
-                //character2 = Integer.valueOf(input.readLine());
-                //output.writeBytes(Integer.toString(character1));
                 character2 = Integer.valueOf(input.readObject().toString());
                 output.writeObject(Integer.toString(character1));
                 HostPanel.getInstance().setEnemyInfo(character2);
+                
+                diff = HostPanel.getInstance().getDifficulty();
+                output.writeObject(diff);
+                
+                HostPanel.getInstance().connected = true;
             }
             else
             {
-                //output.writeBytes(Integer.toString(character1));
-                //character2 = Integer.valueOf(input.readLine());
-                
+                ClientConnectedPanel.getInstance().setMyInfo(character1);
                 output.writeObject(Integer.toString(character1));
                 character2 = Integer.valueOf(input.readObject().toString());
-                ClientPanel.getInstance().setEnemyInfo(character2);
+                ClientConnectedPanel.getInstance().setEnemyInfo(character2);
+                
+                diff = input.readObject().toString();
+                ClientConnectedPanel.getInstance().setDifficultyText(diff);
+                MainFrame.getInstance().SwitchPanel("clientConnected");
+                
+                while(true)
+                {
+                    String msg = input.readObject().toString();
+                    
+                    if(msg.equals("start") == true) break;
+                    else    ClientConnectedPanel.getInstance().setDifficultyText(msg);
+                }
             }
-            
         }catch(Exception ex){
-            if(interrupted == false)JOptionPane.showMessageDialog(null, "Connection failed.");
+            //JOptionPane.showMessageDialog(null, "The Other side has leaved.");
+            if(isServer == true) 
+            {
+                HostPanel.getInstance().reset();
+                MainFrame.getInstance().SwitchPanel("host");
+            }
+            else
+            {
+                MainFrame.getInstance().SwitchPanel("client");
+            }
             return;
         }
     }
