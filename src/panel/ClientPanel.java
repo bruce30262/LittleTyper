@@ -81,6 +81,7 @@ public class ClientPanel extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Impact", 0, 36)); // NOI18N
         jLabel2.setText("Host IP:");
 
+        jTextField1.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);

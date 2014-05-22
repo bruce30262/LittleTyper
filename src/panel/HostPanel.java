@@ -245,6 +245,7 @@ public class HostPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         MainFrame.getInstance().SwitchPanel("character");
         ChoseCharacterPanel.getInstance().choseInit();
+        Connection.getInstance().stop();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseExited

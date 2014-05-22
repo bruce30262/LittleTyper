@@ -27,13 +27,13 @@ public class Connection implements java.lang.Runnable
     boolean isServer;
     ServerSocket welcomeSocket;
     Socket socket;
-    //BufferedReader input;
-    //DataOutputStream output;
     ObjectOutputStream output;
     ObjectInputStream input;
     Thread thread;
     int character1;
     int character2;
+    
+    boolean interrupted;
     
     public static Connection getInstance()
     {
@@ -50,12 +50,24 @@ public class Connection implements java.lang.Runnable
     }
        
     public void connect(String who, String ip) 
-    {      
+    {
+        interrupted = false;
         isServer = who.equals("server") == true;
         IP = ip;
         
         thread = new Thread(conct);
         thread.start();
+    }
+    
+    public void stop() 
+    {   
+        this.thread.interrupt();
+        try {
+            interrupted = true;
+            welcomeSocket.close();
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, "Error: Network has something wrong.");
+        }
     }
 
     @Override
@@ -99,7 +111,7 @@ public class Connection implements java.lang.Runnable
             }
             
         }catch(Exception ex){
-            JOptionPane.showMessageDialog(null, "Connection failed.");
+            if(interrupted == false)JOptionPane.showMessageDialog(null, "Connection failed.");
             return;
         }
     }
