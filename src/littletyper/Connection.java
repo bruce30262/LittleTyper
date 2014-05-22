@@ -26,6 +26,7 @@ public class Connection
 {
     static Connection conct;
     
+    boolean connected = false;
     String IP;
     boolean isServer;
     SocketPackage socket1;
@@ -62,8 +63,7 @@ public class Connection
     public void send(String msg)
     {
         try {
-            if(isServer == true)    socket1.output.writeObject(msg);
-            else    socket2.output.writeObject(msg);
+            socket1.output.writeObject(msg);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Connection failed.");
         }
@@ -83,11 +83,13 @@ public class Connection
             {
                 socket2 = new SocketPackage("client","output",ip,port1);
                 socket1 = new SocketPackage("client","input",ip,port2);
-
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Connection failed.");
+            JOptionPane.showMessageDialog(null, "Connection failed..");
+            return;
         }
+        
+        connected = true;
         
         thread1 = new Thread(socket1);
         thread1.start();
@@ -98,8 +100,26 @@ public class Connection
     
     public void stop() 
     {   
-        this.thread1.interrupt();
-        this.thread2.interrupt();
+        try {
+            
+            if(this.socket1.isServer == true)
+            {
+                this.socket1.welcomeSocket.close();
+                this.socket2.welcomeSocket.close();
+            }
+            
+            if(connected == true)
+            {
+                this.socket1.socket.close();
+                this.socket2.socket.close();
+                this.thread1.interrupt();
+                this.thread2.interrupt();
+            }
+
+            connected = false;
+        } catch (Exception ex) {
+            
+        }
     }
 
 }

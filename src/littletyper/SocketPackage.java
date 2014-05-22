@@ -28,8 +28,8 @@ public class SocketPackage implements java.lang.Runnable
     boolean isServer;
     boolean isInput;
     
-    static ServerSocket welcomeSocket;
-    Socket socket;
+    public ServerSocket welcomeSocket;
+    public Socket socket;
     public ObjectOutputStream output;
     public ObjectInputStream input;
     
@@ -42,7 +42,7 @@ public class SocketPackage implements java.lang.Runnable
         ip = i;
         port = p;
     }
-    
+      
     
 
     @Override
@@ -59,8 +59,7 @@ public class SocketPackage implements java.lang.Runnable
             if(isInput == true) input = new ObjectInputStream(socket.getInputStream());
             else    output = new ObjectOutputStream(socket.getOutputStream());
 
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Connection failed...");
+        } catch (IOException ex) {
             return;
         }
         
@@ -79,6 +78,21 @@ public class SocketPackage implements java.lang.Runnable
                     output.writeObject(Connection.getInstance().diff);
                 }
                 HostPanel.getInstance().connected = true;
+                
+                /*
+                while(true)
+                {
+                    if(isInput == true)
+                    {
+                        String msg = input.readObject().toString();
+                        if(msg.equals("leave"))
+                        {
+                             HostPanel.getInstance().connected = false;
+                             HostPanel.getInstance().reset();
+                        }
+                    }
+                }
+                        */
             }
             else
             {
@@ -107,14 +121,20 @@ public class SocketPackage implements java.lang.Runnable
                 }
             }
         } catch(Exception ex) {
-            if(isServer == true) 
+            if(isInput == true)
             {
-                HostPanel.getInstance().reset();
-                MainFrame.getInstance().SwitchPanel("host");
-            }
-            else
-            {
-                MainFrame.getInstance().SwitchPanel("client");
+                if(isServer == true) 
+                {
+                    HostPanel.getInstance().reset();
+                    MainFrame.getInstance().SwitchPanel("host");
+                    Connection.getInstance().stop();
+                    Connection.getInstance().connect("server", "");
+                }
+                else
+                {
+                    MainFrame.getInstance().SwitchPanel("client");
+                    Connection.getInstance().stop();
+                }
             }
             return;
         }

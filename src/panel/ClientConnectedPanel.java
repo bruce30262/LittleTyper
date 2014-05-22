@@ -191,6 +191,7 @@ public class ClientConnectedPanel extends javax.swing.JPanel {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
         MainFrame.getInstance().SwitchPanel("client");
+        Connection.getInstance().stop();
     }//GEN-LAST:event_jButton3ActionPerformed
 
 
