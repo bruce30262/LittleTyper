@@ -79,6 +79,7 @@ public class SocketPackage implements java.lang.Runnable
                 }
                 HostPanel.getInstance().connected = true;
                 
+                
                 /*
                 while(true)
                 {
@@ -91,8 +92,8 @@ public class SocketPackage implements java.lang.Runnable
                              HostPanel.getInstance().reset();
                         }
                     }
-                }
-                        */
+                }*/
+                        
             }
             else
             {
@@ -110,7 +111,6 @@ public class SocketPackage implements java.lang.Runnable
                     while(true)
                     {
                         String msg = input.readObject().toString();
-
                         if(msg.equals("start") == true) break;
                         else    ClientConnectedPanel.getInstance().setDifficultyText(msg);
                     }

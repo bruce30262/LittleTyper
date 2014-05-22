@@ -28,7 +28,7 @@ public class HostPanel extends javax.swing.JPanel {
 
     
     private static HostPanel hpSingle;
-    private String diffy;
+    private String diffy = "Easy";
     private int roleId;
     private String roleName;
     public boolean connected = false;
@@ -273,6 +273,12 @@ public class HostPanel extends javax.swing.JPanel {
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        if(connected == true)
+        {
+            MainFrame.getInstance().SwitchPanel("playing");
+            PlayingPanel.getInstance().setDifficulty(diffy);
+            PlayingPanel.getInstance().getFocus();  
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jComboBox1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_jComboBox1ItemStateChanged

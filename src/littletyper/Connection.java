@@ -63,7 +63,7 @@ public class Connection
     public void send(String msg)
     {
         try {
-            socket1.output.writeObject(msg);
+            socket2.output.writeObject(msg);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Connection failed.");
         }
