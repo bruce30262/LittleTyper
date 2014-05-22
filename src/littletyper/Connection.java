@@ -16,27 +16,29 @@ import panel.ChoseCharacterPanel;
 import panel.ClientConnectedPanel;
 import panel.ClientPanel;
 import panel.HostPanel;
+import littletyper.SocketPackage;
 
 /**
  *
  * @author Hans
  */
-public class Connection implements java.lang.Runnable
+public class Connection
 {
     static Connection conct;
     
     String IP;
     boolean isServer;
-    ServerSocket welcomeSocket;
-    Socket socket;
-    ObjectOutputStream output;
-    ObjectInputStream input;
-    Thread thread;
-    int character1;
-    int character2;
-    String diff;
+    SocketPackage socket1;
+    SocketPackage socket2;
+    Thread thread1;
+    Thread thread2;
     
-    boolean interrupted;
+    int port1 = 7789;
+    int port2 = 7790;
+    
+    public int character1;
+    public int character2;
+    public String diff;
     
     public static Connection getInstance()
     {
@@ -60,100 +62,44 @@ public class Connection implements java.lang.Runnable
     public void send(String msg)
     {
         try {
-            output.writeObject(msg);
+            if(isServer == true)    socket1.output.writeObject(msg);
+            else    socket2.output.writeObject(msg);
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "Connection failed.");
         }
     }
        
-    public void connect(String who, String ip) 
+    public void connect(String who, String ip)
     {
-        interrupted = false;
         isServer = who.equals("server") == true;
         IP = ip;
+        try {
+            if(isServer == true)
+            {
+                socket1 = new SocketPackage("server","input","",port1);
+                socket2 = new SocketPackage("server","output","",port2);
+            }
+            else
+            {
+                socket2 = new SocketPackage("client","output",ip,port1);
+                socket1 = new SocketPackage("client","input",ip,port2);
+
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Connection failed.");
+        }
         
-        thread = new Thread(conct);
-        thread.start();
+        thread1 = new Thread(socket1);
+        thread1.start();
+        
+        thread2 = new Thread(socket2);
+        thread2.start();
     }
     
     public void stop() 
     {   
-        this.thread.interrupt();
-        try {
-            interrupted = true;
-            welcomeSocket.close();
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(null, "Error: Network has something wrong.");
-        }
+        this.thread1.interrupt();
+        this.thread2.interrupt();
     }
 
-    @Override
-    public void run()
-    {
-        int port1 = 7790;
-        int port2 = 7790;
-        
-        try{
-            if(isServer == true) 
-            {
-                welcomeSocket = new ServerSocket(port1);
-                socket = welcomeSocket.accept();
-            }
-            else
-            {
-                socket = new Socket(IP, port2);
-            }
-            
-            output = new ObjectOutputStream(socket.getOutputStream());
-            input = new ObjectInputStream(socket.getInputStream());
-        }catch(Exception ex){
-            if(interrupted == false)    JOptionPane.showMessageDialog(null, "Connection failed.");
-            return;
-        }   
-        
-        try{
-            if(isServer == true) 
-            {
-                character2 = Integer.valueOf(input.readObject().toString());
-                output.writeObject(Integer.toString(character1));
-                HostPanel.getInstance().setEnemyInfo(character2);
-                
-                diff = HostPanel.getInstance().getDifficulty();
-                output.writeObject(diff);
-                
-                HostPanel.getInstance().connected = true;
-            }
-            else
-            {
-                ClientConnectedPanel.getInstance().setMyInfo(character1);
-                output.writeObject(Integer.toString(character1));
-                character2 = Integer.valueOf(input.readObject().toString());
-                ClientConnectedPanel.getInstance().setEnemyInfo(character2);
-                
-                diff = input.readObject().toString();
-                ClientConnectedPanel.getInstance().setDifficultyText(diff);
-                MainFrame.getInstance().SwitchPanel("clientConnected");
-                
-                while(true)
-                {
-                    String msg = input.readObject().toString();
-                    
-                    if(msg.equals("start") == true) break;
-                    else    ClientConnectedPanel.getInstance().setDifficultyText(msg);
-                }
-            }
-        }catch(Exception ex){
-            //JOptionPane.showMessageDialog(null, "The Other side has leaved.");
-            if(isServer == true) 
-            {
-                HostPanel.getInstance().reset();
-                MainFrame.getInstance().SwitchPanel("host");
-            }
-            else
-            {
-                MainFrame.getInstance().SwitchPanel("client");
-            }
-            return;
-        }
-    }
 }
