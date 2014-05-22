@@ -289,7 +289,6 @@ public class HostPanel extends javax.swing.JPanel {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-        
         reset();
         Connection.getInstance().stop();
         ChoseCharacterPanel.getInstance().choseInit();
@@ -310,6 +309,7 @@ public class HostPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         reset();
         Connection.getInstance().stop();
+        Connection.getInstance().connect("server","");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed

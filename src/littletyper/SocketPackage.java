@@ -80,7 +80,7 @@ public class SocketPackage implements java.lang.Runnable
                 HostPanel.getInstance().connected = true;
                 
                 
-                /*
+                
                 while(true)
                 {
                     if(isInput == true)
@@ -92,7 +92,7 @@ public class SocketPackage implements java.lang.Runnable
                              HostPanel.getInstance().reset();
                         }
                     }
-                }*/
+                }
                         
             }
             else

@@ -102,24 +102,23 @@ public class Connection
     {   
         try {
             
+          
+            this.thread1.interrupt();
+            this.thread2.interrupt();
+            this.socket1.socket.close();
+            this.socket2.socket.close();
+            
             if(this.socket1.isServer == true)
             {
                 this.socket1.welcomeSocket.close();
                 this.socket2.welcomeSocket.close();
             }
-            
-            if(connected == true)
-            {
-                this.socket1.socket.close();
-                this.socket2.socket.close();
-                this.thread1.interrupt();
-                this.thread2.interrupt();
-            }
 
-            connected = false;
         } catch (Exception ex) {
             
         }
+        
+        connected = false;
     }
 
 }
