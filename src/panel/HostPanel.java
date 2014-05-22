@@ -72,6 +72,15 @@ public class HostPanel extends javax.swing.JPanel {
         jButton1.setBackground(new java.awt.Color(0, 165, 22));
         jButton1.setText("   GO!   ");
     }
+    
+    public void reset()
+    {
+        jButton1.setBackground(new java.awt.Color(255, 0, 51));
+        jButton1.setText("waiting...");
+        
+        choseLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/head_empty.png"))); // NOI18N
+        choseNameLabel1.setText("Empty");
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -246,6 +255,8 @@ public class HostPanel extends javax.swing.JPanel {
         MainFrame.getInstance().SwitchPanel("character");
         ChoseCharacterPanel.getInstance().choseInit();
         Connection.getInstance().stop();
+        reset();
+        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseExited
