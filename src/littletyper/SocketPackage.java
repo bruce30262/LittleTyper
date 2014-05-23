@@ -93,6 +93,8 @@ public class SocketPackage implements java.lang.Runnable
                              HostPanel.getInstance().connected = false;
                              HostPanel.getInstance().reset();
                         }
+                        else if(msg.equals("ult") == true) PlayingPanel.getInstance().setNetworkEnemySpecial();
+                        else    PlayingPanel.getInstance().NetworkEnemyAtk(Integer.parseInt(msg));
                     }
                 }
                         
@@ -120,6 +122,13 @@ public class SocketPackage implements java.lang.Runnable
                     MainFrame.getInstance().SwitchPanel("playing");
                     PlayingPanel.getInstance().setDifficultyForNetWork(Connection.getInstance().diff,ChoseCharacterPanel.getInstance().getName(Connection.getInstance().character2));
                     PlayingPanel.getInstance().getFocus();  
+                    
+                    while(true)
+                    {
+                        String msg = input.readObject().toString();
+                        if(msg.equals("ult") == true) PlayingPanel.getInstance().setNetworkEnemySpecial();
+                        else    PlayingPanel.getInstance().NetworkEnemyAtk(Integer.parseInt(msg));
+                    }
                 }
                 else
                 {
