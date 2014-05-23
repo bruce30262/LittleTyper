@@ -641,8 +641,12 @@ public class PlayingPanel extends javax.swing.JPanel {
     public void setNetworkEnemySpecial()
     {
         //System.out.println("set special");
-        this.networkSpecial = true;
-        enemyApBar.setIndeterminate(false);
+        if(enemyAp >= 100 && !this.networkSpecial)
+        {
+            this.networkSpecial = true;
+            this.specialInterrupt_enemy = 0;
+            enemyApBar.setIndeterminate(false);
+        }
     }
     
     public void HurtEnemy()
@@ -736,6 +740,12 @@ public class PlayingPanel extends javax.swing.JPanel {
             userHp -= this.networkLoseHp;
             setUserHp(userHp);
             setAp("enemy");
+            
+            if(this.networkSpecial)
+            {
+                this.networkSpecial = false;
+                this.specialInterrupt_enemy = 0;
+            }
         }
         
         if(hasSpecialWord)
