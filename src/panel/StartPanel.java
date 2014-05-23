@@ -146,7 +146,7 @@ public class StartPanel extends javax.swing.JPanel {
         add(jLabel5);
         jLabel5.setBounds(496, 518, 101, 38);
         add(jLabel6);
-        jLabel6.setBounds(0, 0, 800, 590);
+        jLabel6.setBounds(0, 0, 800, 600);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseEntered
