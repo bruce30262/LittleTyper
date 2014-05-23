@@ -64,6 +64,7 @@ public class PlayingPanel extends javax.swing.JPanel {
     private int enemyRealHp = 100;
     private int enemyAp = 0;
     private int score = 0;
+    private int networkLoseHp = 0;
    
     private ComputerAtkThread enemyThd;
     private long atkTick;
@@ -73,6 +74,7 @@ public class PlayingPanel extends javax.swing.JPanel {
     private boolean typeOk = true;
     private boolean hasSpecialWord = false;
     private boolean notFull = true;
+    private boolean networkSpecial = false;
     private int specialInterrupt = 0;
     private int specialInterrupt_enemy = 0;
     
@@ -188,6 +190,7 @@ public class PlayingPanel extends javax.swing.JPanel {
     public void setDifficultyForNetWork(String d, String e)
     {
         this.curDiffy = d.toLowerCase();
+        this.networkSpecial = false;
         this.roleId = DifficultyPanel.getInstance().getRoleId();
         this.whoAmI = ChoseCharacterPanel.getInstance().getMode();
         wordList = new WordList(d);
@@ -563,12 +566,18 @@ public class PlayingPanel extends javax.swing.JPanel {
     
     public void setEnemyAtkMode(boolean value)
     {
-        enemyThd.setCanAtk(value);
+        if(whoAmI.equals("single"))
+        {
+            enemyThd.setCanAtk(value);
+        }
     }
     
     public void setEnemyAtking(boolean value)
     {
-        enemyThd.setAtking(value);
+        if(whoAmI.equals("single"))
+        {
+            enemyThd.setAtking(value);
+        }
     }
     
     public void setAp(String whoAtk)
@@ -610,6 +619,13 @@ public class PlayingPanel extends javax.swing.JPanel {
         else return false;        
     }
     
+    public void setNetworkEnemySpecial()
+    {
+        System.out.println("set special");
+        this.networkSpecial = true;
+        enemyApBar.setIndeterminate(false);
+    }
+    
     public void HurtEnemy()
     {
         enemyFakeHp += lostHp;
@@ -629,6 +645,18 @@ public class PlayingPanel extends javax.swing.JPanel {
                     enemyThd.setAtkType("normal");
                     enemyThd.setSpecialAtking(false);
                     enemyThd.resetTimeGape();
+                    setApBar("enemy", "empty");
+                }
+            }
+        }
+        else //network battling
+        {
+            if(this.networkSpecial) //is specialing
+            {
+                specialInterrupt_enemy++;
+                if(specialInterrupt_enemy == 2)
+                {
+                    specialInterrupt_enemy = 0;
                     setApBar("enemy", "empty");
                 }
             }
@@ -683,6 +711,12 @@ public class PlayingPanel extends javax.swing.JPanel {
                 setAp("enemy");
             }
         }
+        else //network battling
+        {
+            userHp -= this.networkLoseHp;
+            setUserHp(userHp);
+            setAp("enemy");
+        }
         
         if(hasSpecialWord)
         {
@@ -729,7 +763,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         ball.start();
     }
     
-    public void genEnemySpecialAtk()
+    public void genEnemySpecialAtk() //single mode only
     {
         boolean check = enemyThd.initSpecialAtk();
         
@@ -739,6 +773,23 @@ public class PlayingPanel extends javax.swing.JPanel {
         }
     }   
     
+    public void NetworkEnemyAtk(int power)
+    {
+        System.out.println(power);
+        /*NetworkAtkThread networkAtk;
+        this.networkLoseHp = power;
+                
+        if(power > 20)
+        {
+            networkAtk = new NetworkAtkThread("special");
+        }
+        else
+        {
+            networkAtk = new NetworkAtkThread("normal");
+        }
+        networkAtk.start();*/
+    }
+        
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -925,6 +976,7 @@ public class PlayingPanel extends javax.swing.JPanel {
             {
                 genNewSpecialWord();
                 userApBar.setIndeterminate(false);
+                Connection.getInstance().send("ult");
             }
         }
     }//GEN-LAST:event_formKeyPressed
@@ -1089,6 +1141,65 @@ class ComputerAtkThread extends Thread
     {
         if(!this.canAtk) return;
         
+        PlayingPanel.getInstance().setUserAtkMode(false); //disable user atk
+        
+        turnAttacking();
+        PlayingPanel.getInstance().StartEnemyBall(this.atkType);
+        
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(ComputerAtkThread.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        turnStanding();
+    }
+    
+    private void turnAttacking()
+    {
+        SwingUtilities.invokeLater(new Runnable() 
+        {
+            public void run() 
+            {
+                PlayingPanel.getInstance().getEnemy().LaunchAtk(atkType);
+                
+                if(atkType.equals("special"))
+                {
+                    PlayingPanel.getInstance().InitSpecialInterruptEnemy();
+                    PlayingPanel.getInstance().setApBar("enemy", "empty");
+                }
+            }
+        });
+    }
+    
+    private void turnStanding()
+    {
+        SwingUtilities.invokeLater(new Runnable() 
+        {
+            public void run() 
+            {
+                PlayingPanel.getInstance().getEnemy().ToStand();
+            }
+        });
+    }
+}
+
+class NetworkAtkThread extends Thread
+{
+    String atkType;
+        
+    public NetworkAtkThread(String t)
+    {
+        this.atkType = t;
+    }
+    
+    public void run() 
+    {
+        Attacking();
+    }  
+        
+    private void Attacking()
+    {
         PlayingPanel.getInstance().setUserAtkMode(false); //disable user atk
         
         turnAttacking();
