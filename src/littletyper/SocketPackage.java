@@ -14,8 +14,10 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import javax.swing.JOptionPane;
 import littletyper.Connection;
+import panel.ChoseCharacterPanel;
 import panel.ClientConnectedPanel;
 import panel.HostPanel;
+import panel.PlayingPanel;
 
 /**
  *
@@ -114,6 +116,10 @@ public class SocketPackage implements java.lang.Runnable
                         if(msg.equals("start") == true) break;
                         else    ClientConnectedPanel.getInstance().setDifficultyText(msg);
                     }
+                    
+                    MainFrame.getInstance().SwitchPanel("playing");
+                    PlayingPanel.getInstance().setDifficultyForNetWork(Connection.getInstance().diff,ChoseCharacterPanel.getInstance().getName(Connection.getInstance().character2));
+                    PlayingPanel.getInstance().getFocus();  
                 }
                 else
                 {
