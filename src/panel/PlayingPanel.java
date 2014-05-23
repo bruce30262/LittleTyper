@@ -8,12 +8,17 @@ package panel;
 
 import frame.MainFrame;
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.Icon;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
@@ -84,6 +89,8 @@ public class PlayingPanel extends javax.swing.JPanel {
     private Enemy enemy;
     private String enemyName = "";
     
+    private BufferedImage[] backgroundImage = new BufferedImage[5];
+    
     private Music stageWinMusic = new Music("stage_win_1.wav");
     private Music finalWinMusic = new Music("stage_win_2.wav");
     private Music loseMusic = new Music("lose.wav");
@@ -96,6 +103,7 @@ public class PlayingPanel extends javax.swing.JPanel {
     private PlayingPanel() {
         gen = new Random();
         initComponents();
+        loadBackgroundImage();
         setBarUI();
         
         computerEnemyName = new String[5];
@@ -120,6 +128,29 @@ public class PlayingPanel extends javax.swing.JPanel {
             playSingle = new PlayingPanel();
         }
         return playSingle;
+    }
+    
+    private void loadBackgroundImage()
+    {
+        
+        try 
+        {
+            backgroundImage[0] = ImageIO.read(getClass().getResource("/panel/image/background_level1.gif"));
+            backgroundImage[1] = ImageIO.read(getClass().getResource("/panel/image/background_level2.gif"));
+            backgroundImage[2] = ImageIO.read(getClass().getResource("/panel/image/background_level3.gif"));
+            backgroundImage[3] = ImageIO.read(getClass().getResource("/panel/image/background_level4.gif"));
+            backgroundImage[4] = ImageIO.read(getClass().getResource("/panel/image/background_level5.gif"));
+        }
+        catch (IOException ex) 
+        {
+            Logger.getLogger(PlayingPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void paintComponent(Graphics g) 
+    {
+        super.paintComponent(g);
+        g.drawImage(backgroundImage[stage-1], 0, 0, this); // Draw the background image.
     }
     
     public void setDifficulty(String d)
@@ -298,6 +329,7 @@ public class PlayingPanel extends javax.swing.JPanel {
     {
         userWordLabel.setText(String.format("<html><font color='red'>%s</font>%s</html>", 
         this.userCurStr, this.leftStr));
+        userWordLabel.validate();
     }
    
     public void setApBar(String role, String flag)
@@ -847,10 +879,12 @@ public class PlayingPanel extends javax.swing.JPanel {
         });
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        userWordLabel.setBackground(new java.awt.Color(255, 255, 255));
         userWordLabel.setFont(new java.awt.Font("Times New Roman", 0, 18)); // NOI18N
         userWordLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         userWordLabel.setText("   ");
-        add(userWordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(58, 314, 240, 35));
+        userWordLabel.setOpaque(true);
+        add(userWordLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 440, -1, -1));
 
         enemyHpBar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         enemyHpBar.setFocusable(false);
@@ -872,7 +906,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         add(userApBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 137, 35, 85));
 
         userIconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/stand_freeze.gif"))); // NOI18N
-        add(userIconLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(137, 358, -1, -1));
+        add(userIconLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 470, -1, -1));
 
         enemyApBar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         enemyApBar.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
@@ -884,16 +918,16 @@ public class PlayingPanel extends javax.swing.JPanel {
         add(enemyApBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(717, 137, 35, 85));
 
         enemyIconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/stand_freeze_reverse.gif"))); // NOI18N
-        add(enemyIconLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(582, 358, -1, -1));
+        add(enemyIconLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 470, -1, -1));
 
         userBallLabel.setText("   ");
         userBallLabel.setFocusable(false);
         userBallLabel.setRequestFocusEnabled(false);
-        add(userBallLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(179, 380, -1, -1));
+        add(userBallLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 500, -1, -1));
 
         enemyBallLabel.setText("   ");
         enemyBallLabel.setDoubleBuffered(true);
-        add(enemyBallLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 380, -1, -1));
+        add(enemyBallLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 500, -1, -1));
 
         userScoreLabel.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
         userScoreLabel.setText("0");
@@ -1006,7 +1040,11 @@ public class PlayingPanel extends javax.swing.JPanel {
             {
                 genNewSpecialWord();
                 userApBar.setIndeterminate(false);
-                Connection.getInstance().send("ult");
+                
+                if(!whoAmI.equals("single")) //network battle
+                {
+                    Connection.getInstance().send("ult");
+                }
             }
         }
     }//GEN-LAST:event_formKeyPressed
