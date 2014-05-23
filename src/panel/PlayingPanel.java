@@ -889,12 +889,12 @@ public class PlayingPanel extends javax.swing.JPanel {
         enemyHpBar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         enemyHpBar.setFocusable(false);
         enemyHpBar.setRequestFocusEnabled(false);
-        add(enemyHpBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(496, 55, 256, 47));
+        add(enemyHpBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 90, 256, 47));
 
         userHpBar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         userHpBar.setFocusable(false);
         userHpBar.setRequestFocusEnabled(false);
-        add(userHpBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 55, 256, 47));
+        add(userHpBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 90, 256, 47));
 
         userApBar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
         userApBar.setDebugGraphicsOptions(javax.swing.DebugGraphics.NONE_OPTION);
@@ -903,7 +903,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         userApBar.setRequestFocusEnabled(false);
         userApBar.setString("");
         userApBar.setStringPainted(true);
-        add(userApBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(48, 137, 35, 85));
+        add(userApBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 35, 85));
 
         userIconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/stand_freeze.gif"))); // NOI18N
         add(userIconLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 470, -1, -1));
@@ -915,7 +915,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         enemyApBar.setRequestFocusEnabled(false);
         enemyApBar.setString("");
         enemyApBar.setStringPainted(true);
-        add(enemyApBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(717, 137, 35, 85));
+        add(enemyApBar, new org.netbeans.lib.awtextra.AbsoluteConstraints(720, 200, 35, 85));
 
         enemyIconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/stand_freeze_reverse.gif"))); // NOI18N
         add(enemyIconLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 470, -1, -1));
@@ -929,9 +929,12 @@ public class PlayingPanel extends javax.swing.JPanel {
         enemyBallLabel.setDoubleBuffered(true);
         add(enemyBallLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 500, -1, -1));
 
+        userScoreLabel.setBackground(new java.awt.Color(102, 0, 102));
         userScoreLabel.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
+        userScoreLabel.setForeground(new java.awt.Color(255, 255, 255));
         userScoreLabel.setText("0");
-        add(userScoreLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 240, 30));
+        userScoreLabel.setOpaque(true);
+        add(userScoreLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
