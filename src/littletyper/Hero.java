@@ -121,7 +121,7 @@ public class Hero {
         }
         else if(name.equals("woody"))
         {
-            return y-75;
+            return y-125;
         }
         else
         {

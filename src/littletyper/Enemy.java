@@ -120,7 +120,7 @@ public class Enemy {
         }
         else if(name.equals("woody"))
         {
-            return y-75;
+            return y-125;
         }
         else if(name.equals("jack"))
         {
@@ -136,7 +136,7 @@ public class Enemy {
         }
         else if(name.equals("julian"))
         {
-            return y-75;
+            return y-125;
         }
         else
         {
