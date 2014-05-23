@@ -184,6 +184,56 @@ public class PlayingPanel extends javax.swing.JPanel {
         }
     }
     
+    public void setDifficultyForNetWork(String d)
+    {
+        this.curDiffy = d.toLowerCase();
+        this.roleId = DifficultyPanel.getInstance().getRoleId();
+        this.whoAmI = ChoseCharacterPanel.getInstance().getMode();
+        wordList = new WordList(d);
+        specialWordList = new WordList("special"+d);
+        this.totalWordNum = wordList.getSize();
+        this.totalSpecialWordNum = specialWordList.getSize();
+        this.checkRepeat = new boolean[this.totalWordNum];
+        this.checkRepeatSpecial = new boolean[this.totalSpecialWordNum];
+        clearRepeat();
+        
+        userHp = 100;
+        userAp = 0; // user angry point
+        enemyFakeHp = 0;
+        enemyRealHp = 100;
+        enemyAp = 0;
+        
+        setApBar("hero", "empty");
+        setApBar("enemy", "empty");
+        enemyHpBar.setValue(enemyFakeHp);
+        userHpBar.setValue(userHp);
+        
+        this.hasSpecialWord = false;
+        setUserAtkMode(true);
+        this.notFull = true;
+        this.specialInterrupt = 0;
+        this.specialInterrupt_enemy = 0;
+        
+        heroName = ChoseCharacterPanel.getInstance().getRoleName();
+        hero = new Hero(heroName);
+        hero.ToStand();
+        
+        enemyName = "";
+        enemy = new Enemy(enemyName);
+        enemy.ToStand();
+        
+        genNewWord();
+                
+        if(whoAmI.equals("single"))
+        {
+            userScoreLabel.setVisible(true);
+        }
+        else
+        {
+            userScoreLabel.setVisible(false);
+        }
+    }
+    
     public void setStage(int s)
     {
         stageWinMusic.stop();
