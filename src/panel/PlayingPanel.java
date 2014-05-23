@@ -529,6 +529,12 @@ public class PlayingPanel extends javax.swing.JPanel {
             enemy.PlayDeath();
             dead.start();
         }
+        else //network battle
+        {
+            DeathThread dead = new DeathThread("win"); //user win
+            enemy.PlayDeath();
+            dead.start();
+        }
     }
     
     public void HeroDeath()
@@ -539,6 +545,12 @@ public class PlayingPanel extends javax.swing.JPanel {
         {
             enemyThd.setTerminate(true);
             enemyThd.setCanAtk(false);
+            DeathThread dead = new DeathThread("lose"); //user lose
+            hero.PlayDeath();
+            dead.start();
+        }
+        else //network battle
+        {
             DeathThread dead = new DeathThread("lose"); //user lose
             hero.PlayDeath();
             dead.start();
@@ -1734,6 +1746,11 @@ class DeathThread extends Thread
             
             Switch();
         }
+        else
+        {
+            
+        }
+                
     }
     
     private void notMove()
