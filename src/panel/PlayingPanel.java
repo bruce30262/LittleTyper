@@ -21,6 +21,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 import javax.swing.plaf.ProgressBarUI;
 import javax.swing.plaf.basic.BasicProgressBarUI;
+import littletyper.Connection;
 import littletyper.Enemy;
 import littletyper.Hero;
 import littletyper.Music;
@@ -184,7 +185,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         }
     }
     
-    public void setDifficultyForNetWork(String d)
+    public void setDifficultyForNetWork(String d, String e)
     {
         this.curDiffy = d.toLowerCase();
         this.roleId = DifficultyPanel.getInstance().getRoleId();
@@ -218,7 +219,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         hero = new Hero(heroName);
         hero.ToStand();
         
-        enemyName = "";
+        enemyName = e;
         enemy = new Enemy(enemyName);
         enemy.ToStand();
         
@@ -851,13 +852,6 @@ public class PlayingPanel extends javax.swing.JPanel {
                 
                 if(hasSpecialWord) //special sttack
                 {
-                    if(whoAmI.equals("single"))
-                    {
-                        score += 2000;
-                        String curScore = String.valueOf(score);
-                        userScoreLabel.setText(curScore);
-                    }
-                    
                     userBallY = hero.AdjustY(userBallY);
                     if(hero.getName().equals("freeze") || hero.getName().equals("firen"))
                     {
@@ -876,16 +870,21 @@ public class PlayingPanel extends javax.swing.JPanel {
                     ball = new BallFlyingThd("hero", "special", userBallX, userBallY, enemyBallX, enemyBallY);
                     setApBar("hero", "empty"); 
                     lostHp = 20 + realStr.length();
+                    
+                    if(whoAmI.equals("single"))
+                    {
+                        score += 2000;
+                        String curScore = String.valueOf(score);
+                        userScoreLabel.setText(curScore);
+                    }
+                    else //host or client
+                    {
+                        String msg = String.valueOf(lostHp);
+                        Connection.getInstance().send(msg);
+                    }
                 }
                 else //normal attack
                 {
-                     if(whoAmI.equals("single"))
-                     {
-                        score += realStr.length() * 100;
-                        String curScore = String.valueOf(score);
-                        userScoreLabel.setText(curScore);
-                     }
-                    
                     attack = new UserAtkThd("normal");
                     ball = new BallFlyingThd("hero", "normal", userBallX, userBallY, enemyBallX, enemyBallY);
                     
@@ -900,6 +899,18 @@ public class PlayingPanel extends javax.swing.JPanel {
                     else
                     {
                         lostHp = realStr.length() - 2;
+                    }
+                    
+                    if(whoAmI.equals("single"))
+                    {
+                       score += realStr.length() * 100;
+                       String curScore = String.valueOf(score);
+                       userScoreLabel.setText(curScore);
+                    }
+                    else //host or client
+                    {
+                        String msg = String.valueOf(lostHp);
+                        Connection.getInstance().send(msg);
                     }
                 }
                 
