@@ -277,7 +277,7 @@ public class HostPanel extends javax.swing.JPanel {
         if(connected == true)
         {
             MainFrame.getInstance().SwitchPanel("playing");
-            PlayingPanel.getInstance().setDifficulty(diffy);
+            PlayingPanel.getInstance().setDifficultyForNetWork(diffy,ChoseCharacterPanel.getInstance().getName(Connection.getInstance().character2));
             PlayingPanel.getInstance().getFocus();  
         }
     }//GEN-LAST:event_jButton1ActionPerformed
