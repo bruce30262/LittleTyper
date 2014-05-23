@@ -25,6 +25,8 @@ public class ClientConnectedPanel extends javax.swing.JPanel {
      */
     public ClientConnectedPanel() {
         initComponents();
+        
+        jButton3.setVisible(false);
     }
     
     public static ClientConnectedPanel getInstance()
