@@ -23,12 +23,13 @@ public class ProloguePanel extends javax.swing.JPanel {
     
     private ProloguePanel() {
         initComponents();
-        storyTexts = new String[5];
+        storyTexts = new String[6];
         storyTexts[0] = "there was @#$%@#$%@";
         storyTexts[1] = "and there was the BOSS  who #@#$%@#";
         storyTexts[2] = "but the !#$!%#@%@";
         storyTexts[3] = "@#$@#^&!&^&$%^*&";
         storyTexts[4] = "THE LITTLE TYPER!!! ";
+        storyTexts[5] = "";
     }
     
     public static ProloguePanel getInstance()
@@ -90,14 +91,17 @@ public class ProloguePanel extends javax.swing.JPanel {
     private void storyLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_storyLabelMouseClicked
         // TODO add your handling code here:
         storyLabel.setText(storyTexts[i]);
-        if (i < 4)
-            i++;
+        
+        if (i <= 4)
+            i++;// = (i+1) % 5;
         else
         {
            //background music stop
             MainFrame.getInstance().SwitchPanel("character");
             ChoseCharacterPanel.getInstance().choseInit();
             ChoseCharacterPanel.getInstance().getSelectMusic().playLoop();
+            i = 0;
+            storyLabel.setText("Once upon a time ...");
         }
     }//GEN-LAST:event_storyLabelMouseClicked
 
