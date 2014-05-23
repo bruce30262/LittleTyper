@@ -664,6 +664,7 @@ public class PlayingPanel extends javax.swing.JPanel {
                 if(specialInterrupt_enemy == 2)
                 {
                     specialInterrupt_enemy = 0;
+                    this.networkSpecial = false;
                     setApBar("enemy", "empty");
                 }
             }
