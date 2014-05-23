@@ -609,6 +609,13 @@ public class PlayingPanel extends javax.swing.JPanel {
                     return;
                 }
             }
+            else
+            {
+                if(this.networkSpecial)
+                {
+                    return;
+                }
+            }
             setApBar("enemy", "full");
         }
     }
