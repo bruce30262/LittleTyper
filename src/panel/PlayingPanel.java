@@ -621,7 +621,7 @@ public class PlayingPanel extends javax.swing.JPanel {
     
     public void setNetworkEnemySpecial()
     {
-        System.out.println("set special");
+        //System.out.println("set special");
         this.networkSpecial = true;
         enemyApBar.setIndeterminate(false);
     }
@@ -775,8 +775,8 @@ public class PlayingPanel extends javax.swing.JPanel {
     
     public void NetworkEnemyAtk(int power)
     {
-        System.out.println(power);
-        /*NetworkAtkThread networkAtk;
+        //System.out.println(power);
+        NetworkAtkThread networkAtk;
         this.networkLoseHp = power;
                 
         if(power > 20)
@@ -787,7 +787,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         {
             networkAtk = new NetworkAtkThread("normal");
         }
-        networkAtk.start();*/
+        networkAtk.start();
     }
         
     /**
