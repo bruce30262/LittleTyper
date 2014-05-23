@@ -190,6 +190,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         this.stage = 1 ;
                
         heroName = ChoseCharacterPanel.getInstance().getRoleName();
+        userNameLabel.setText(heroName);
         hero = new Hero(heroName);
         hero.ToStand();
         
@@ -198,6 +199,7 @@ public class PlayingPanel extends javax.swing.JPanel {
             enemyName = computerEnemyName[stage-1];
             atkTick = computerEnemyTick[stage-1];
         }
+        enemyNameLabel.setText(enemyName);
         enemy = new Enemy(enemyName);
         enemy.ToStand();
         
@@ -222,6 +224,7 @@ public class PlayingPanel extends javax.swing.JPanel {
     {
         this.curDiffy = d.toLowerCase();
         this.networkSpecial = false;
+        this.stage = 2; // for painting background
         this.roleId = DifficultyPanel.getInstance().getRoleId();
         this.whoAmI = ChoseCharacterPanel.getInstance().getMode();
         wordList = new WordList(d);
@@ -250,10 +253,12 @@ public class PlayingPanel extends javax.swing.JPanel {
         this.specialInterrupt_enemy = 0;
         
         heroName = ChoseCharacterPanel.getInstance().getRoleName();
+        userNameLabel.setText(heroName);
         hero = new Hero(heroName);
         hero.ToStand();
         
         enemyName = e;
+        enemyNameLabel.setText(enemyName);
         enemy = new Enemy(enemyName);
         enemy.ToStand();
         
@@ -301,6 +306,7 @@ public class PlayingPanel extends javax.swing.JPanel {
             enemyName = computerEnemyName[stage-1];
             atkTick = computerEnemyTick[stage-1];
         }
+        enemyNameLabel.setText(enemyName);
         enemy = new Enemy(enemyName);
         enemy.ToStand();
         
@@ -871,6 +877,8 @@ public class PlayingPanel extends javax.swing.JPanel {
         userBallLabel = new javax.swing.JLabel();
         enemyBallLabel = new javax.swing.JLabel();
         userScoreLabel = new javax.swing.JLabel();
+        enemyNameLabel = new javax.swing.JLabel();
+        userNameLabel = new javax.swing.JLabel();
 
         addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
@@ -935,6 +943,25 @@ public class PlayingPanel extends javax.swing.JPanel {
         userScoreLabel.setText("0");
         userScoreLabel.setOpaque(true);
         add(userScoreLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, -1, -1));
+
+        enemyNameLabel.setBackground(new java.awt.Color(0, 0, 0));
+        enemyNameLabel.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        enemyNameLabel.setForeground(new java.awt.Color(204, 204, 204));
+        enemyNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        enemyNameLabel.setText("   ");
+        enemyNameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        enemyNameLabel.setOpaque(true);
+        add(enemyNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 150, 70, -1));
+
+        userNameLabel.setBackground(new java.awt.Color(0, 0, 0));
+        userNameLabel.setFont(new java.awt.Font("Impact", 0, 18)); // NOI18N
+        userNameLabel.setForeground(new java.awt.Color(204, 204, 204));
+        userNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        userNameLabel.setText("   ");
+        userNameLabel.setToolTipText("");
+        userNameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        userNameLabel.setOpaque(true);
+        add(userNameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, 60, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void formKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_formKeyPressed
@@ -1057,10 +1084,12 @@ public class PlayingPanel extends javax.swing.JPanel {
     private javax.swing.JLabel enemyBallLabel;
     private javax.swing.JProgressBar enemyHpBar;
     private javax.swing.JLabel enemyIconLabel;
+    private javax.swing.JLabel enemyNameLabel;
     private javax.swing.JProgressBar userApBar;
     private javax.swing.JLabel userBallLabel;
     private javax.swing.JProgressBar userHpBar;
     private javax.swing.JLabel userIconLabel;
+    private javax.swing.JLabel userNameLabel;
     private javax.swing.JLabel userScoreLabel;
     private javax.swing.JLabel userWordLabel;
     // End of variables declaration//GEN-END:variables
