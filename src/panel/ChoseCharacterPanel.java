@@ -369,14 +369,6 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
         characterBox[3] = ch_Label4;
         characterBox[4] = ch_Label5;
         
-       /* for(int i = 0 ; i < 5 ; i++)
-        {
-           // BufferedImage myPicture = ImageIO.read(new File("path-to-file"));
-            //characterBox[i] = new JLabel("test "+i);
-            //characterBox[i].setSize(500,500);
-            //characterBox[i].setLocation(160*i,100);
-            //this.add(characterBox[i]);
-        }*/
         redBorder = javax.swing.BorderFactory.createLineBorder(Color.RED, 3);
         blackBorder = javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3);
     }
