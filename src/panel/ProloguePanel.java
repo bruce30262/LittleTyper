@@ -112,6 +112,7 @@ public class ProloguePanel extends javax.swing.JPanel {
         else
         {
            //background music stop
+            this.prologueMusic.stop();
             MainFrame.getInstance().SwitchPanel("character");
             ChoseCharacterPanel.getInstance().choseInit();
             ChoseCharacterPanel.getInstance().getSelectMusic().playLoop();
@@ -122,6 +123,7 @@ public class ProloguePanel extends javax.swing.JPanel {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        this.prologueMusic.stop();
         MainFrame.getInstance().SwitchPanel("character");
         ChoseCharacterPanel.getInstance().choseInit();
         ChoseCharacterPanel.getInstance().getSelectMusic().playLoop();
@@ -136,6 +138,7 @@ public class ProloguePanel extends javax.swing.JPanel {
         else
         {
            //background music stop
+            this.prologueMusic.stop();
             MainFrame.getInstance().SwitchPanel("character");
             ChoseCharacterPanel.getInstance().choseInit();
             ChoseCharacterPanel.getInstance().getSelectMusic().playLoop();
