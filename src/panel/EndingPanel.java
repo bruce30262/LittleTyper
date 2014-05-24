@@ -19,6 +19,8 @@ public class EndingPanel extends javax.swing.JPanel {
     private Icon[] chIMGs;
     private Icon[] walkIMGs;
     private int imgID;
+    private int coordX;
+    private int coordY;
     
     /**
      * Creates new form EndingPanel
@@ -28,6 +30,9 @@ public class EndingPanel extends javax.swing.JPanel {
     
     private EndingPanel() {
         initComponents();
+        coordX = 130;
+        coordY = 470;
+        
         chIMGs = new Icon[5];
         chIMGs[0] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/stand_freeze.gif"));
         chIMGs[1] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/stand_firen.gif"));
@@ -66,8 +71,19 @@ public class EndingPanel extends javax.swing.JPanel {
     private void startAnimation()
     {   
         this.setWalkIMG(this.imgID);
-        
-        
+        while(coordX <= 800)
+        {
+            chLabel.setLocation(coordX, coordY);
+            try 
+            {
+                Thread.sleep(25);
+            } 
+            catch (InterruptedException ex) 
+            {
+                Logger.getLogger(EndingPanel.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            coordX += 10;
+        }
     }
 
     /**
