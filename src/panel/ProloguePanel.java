@@ -6,6 +6,7 @@
 
 package panel;
 import frame.MainFrame;
+import javax.swing.Icon;
 
 /**
  *
@@ -17,12 +18,15 @@ public class ProloguePanel extends javax.swing.JPanel {
      * Creates new form ProloguePanel
      */
     private String[] storyTexts;
+    //private Icon backgroundIMG;
     private int i = 0;
     
     private static ProloguePanel prologueSingle;
     
     private ProloguePanel() {
         initComponents();
+        //backgroundIMG = new javax.swing.ImageIcon(getClass().getResource("/panel/image/prologueBGimg.png"));
+        //storyLabel.setIcon(backgroundIMG);
         storyTexts = new String[6];
         storyTexts[0] = "there was @#$%@#$%@";
         storyTexts[1] = "and there was the BOSS  who #@#$%@#";
@@ -51,7 +55,11 @@ public class ProloguePanel extends javax.swing.JPanel {
     private void initComponents() {
 
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         storyLabel = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+
+        setLayout(null);
 
         jButton1.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
         jButton1.setText("skip");
@@ -60,8 +68,21 @@ public class ProloguePanel extends javax.swing.JPanel {
                 jButton1ActionPerformed(evt);
             }
         });
+        add(jButton1);
+        jButton1.setBounds(0, 550, 180, 54);
+
+        jButton2.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
+        jButton2.setText("Next");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
+        add(jButton2);
+        jButton2.setBounds(620, 550, 180, 50);
 
         storyLabel.setFont(new java.awt.Font("Impact", 0, 72)); // NOI18N
+        storyLabel.setForeground(new java.awt.Color(255, 255, 255));
         storyLabel.setText("Once upon a time ...");
         storyLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         storyLabel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -69,23 +90,14 @@ public class ProloguePanel extends javax.swing.JPanel {
                 storyLabelMouseClicked(evt);
             }
         });
+        add(storyLabel);
+        storyLabel.setBounds(0, 0, 800, 600);
+        storyLabel.getAccessibleContext().setAccessibleName("  Once upon a time ...");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(storyLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(storyLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 540, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/prologueBGimg.png"))); // NOI18N
+        jLabel1.setText("jLabel1");
+        add(jLabel1);
+        jLabel1.setBounds(0, 0, 800, 600);
     }// </editor-fold>//GEN-END:initComponents
 
     private void storyLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_storyLabelMouseClicked
@@ -112,9 +124,28 @@ public class ProloguePanel extends javax.swing.JPanel {
         ChoseCharacterPanel.getInstance().getSelectMusic().playLoop();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        // TODO add your handling code here:
+        storyLabel.setText(storyTexts[i]);
+        
+        if (i <= 4)
+            i++;// = (i+1) % 5;
+        else
+        {
+           //background music stop
+            MainFrame.getInstance().SwitchPanel("character");
+            ChoseCharacterPanel.getInstance().choseInit();
+            ChoseCharacterPanel.getInstance().getSelectMusic().playLoop();
+            i = 0;
+            storyLabel.setText("Once upon a time ...");
+        }
+    }//GEN-LAST:event_jButton2MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel storyLabel;
     // End of variables declaration//GEN-END:variables
 }
