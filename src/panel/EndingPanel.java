@@ -9,6 +9,7 @@ package panel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -19,8 +20,7 @@ public class EndingPanel extends javax.swing.JPanel {
     private Icon[] chIMGs;
     private Icon[] walkIMGs;
     private int imgID;
-    private int coordX;
-    private int coordY;
+    
     
     /**
      * Creates new form EndingPanel
@@ -30,8 +30,6 @@ public class EndingPanel extends javax.swing.JPanel {
     
     private EndingPanel() {
         initComponents();
-        coordX = 130;
-        coordY = 470;
         
         chIMGs = new Icon[5];
         chIMGs[0] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/stand_freeze.gif"));
@@ -68,22 +66,11 @@ public class EndingPanel extends javax.swing.JPanel {
         chLabel.setIcon(walkIMGs[id]);
     }
     
-    private void startAnimation()
-    {   
-        this.setWalkIMG(this.imgID);
-        while(coordX <= 800)
-        {
-            chLabel.setLocation(coordX, coordY);
-            try 
-            {
-                Thread.sleep(25);
-            } 
-            catch (InterruptedException ex) 
-            {
-                Logger.getLogger(EndingPanel.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            coordX += 10;
-        }
+    public void setWalkPosition (int x, int y)
+    {
+        setWalkIMG(this.imgID);
+        
+        chLabel.setLocation(x, y);
     }
 
     /**
@@ -95,19 +82,19 @@ public class EndingPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        animeActive = new javax.swing.JLabel();
+        activeLabel = new javax.swing.JLabel();
         chLabel = new javax.swing.JLabel();
         backgroundLabel = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(800, 600));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        animeActive.addMouseListener(new java.awt.event.MouseAdapter() {
+        activeLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                animeActiveMouseClicked(evt);
+                activeLabelMouseClicked(evt);
             }
         });
-        add(animeActive, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
+        add(activeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
 
         chLabel.setPreferredSize(new java.awt.Dimension(100, 100));
         add(chLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 470, -1, -1));
@@ -116,15 +103,62 @@ public class EndingPanel extends javax.swing.JPanel {
         add(backgroundLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void animeActiveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_animeActiveMouseClicked
+    private void activeLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activeLabelMouseClicked
         // TODO add your handling code here:
-        this.startAnimation();
-    }//GEN-LAST:event_animeActiveMouseClicked
+        WalkAnimeThd walk = new WalkAnimeThd();
+        walk.start();
+    }//GEN-LAST:event_activeLabelMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel animeActive;
+    private javax.swing.JLabel activeLabel;
     private javax.swing.JLabel backgroundLabel;
     private javax.swing.JLabel chLabel;
     // End of variables declaration//GEN-END:variables
+}
+
+class WalkAnimeThd extends Thread
+{
+    private int coordX;
+    private int coordY;
+    
+    public WalkAnimeThd()
+    {
+        this.coordX = 130;
+        this.coordY = 470;
+    }
+    
+    public void run()
+    {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(UserAtkThd.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        turnWalking();
+        
+        while (coordX <= 600)
+        {
+            try {
+                Thread.sleep(25);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(WalkAnimeThd.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            coordX += 10;
+            
+            turnWalking();
+        }
+    }
+
+    private void turnWalking()
+    {
+        SwingUtilities.invokeLater(new Runnable() 
+        {
+            public void run() 
+            {
+                EndingPanel.getInstance().setWalkPosition(coordX, coordY);
+            }
+        });
+    }
 }
