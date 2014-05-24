@@ -57,12 +57,32 @@ public class ProloguePanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        fighterLabel5 = new javax.swing.JLabel();
+        fighterLabel4 = new javax.swing.JLabel();
+        fighterLabel1 = new javax.swing.JLabel();
+        fighterLabel2 = new javax.swing.JLabel();
+        fighterLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         storyLabel = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        backgroundLabel = new javax.swing.JLabel();
 
-        setLayout(null);
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        fighterLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/ch_woody.png")));
+        add(fighterLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 440, 100, 100));
+
+        fighterLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/ch_john.png")));
+        add(fighterLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 440, 100, 100));
+
+        fighterLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/ch_davis.png")));
+        add(fighterLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 420, 100, 100));
+
+        fighterLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/ch_firen.png")));
+        add(fighterLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 420, 100, 100));
+
+        fighterLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/ch_freeze.png")));
+        add(fighterLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 430, 100, 100));
 
         jButton1.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
         jButton1.setText("skip");
@@ -71,8 +91,7 @@ public class ProloguePanel extends javax.swing.JPanel {
                 jButton1ActionPerformed(evt);
             }
         });
-        add(jButton1);
-        jButton1.setBounds(0, 550, 180, 54);
+        add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 550, 180, 54));
 
         jButton2.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
         jButton2.setText("Next");
@@ -81,8 +100,7 @@ public class ProloguePanel extends javax.swing.JPanel {
                 jButton2MouseClicked(evt);
             }
         });
-        add(jButton2);
-        jButton2.setBounds(620, 550, 180, 50);
+        add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 550, 180, 50));
 
         storyLabel.setFont(new java.awt.Font("Impact", 0, 72)); // NOI18N
         storyLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -93,13 +111,11 @@ public class ProloguePanel extends javax.swing.JPanel {
                 storyLabelMouseClicked(evt);
             }
         });
-        add(storyLabel);
-        storyLabel.setBounds(0, 0, 800, 600);
+        add(storyLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
         storyLabel.getAccessibleContext().setAccessibleName("  Once upon a time ...");
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/prologueBGimg.png")));
-        add(jLabel1);
-        jLabel1.setBounds(0, 0, 800, 600);
+        backgroundLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/prologueBGimg.png")));
+        add(backgroundLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
     }// </editor-fold>//GEN-END:initComponents
 
     private void storyLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_storyLabelMouseClicked
@@ -148,9 +164,14 @@ public class ProloguePanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel backgroundLabel;
+    private javax.swing.JLabel fighterLabel1;
+    private javax.swing.JLabel fighterLabel2;
+    private javax.swing.JLabel fighterLabel3;
+    private javax.swing.JLabel fighterLabel4;
+    private javax.swing.JLabel fighterLabel5;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel storyLabel;
     // End of variables declaration//GEN-END:variables
 }
