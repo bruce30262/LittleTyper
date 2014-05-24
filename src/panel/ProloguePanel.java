@@ -173,6 +173,7 @@ public class ProloguePanel extends javax.swing.JPanel {
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
         // TODO add your handling code here:
+        this.prologueMusic.stop();
         MainFrame.getInstance().SwitchPanel("ending");
     }//GEN-LAST:event_jButton3MouseClicked
 
