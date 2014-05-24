@@ -7,6 +7,7 @@
 package panel;
 import frame.MainFrame;
 import javax.swing.Icon;
+import littletyper.Music;
 
 /**
  *
@@ -18,6 +19,7 @@ public class ProloguePanel extends javax.swing.JPanel {
      * Creates new form ProloguePanel
      */
     private String[] storyTexts;
+    public Music prologueMusic;
     //private Icon backgroundIMG;
     private int i = 0;
     
@@ -27,6 +29,7 @@ public class ProloguePanel extends javax.swing.JPanel {
         initComponents();
         //backgroundIMG = new javax.swing.ImageIcon(getClass().getResource("/panel/image/prologueBGimg.png"));
         //storyLabel.setIcon(backgroundIMG);
+        prologueMusic = new Music("prologueBGM.wav");
         storyTexts = new String[6];
         storyTexts[0] = "there was @#$%@#$%@";
         storyTexts[1] = "and there was the BOSS  who #@#$%@#";
