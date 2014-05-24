@@ -6,6 +6,8 @@
 
 package panel;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.Icon;
 
 /**
@@ -15,6 +17,8 @@ import javax.swing.Icon;
 public class EndingPanel extends javax.swing.JPanel {
 
     private Icon[] chIMGs;
+    private Icon[] walkIMGs;
+    private int imgID;
     
     /**
      * Creates new form EndingPanel
@@ -25,11 +29,29 @@ public class EndingPanel extends javax.swing.JPanel {
     private EndingPanel() {
         initComponents();
         chIMGs = new Icon[5];
-        chIMGs[0] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/ch_freeze.png"));
-        chIMGs[1] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/ch_firen.png"));
-        chIMGs[2] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/ch_davis.png"));
-        chIMGs[3] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/ch_john.png"));
-        chIMGs[4] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/ch_woody.png"));
+        chIMGs[0] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/stand_freeze.gif"));
+        chIMGs[1] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/stand_firen.gif"));
+        chIMGs[2] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/stand_davis.gif"));
+        chIMGs[3] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/stand_john.gif"));
+        chIMGs[4] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/stand_woody.gif"));
+        
+        walkIMGs = new Icon[5];
+        walkIMGs[0] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/walk_freeze.gif"));
+        walkIMGs[1] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/walk_firen.gif"));
+        walkIMGs[2] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/walk_davis.gif"));
+        walkIMGs[3] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/walk_john.gif"));
+        walkIMGs[4] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/walk_woody.gif"));
+        
+        try 
+        {
+            Thread.sleep(8000);
+        } 
+        catch (InterruptedException ex) 
+        {
+            Logger.getLogger(EndingPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.startAnimation();
     }
     
     public static EndingPanel getInstance()
@@ -41,9 +63,22 @@ public class EndingPanel extends javax.swing.JPanel {
         return endingSingle;
     }
     
-    public void setIMG(int id)
+    public void setStandIMG(int id)
     {
         chLabel.setIcon(chIMGs[id]);
+        this.imgID = id;
+    }
+    
+    public void setWalkIMG(int id)
+    {
+        chLabel.setIcon(walkIMGs[id]);
+    }
+    
+    private void startAnimation()
+    {
+        this.setWalkIMG(this.imgID);
+        
+        
     }
 
     /**
