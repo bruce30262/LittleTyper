@@ -17,7 +17,7 @@ public class YouWinPanel extends javax.swing.JPanel {
      * Creates new form YouWinPanel
      */
     private static YouWinPanel ywSingle = null;
-    
+        
     private YouWinPanel() {
         initComponents();
     }
@@ -92,6 +92,8 @@ public class YouWinPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         int curStage = PlayingPanel.getInstance().getStageNum();
         curStage++;
+        PlayingPanel.getInstance().setStageBGM(curStage);
+        PlayingPanel.getInstance().getStageBGM().playLoop();
         PlayingPanel.getInstance().setStage(curStage);
         MainFrame.getInstance().SwitchPanel("playing");
         PlayingPanel.getInstance().getFocus();

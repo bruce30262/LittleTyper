@@ -47,6 +47,7 @@ public class PlayingPanel extends javax.swing.JPanel {
     
     private String curDiffy;
     private String[] computerEnemyName;
+    private String[] stageBGMPath = new String[5];
     private long[] computerEnemyTick;
     private String whoAmI = "";
     private int roleId;
@@ -91,6 +92,8 @@ public class PlayingPanel extends javax.swing.JPanel {
     
     private BufferedImage[] backgroundImage = new BufferedImage[5];
     
+    private Music stageBGM;
+    private Music[] allStageBGM = new Music[5];
     private Music stageWinMusic = new Music("stage_win_1.wav");
     private Music finalWinMusic = new Music("stage_win_2.wav");
     private Music loseMusic = new Music("lose.wav");
@@ -119,6 +122,18 @@ public class PlayingPanel extends javax.swing.JPanel {
         computerEnemyTick[2] = 3500;
         computerEnemyTick[3] = 3000;
         computerEnemyTick[4] = 2500;
+        
+        allStageBGM[0] = null;
+        allStageBGM[1] = null;
+        allStageBGM[2] = null;
+        allStageBGM[3] = null;
+        allStageBGM[4] = null;
+        
+        stageBGMPath[0] = "bgm_stage1.wav";
+        stageBGMPath[1] = "bgm_stage2.wav";
+        stageBGMPath[2] = "bgm_stage1.wav";
+        stageBGMPath[3] = "bgm_stage2.wav";
+        stageBGMPath[4] = "bgm_stage1.wav";
     }
     
     public static PlayingPanel getInstance()
@@ -153,6 +168,19 @@ public class PlayingPanel extends javax.swing.JPanel {
         g.drawImage(backgroundImage[stage-1], 0, 0, this); // Draw the background image.
     }
     
+    public Music getStageBGM()
+    {
+        return this.stageBGM;
+    }
+    
+    public void setStageBGM(int stageNum)
+    {
+        if(allStageBGM[stageNum - 1] == null)
+        {
+            allStageBGM[stageNum - 1] = new Music(stageBGMPath[stageNum-1]);
+        }
+        this.stageBGM = allStageBGM[stageNum - 1];
+    }
     public void setDifficulty(String d)
     {
         this.curDiffy = d.toLowerCase();
@@ -1491,6 +1519,7 @@ class BallFlyingThd extends Thread
                     
                     if(PlayingPanel.getInstance().getHp("enemy") <= 0) //enemy death
                     {
+                        PlayingPanel.getInstance().getStageBGM().stop();
                         PlayingPanel.getInstance().EnemyDeath();
                         if(atkType.equals("normal"))
                         {
@@ -1528,6 +1557,7 @@ class BallFlyingThd extends Thread
                                        
                     if(PlayingPanel.getInstance().getHp("hero") <= 0) //hero death
                     {
+                        PlayingPanel.getInstance().getStageBGM().stop();
                         PlayingPanel.getInstance().HeroDeath();
                         if(atkType.equals("normal"))
                         {
