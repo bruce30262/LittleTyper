@@ -56,16 +56,21 @@ public class EndingPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         chLabel = new javax.swing.JLabel();
+        backgroundLabel = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(800, 600));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         chLabel.setPreferredSize(new java.awt.Dimension(100, 100));
         add(chLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 470, -1, -1));
+
+        backgroundLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/background_level5.gif")));
+        add(backgroundLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel backgroundLabel;
     private javax.swing.JLabel chLabel;
     // End of variables declaration//GEN-END:variables
 }
