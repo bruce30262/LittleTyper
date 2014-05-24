@@ -133,7 +133,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         stageBGMPath[1] = "bgm_stage2.wav";
         stageBGMPath[2] = "bgm_stage1.wav";
         stageBGMPath[3] = "bgm_stage2.wav";
-        stageBGMPath[4] = "bgm_stage1.wav";
+        stageBGMPath[4] = "bgm_stage5.wav";
     }
     
     public static PlayingPanel getInstance()
