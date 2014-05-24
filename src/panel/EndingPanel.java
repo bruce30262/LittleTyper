@@ -15,8 +15,20 @@ public class EndingPanel extends javax.swing.JPanel {
     /**
      * Creates new form EndingPanel
      */
-    public EndingPanel() {
+    
+    private static EndingPanel endingSingle;
+    
+    private EndingPanel() {
         initComponents();
+    }
+    
+    public static EndingPanel getInstance()
+    {
+        if(endingSingle == null)
+        {
+            endingSingle = new EndingPanel();
+        }
+        return endingSingle;
     }
 
     /**

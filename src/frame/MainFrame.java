@@ -34,6 +34,7 @@ public class MainFrame extends javax.swing.JFrame {
         this.add(PlayingPanel.getInstance(), "playing");
         this.add(HostPanel.getInstance(), "host");
         this.add(ProloguePanel.getInstance(), "prologue");
+        this.add(EndingPanel.getInstance(), "ending");
         this.add(ClientPanel.getInstance(), "client");
         this.add(YouWinPanel.getInstance(), "youWin");
         this.add(YouLosePanel.getInstance(), "youLose");
