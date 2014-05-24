@@ -98,7 +98,6 @@ public class ProloguePanel extends javax.swing.JPanel {
         storyLabel.getAccessibleContext().setAccessibleName("  Once upon a time ...");
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/prologueBGimg.png"))); // NOI18N
-        jLabel1.setText("jLabel1");
         add(jLabel1);
         jLabel1.setBounds(0, 0, 800, 600);
     }// </editor-fold>//GEN-END:initComponents
