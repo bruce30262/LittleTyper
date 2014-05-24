@@ -41,17 +41,6 @@ public class EndingPanel extends javax.swing.JPanel {
         walkIMGs[2] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/walk_davis.gif"));
         walkIMGs[3] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/walk_john.gif"));
         walkIMGs[4] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/walk_woody.gif"));
-        
-        try 
-        {
-            Thread.sleep(8000);
-        } 
-        catch (InterruptedException ex) 
-        {
-            Logger.getLogger(EndingPanel.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        this.startAnimation();
     }
     
     public static EndingPanel getInstance()
@@ -75,7 +64,7 @@ public class EndingPanel extends javax.swing.JPanel {
     }
     
     private void startAnimation()
-    {
+    {   
         this.setWalkIMG(this.imgID);
         
         
@@ -90,11 +79,19 @@ public class EndingPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        animeActive = new javax.swing.JLabel();
         chLabel = new javax.swing.JLabel();
         backgroundLabel = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(800, 600));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        animeActive.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                animeActiveMouseClicked(evt);
+            }
+        });
+        add(animeActive, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
 
         chLabel.setPreferredSize(new java.awt.Dimension(100, 100));
         add(chLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 470, -1, -1));
@@ -103,8 +100,14 @@ public class EndingPanel extends javax.swing.JPanel {
         add(backgroundLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
     }// </editor-fold>//GEN-END:initComponents
 
+    private void animeActiveMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_animeActiveMouseClicked
+        // TODO add your handling code here:
+        this.startAnimation();
+    }//GEN-LAST:event_animeActiveMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel animeActive;
     private javax.swing.JLabel backgroundLabel;
     private javax.swing.JLabel chLabel;
     // End of variables declaration//GEN-END:variables
