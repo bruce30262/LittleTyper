@@ -6,12 +6,16 @@
 
 package panel;
 
+import javax.swing.Icon;
+
 /**
  *
  * @author Alex
  */
 public class EndingPanel extends javax.swing.JPanel {
 
+    private Icon[] chIMGs;
+    
     /**
      * Creates new form EndingPanel
      */
@@ -20,6 +24,12 @@ public class EndingPanel extends javax.swing.JPanel {
     
     private EndingPanel() {
         initComponents();
+        chIMGs = new Icon[5];
+        chIMGs[0] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/ch_freeze.png"));
+        chIMGs[1] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/ch_firen.png"));
+        chIMGs[2] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/ch_davis.png"));
+        chIMGs[3] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/ch_john.png"));
+        chIMGs[4] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/ch_woody.png"));
     }
     
     public static EndingPanel getInstance()
@@ -29,6 +39,11 @@ public class EndingPanel extends javax.swing.JPanel {
             endingSingle = new EndingPanel();
         }
         return endingSingle;
+    }
+    
+    public void setIMG(int id)
+    {
+        chLabel.setIcon(chIMGs[id]);
     }
 
     /**
@@ -40,19 +55,17 @@ public class EndingPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-        );
+        chLabel = new javax.swing.JLabel();
+
+        setPreferredSize(new java.awt.Dimension(800, 600));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        chLabel.setPreferredSize(new java.awt.Dimension(100, 100));
+        add(chLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 470, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel chLabel;
     // End of variables declaration//GEN-END:variables
 }

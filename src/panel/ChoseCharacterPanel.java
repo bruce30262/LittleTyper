@@ -407,6 +407,7 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
     {
         MainFrame.getInstance().SwitchPanel("difficulty");
         DifficultyPanel.getInstance().setRole(headIcon[cnt], roleName[cnt], cnt);
+        EndingPanel.getInstance().setIMG(cnt);
     }
     
     public void loadImageAndName()
