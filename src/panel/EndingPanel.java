@@ -140,7 +140,7 @@ class WalkAnimeThd extends Thread
         while (coordX <= 600)
         {
             try {
-                Thread.sleep(25);
+                Thread.sleep(80);
             } catch (InterruptedException ex) {
                 Logger.getLogger(WalkAnimeThd.class.getName()).log(Level.SEVERE, null, ex);
             }
