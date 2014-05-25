@@ -19,7 +19,9 @@ public class EndingPanel extends javax.swing.JPanel {
 
     private Icon[] chIMGs;
     private Icon[] walkIMGs;
-    private int imgID;
+    private Icon bodyIMG = new javax.swing.ImageIcon(getClass().getResource("/panel/image/dead_julian_reverse.png"));
+    private Icon cubeIMG = new javax.swing.ImageIcon(getClass().getResource("/panel/image/cube.gif"));
+    public int imgID;
     
     
     /**
@@ -30,6 +32,8 @@ public class EndingPanel extends javax.swing.JPanel {
     
     private EndingPanel() {
         initComponents();
+        
+        bodyLabel.setIcon(bodyIMG);
         
         chIMGs = new Icon[5];
         chIMGs[0] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/stand_freeze.gif"));
@@ -72,6 +76,12 @@ public class EndingPanel extends javax.swing.JPanel {
         
         chLabel.setLocation(x, y);
     }
+    
+    public void setCubePosition (int x, int y)
+    {   
+        cubeLabel.setIcon(cubeIMG);
+        cubeLabel.setLocation(x, y);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -83,6 +93,8 @@ public class EndingPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         activeLabel = new javax.swing.JLabel();
+        cubeLabel = new javax.swing.JLabel();
+        bodyLabel = new javax.swing.JLabel();
         chLabel = new javax.swing.JLabel();
         backgroundLabel = new javax.swing.JLabel();
 
@@ -96,6 +108,12 @@ public class EndingPanel extends javax.swing.JPanel {
         });
         add(activeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
 
+        cubeLabel.setPreferredSize(new java.awt.Dimension(100, 100));
+        add(cubeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 470, -1, -1));
+
+        bodyLabel.setPreferredSize(new java.awt.Dimension(100, 100));
+        add(bodyLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 470, -1, -1));
+
         chLabel.setPreferredSize(new java.awt.Dimension(100, 100));
         add(chLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 470, -1, -1));
 
@@ -106,14 +124,18 @@ public class EndingPanel extends javax.swing.JPanel {
     private void activeLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activeLabelMouseClicked
         // TODO add your handling code here:
         WalkAnimeThd walk = new WalkAnimeThd();
+        raiseAnimeThd raise = new raiseAnimeThd();
         walk.start();
+        raise.start();
     }//GEN-LAST:event_activeLabelMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel activeLabel;
     private javax.swing.JLabel backgroundLabel;
+    private javax.swing.JLabel bodyLabel;
     private javax.swing.JLabel chLabel;
+    private javax.swing.JLabel cubeLabel;
     // End of variables declaration//GEN-END:variables
 }
 
@@ -158,6 +180,53 @@ class WalkAnimeThd extends Thread
             public void run() 
             {
                 EndingPanel.getInstance().setWalkPosition(coordX, coordY);
+            }
+        });
+    }
+}
+
+class raiseAnimeThd extends Thread
+{
+    private int coordX;
+    private int coordY;
+    
+    public raiseAnimeThd()
+    {
+        this.coordX = 610;
+        this.coordY = 470;
+    }
+    
+    public void run()
+    {
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(UserAtkThd.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+        turnPicking();
+        
+        while (coordY >= 400)
+        {
+            try {
+                Thread.sleep(30);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(WalkAnimeThd.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            coordY -= 3;
+            
+            turnPicking();
+        }
+        
+    }
+    
+    private void turnPicking()
+    {
+        SwingUtilities.invokeLater(new Runnable() 
+        {
+            public void run() 
+            {
+                EndingPanel.getInstance().setCubePosition(coordX, coordY);
             }
         });
     }
