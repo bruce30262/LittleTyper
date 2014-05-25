@@ -99,26 +99,31 @@ public class EndingPanel extends javax.swing.JPanel {
         backgroundLabel = new javax.swing.JLabel();
 
         setPreferredSize(new java.awt.Dimension(800, 600));
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setLayout(null);
 
         activeLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 activeLabelMouseClicked(evt);
             }
         });
-        add(activeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
+        add(activeLabel);
+        activeLabel.setBounds(0, 0, 800, 600);
 
         cubeLabel.setPreferredSize(new java.awt.Dimension(100, 100));
-        add(cubeLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 470, -1, -1));
+        add(cubeLabel);
+        cubeLabel.setBounds(610, 470, 100, 100);
 
         bodyLabel.setPreferredSize(new java.awt.Dimension(100, 100));
-        add(bodyLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 470, -1, -1));
+        add(bodyLabel);
+        bodyLabel.setBounds(600, 470, 100, 100);
 
         chLabel.setPreferredSize(new java.awt.Dimension(100, 100));
-        add(chLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 470, -1, -1));
+        add(chLabel);
+        chLabel.setBounds(130, 470, 100, 100);
 
         backgroundLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/background_level5.gif")));
-        add(backgroundLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 600));
+        add(backgroundLabel);
+        backgroundLabel.setBounds(0, 0, 800, 600);
     }// </editor-fold>//GEN-END:initComponents
 
     private void activeLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activeLabelMouseClicked
@@ -155,11 +160,10 @@ class WalkAnimeThd extends Thread
         try {
             Thread.sleep(1000);
         } catch (InterruptedException ex) {
-            Logger.getLogger(UserAtkThd.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(WalkAnimeThd.class.getName()).log(Level.SEVERE, null, ex);
         } 
-        turnWalking();
         
-        while (coordX <= 600)
+        while (this.coordX <= 600)
         {
             try {
                 Thread.sleep(80);
@@ -167,7 +171,7 @@ class WalkAnimeThd extends Thread
                 Logger.getLogger(WalkAnimeThd.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-            coordX += 10;
+            this.coordX += 10;
             
             turnWalking();
         }
@@ -201,19 +205,19 @@ class raiseAnimeThd extends Thread
         try {
             Thread.sleep(5000);
         } catch (InterruptedException ex) {
-            Logger.getLogger(UserAtkThd.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(raiseAnimeThd.class.getName()).log(Level.SEVERE, null, ex);
         } 
         turnPicking();
         
-        while (coordY >= 400)
+        while (this.coordY >= 400)
         {
             try {
                 Thread.sleep(30);
             } catch (InterruptedException ex) {
-                Logger.getLogger(WalkAnimeThd.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(raiseAnimeThd.class.getName()).log(Level.SEVERE, null, ex);
             }
             
-            coordY -= 3;
+            this.coordY -= 3;
             
             turnPicking();
         }
