@@ -19,6 +19,8 @@ public class EndingPanel extends javax.swing.JPanel {
 
     private Icon[] chIMGs;
     private Icon[] walkIMGs;
+    private Icon[] liftIMGs;
+    private Icon[] liftStillIMGs;
     private Icon bodyIMG = new javax.swing.ImageIcon(getClass().getResource("/panel/image/dead_julian_reverse.png"));
     private Icon cubeIMG = new javax.swing.ImageIcon(getClass().getResource("/panel/image/cube.gif"));
     public int imgID;
@@ -48,6 +50,20 @@ public class EndingPanel extends javax.swing.JPanel {
         walkIMGs[2] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/walk_davis.gif"));
         walkIMGs[3] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/walk_john.gif"));
         walkIMGs[4] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/walk_woody.gif"));
+        
+        liftIMGs = new Icon[5];
+        liftIMGs[0] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/lift_freeze.gif"));
+        liftIMGs[1] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/lift_firean.gif"));
+        liftIMGs[2] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/lift_davis.gif"));
+        liftIMGs[3] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/lift_john.gif"));
+        liftIMGs[4] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/lift_woody.gif"));
+        
+        liftStillIMGs = new Icon[5];
+        liftStillIMGs[0] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/lift_stand_freeze.png"));
+        liftStillIMGs[1] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/lift_stand_firen.png"));
+        liftStillIMGs[2] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/lift_stand_davis.png"));
+        liftStillIMGs[3] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/lift_stand_john.png"));
+        liftStillIMGs[4] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/lift_stand_woody.png"));
     }
     
     public static EndingPanel getInstance()
@@ -82,6 +98,28 @@ public class EndingPanel extends javax.swing.JPanel {
         cubeLabel.setIcon(cubeIMG);
         cubeLabel.setLocation(x, y);
     }
+    
+    public void setLiftIMG (int id)
+    {
+        chLabel.setIcon(liftIMGs[id]);
+    }
+    
+    public void setLiftPosition (int x, int y)
+    {
+        setLiftIMG(this.imgID);
+        chLabel.setLocation(x, y);
+    }
+    
+    public void setLiftStillIMG (int id)
+    {
+        chLabel.setIcon(liftStillIMGs[id]);
+    }
+    
+    public void setLiftStillPosition (int x, int y)
+    {
+        setLiftStillIMG(this.imgID);
+        chLabel.setLocation(x, y);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -111,7 +149,7 @@ public class EndingPanel extends javax.swing.JPanel {
 
         cubeLabel.setPreferredSize(new java.awt.Dimension(100, 100));
         add(cubeLabel);
-        cubeLabel.setBounds(610, 470, 100, 100);
+        cubeLabel.setBounds(625, 470, 100, 100);
 
         bodyLabel.setPreferredSize(new java.awt.Dimension(100, 100));
         add(bodyLabel);
@@ -175,6 +213,7 @@ class WalkAnimeThd extends Thread
             
             turnWalking();
         }
+        turnLifting();
     }
 
     private void turnWalking()
@@ -187,6 +226,17 @@ class WalkAnimeThd extends Thread
             }
         });
     }
+    
+    private void turnLifting()
+    {
+        SwingUtilities.invokeLater(new Runnable() 
+        {
+            public void run() 
+            {
+                EndingPanel.getInstance().setLiftPosition(coordX, coordY);
+            }
+        });
+    }
 }
 
 class raiseAnimeThd extends Thread
@@ -196,8 +246,8 @@ class raiseAnimeThd extends Thread
     
     public raiseAnimeThd()
     {
-        this.coordX = 610;
-        this.coordY = 470;
+        this.coordX = 625;
+        this.coordY = 485;
     }
     
     public void run()
@@ -207,9 +257,9 @@ class raiseAnimeThd extends Thread
         } catch (InterruptedException ex) {
             Logger.getLogger(raiseAnimeThd.class.getName()).log(Level.SEVERE, null, ex);
         } 
-        turnPicking();
+        turnRaising();
         
-        while (this.coordY >= 400)
+        while (this.coordY >= 427)
         {
             try {
                 Thread.sleep(30);
@@ -219,18 +269,29 @@ class raiseAnimeThd extends Thread
             
             this.coordY -= 3;
             
-            turnPicking();
+            turnRaising();
         }
-        
+        turnLiftStill();
     }
     
-    private void turnPicking()
+    private void turnRaising()
     {
         SwingUtilities.invokeLater(new Runnable() 
         {
             public void run() 
             {
                 EndingPanel.getInstance().setCubePosition(coordX, coordY);
+            }
+        });
+    }
+    
+    private void turnLiftStill()
+    {
+        SwingUtilities.invokeLater(new Runnable() 
+        {
+            public void run() 
+            {
+                EndingPanel.getInstance().setLiftStillPosition(605, 470);
             }
         });
     }
