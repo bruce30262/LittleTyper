@@ -30,13 +30,23 @@ public class ProloguePanel extends javax.swing.JPanel {
         //backgroundIMG = new javax.swing.ImageIcon(getClass().getResource("/panel/image/prologueBGimg.png"));
         //storyLabel.setIcon(backgroundIMG);
         prologueMusic = new Music("prologueBGM.wav");
-        storyTexts = new String[6];
-        storyTexts[0] = "there was @#$%@#$%@";
-        storyTexts[1] = "and there was the BOSS  who #@#$%@#";
-        storyTexts[2] = "but the !#$!%#@%@";
-        storyTexts[3] = "@#$@#^&!&^&$%^*&";
-        storyTexts[4] = "THE LITTLE TYPER!!! ";
-        storyTexts[5] = "";
+        storyTexts = new String[16];
+        storyTexts[0] = "the evil appears...";
+        storyTexts[1] = "he takes away the precious of mankind...";
+        storyTexts[2] = "...mankind's language!";
+        storyTexts[3] = "and condemns mankind to HELL";
+        storyTexts[4] = "losing the ability of speaking...";
+        storyTexts[5] = "people don't know how to fight back";
+        storyTexts[6] = "...seems there is no hope left";
+        storyTexts[7] = "but a group of Heros do not give up";
+        storyTexts[8] = "they raise up ...";
+        storyTexts[9] = "and fight against the evil!!";
+        storyTexts[10] = "people called them ...";
+        storyTexts[11] = ".......";
+        storyTexts[12] = "THE                 ";
+        storyTexts[13] = "THE LITTLE          ";
+        storyTexts[14] = "THE LITTLE TYPER!!! ";
+        storyTexts[15] = "";
     }
     
     public static ProloguePanel getInstance()
@@ -111,8 +121,9 @@ public class ProloguePanel extends javax.swing.JPanel {
         });
         add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 550, 180, 50));
 
-        storyLabel.setFont(new java.awt.Font("Impact", 0, 72)); // NOI18N
+        storyLabel.setFont(new java.awt.Font("Impact", 0, 48)); // NOI18N
         storyLabel.setForeground(new java.awt.Color(255, 255, 255));
+        storyLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         storyLabel.setText("Once upon a time ...");
         storyLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         storyLabel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -131,7 +142,7 @@ public class ProloguePanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         storyLabel.setText(storyTexts[i]);
         
-        if (i <= 4)
+        if (i <= 14)
             i++;// = (i+1) % 5;
         else
         {
@@ -157,7 +168,7 @@ public class ProloguePanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         storyLabel.setText(storyTexts[i]);
         
-        if (i <= 4)
+        if (i <= 14)
             i++;// = (i+1) % 5;
         else
         {
