@@ -88,7 +88,7 @@ public class ProloguePanel extends javax.swing.JPanel {
         add(fighterLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 420, 100, 100));
 
         fighterLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/defence_firen.png")));
-        add(fighterLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 420, 100, 100));
+        add(fighterLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 410, 100, 100));
 
         fighterLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/defence_freeze.png")));
         add(fighterLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 430, 100, 100));
