@@ -34,10 +34,15 @@ Build:
     * Make sure you have **JDK 8** & **Apache Ant(TM) version 1.9.2**
     * Download the whole repository
     * Change directory into the project directory
-    * Simply type **"ant"** command to build the project
+    * First, type `ant` command to build the project
+    * Then type `ant copy` to copy /music & /dic directory to /dist directory
     * It will build a jar file name **"LittleTyper.jar"** in the /dist directory
-    * In Windows you can just simply click the jar file to start execution
-    * In Linux, type `java -jar LittleTyper.jar` to start execution
+     
+Execution:
+
+* **It is highly recommand to execute the program in Windows, Linux might get the LineUnavailableException error**
+* In Windows you can just simply click the jar file to start execution
+* Or type `java -jar LittleTyper.jar` to start execution
 
 
 (this readme file is still editing)

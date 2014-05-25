@@ -70,4 +70,15 @@
     nbproject/build-impl.xml file. 
 
     -->
+	
+	<target name="copy">
+		<echo>copying music dir to dist dir...</echo>
+		<copy todir="dist" >  
+			<fileset dir = "." includes = "music/**" />  
+		</copy>
+		<echo>copying dic dir to dist dir...</echo>
+		<copy todir="dist" >  
+			<fileset dir = "." includes = "dic/**" />  
+		</copy>
+	</target>
 </project>

@@ -9,6 +9,7 @@ package panel;
 import frame.MainFrame;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
+import littletyper.Music;
 
 /**
  *
@@ -167,6 +168,8 @@ public class DifficultyPanel extends javax.swing.JPanel {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         ChoseCharacterPanel.getInstance().getSelectMusic().stop();
+        PlayingPanel.getInstance().setStageBGM(1);
+        PlayingPanel.getInstance().getStageBGM().playLoop();
         MainFrame.getInstance().SwitchPanel("playing");
         PlayingPanel.getInstance().setDifficulty(diffy);
         PlayingPanel.getInstance().getFocus();  

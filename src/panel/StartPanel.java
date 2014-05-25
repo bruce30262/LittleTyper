@@ -240,7 +240,8 @@ public class StartPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         this.startMusic.stop();
         ChoseCharacterPanel.getInstance().setMode("single");
-        MainFrame.getInstance().SwitchPanel("prologue");    
+        MainFrame.getInstance().SwitchPanel("prologue");
+        ProloguePanel.getInstance().prologueMusic.playLoop();
     }//GEN-LAST:event_jLabel1MouseClicked
 
     private void changeTextColor(javax.swing.JLabel label, String color)
