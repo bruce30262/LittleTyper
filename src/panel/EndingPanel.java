@@ -6,10 +6,14 @@
 
 package panel;
 
+import frame.MainFrame;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.Icon;
+import javax.swing.JDialog;
 import javax.swing.SwingUtilities;
+import javax.swing.WindowConstants;
+import littletyper.RankingList;
 
 /**
  *
@@ -24,6 +28,10 @@ public class EndingPanel extends javax.swing.JPanel {
     private Icon bodyIMG = new javax.swing.ImageIcon(getClass().getResource("/panel/image/dead_julian_reverse.png"));
     private Icon cubeIMG = new javax.swing.ImageIcon(getClass().getResource("/panel/image/cube.gif"));
     public int imgID;
+    
+    private String diffy;
+    private int id;
+    private int score;
     
     
     /**
@@ -120,6 +128,26 @@ public class EndingPanel extends javax.swing.JPanel {
         setLiftStillIMG(this.imgID);
         chLabel.setLocation(x, y);
     }
+    
+    public void StartEnding()
+    {
+        WalkAnimeThd walk = new WalkAnimeThd();
+        raiseAnimeThd raise = new raiseAnimeThd();
+        walk.start();
+        raise.start();
+    }
+    
+    public void SetRankData()
+    {
+        this.diffy = PlayingPanel.getInstance().getDiffy();
+        this.id = PlayingPanel.getInstance().getRoleId();
+        this.score = PlayingPanel.getInstance().getScore();
+    }
+    
+    public JDialog getInputDialog()
+    {
+        return this.inputNameDialog;
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -130,22 +158,77 @@ public class EndingPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        activeLabel = new javax.swing.JLabel();
+        inputNameDialog = new javax.swing.JDialog();
+        sendName = new javax.swing.JButton();
+        nameTextBox = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         cubeLabel = new javax.swing.JLabel();
         bodyLabel = new javax.swing.JLabel();
         chLabel = new javax.swing.JLabel();
         backgroundLabel = new javax.swing.JLabel();
 
-        setPreferredSize(new java.awt.Dimension(800, 600));
-        setLayout(null);
+        inputNameDialog.setAlwaysOnTop(true);
+        inputNameDialog.setMinimumSize(new java.awt.Dimension(400, 300));
+        inputNameDialog.setResizable(false);
 
-        activeLabel.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                activeLabelMouseClicked(evt);
+        sendName.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
+        sendName.setText("OK");
+        sendName.setEnabled(false);
+        sendName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendNameActionPerformed(evt);
             }
         });
-        add(activeLabel);
-        activeLabel.setBounds(0, 0, 800, 600);
+
+        nameTextBox.setFont(new java.awt.Font("Impact", 0, 36)); // NOI18N
+        nameTextBox.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                nameTextBoxKeyTyped(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Impact", 0, 36)); // NOI18N
+        jLabel4.setText("Name :");
+
+        jLabel5.setFont(new java.awt.Font("Impact", 0, 36)); // NOI18N
+        jLabel5.setText("It's a new record!!");
+
+        javax.swing.GroupLayout inputNameDialogLayout = new javax.swing.GroupLayout(inputNameDialog.getContentPane());
+        inputNameDialog.getContentPane().setLayout(inputNameDialogLayout);
+        inputNameDialogLayout.setHorizontalGroup(
+            inputNameDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(inputNameDialogLayout.createSequentialGroup()
+                .addContainerGap(39, Short.MAX_VALUE)
+                .addGroup(inputNameDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inputNameDialogLayout.createSequentialGroup()
+                        .addComponent(sendName, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(131, 131, 131))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inputNameDialogLayout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(nameTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inputNameDialogLayout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(65, 65, 65))))
+        );
+        inputNameDialogLayout.setVerticalGroup(
+            inputNameDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, inputNameDialogLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
+                .addGroup(inputNameDialogLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nameTextBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+                .addComponent(sendName, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24))
+        );
+
+        setPreferredSize(new java.awt.Dimension(800, 600));
+        setLayout(null);
 
         cubeLabel.setPreferredSize(new java.awt.Dimension(100, 100));
         add(cubeLabel);
@@ -164,21 +247,64 @@ public class EndingPanel extends javax.swing.JPanel {
         backgroundLabel.setBounds(0, 0, 800, 600);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void activeLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_activeLabelMouseClicked
+    private void sendNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendNameActionPerformed
         // TODO add your handling code here:
-        WalkAnimeThd walk = new WalkAnimeThd();
-        raiseAnimeThd raise = new raiseAnimeThd();
-        walk.start();
-        raise.start();
-    }//GEN-LAST:event_activeLabelMouseClicked
+        String userName = nameTextBox.getText();
+        if(userName.length() > 0 && userName.length() <= 20)
+        {
+            RankingList curRank = RankingPanel.getInstance().getRankList(this.diffy);
+            curRank.InserNewUser(userName, this.id, this.score);
+            RankingPanel.getInstance().saveRankFile(this.diffy);
+
+            RankingPanel.getInstance().loadRankFile("easy");
+            RankingPanel.getInstance().loadRankFile("medium");
+            RankingPanel.getInstance().loadRankFile("expert");
+
+            RankingPanel.getInstance().initRankPanel("easy");
+            RankingPanel.getInstance().initRankPanel("medium");
+            RankingPanel.getInstance().initRankPanel("expert");
+
+            RankingPanel.getInstance().setRankPanel("easy");
+            RankingPanel.getInstance().setRankPanel("medium");
+            RankingPanel.getInstance().setRankPanel("expert");
+
+            inputNameDialog.dispose();
+            MainFrame.getInstance().SwitchPanel("ranking");
+            RankingPanel.getInstance().setTab(this.diffy);
+        }
+    }//GEN-LAST:event_sendNameActionPerformed
+
+    private void nameTextBoxKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_nameTextBoxKeyTyped
+        // TODO add your handling code here:
+        String text = nameTextBox.getText();
+
+        if(text.length() > 0)
+        {
+            sendName.setEnabled(true);
+        }
+        else
+        {
+            sendName.setEnabled(false);
+        }
+
+        if(text.length() > 20)
+        {
+            String s = text.substring(0, 20);
+            nameTextBox.setText(s);
+        }
+    }//GEN-LAST:event_nameTextBoxKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel activeLabel;
     private javax.swing.JLabel backgroundLabel;
     private javax.swing.JLabel bodyLabel;
     private javax.swing.JLabel chLabel;
     private javax.swing.JLabel cubeLabel;
+    private javax.swing.JDialog inputNameDialog;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JTextField nameTextBox;
+    private javax.swing.JButton sendName;
     // End of variables declaration//GEN-END:variables
 }
 
@@ -272,6 +398,18 @@ class raiseAnimeThd extends Thread
             turnRaising();
         }
         turnLiftStill();
+        
+        try 
+        {
+            Thread.sleep(2000);
+        }
+        catch (InterruptedException ex) 
+        {
+            Logger.getLogger(raiseAnimeThd.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        HandleWinThread win = new HandleWinThread();
+        win.start();
     }
     
     private void turnRaising()
@@ -294,5 +432,35 @@ class raiseAnimeThd extends Thread
                 EndingPanel.getInstance().setLiftStillPosition(605, 470);
             }
         });
+    }
+}
+
+class HandleWinThread extends Thread
+{
+    String diffy;
+    int roleId;
+    int score;
+    
+    public HandleWinThread()
+    {
+        this.diffy = PlayingPanel.getInstance().getDiffy();
+        this.roleId = PlayingPanel.getInstance().getRoleId();
+        this.score = PlayingPanel.getInstance().getScore();
+    }
+    
+    public void run()
+    {
+        RankingList curRank = RankingPanel.getInstance().getRankList(this.diffy);
+        
+        if(curRank.checkHighEnough(this.score))
+        {
+            EndingPanel.getInstance().getInputDialog().setLocationRelativeTo(null);
+            EndingPanel.getInstance().getInputDialog().setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+            EndingPanel.getInstance().getInputDialog().setVisible(true);
+        }
+        else
+        {
+            MainFrame.getInstance().SwitchPanel("start");
+        }
     }
 }

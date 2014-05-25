@@ -1898,13 +1898,15 @@ class DeathThread extends Thread
         {
             public void run() 
             {
-                if(winOrLose.equals("win"))
+                if(winOrLose.equals("win")) //win
                 {
                     if(PlayingPanel.getInstance().getStageNum() == 5)
                     {
                         PlayingPanel.getInstance().getFinalWinMusic().playOnce();
                         //switch to ending
+                        EndingPanel.getInstance().SetRankData();
                         MainFrame.getInstance().SwitchPanel("ending");
+                        EndingPanel.getInstance().StartEnding();
                     }
                     else
                     {
@@ -1912,7 +1914,7 @@ class DeathThread extends Thread
                         MainFrame.getInstance().SwitchPanel("youWin");
                     }
                 }
-                else
+                else //Lose
                 {
                     PlayingPanel.getInstance().getLoseMusic().playOnce();
                     String s = String.valueOf( PlayingPanel.getInstance().getScore() );
