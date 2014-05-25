@@ -114,9 +114,9 @@ public class ProloguePanel extends javax.swing.JPanel {
 
         jButton2.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
         jButton2.setText("Next");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton2MouseClicked(evt);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
         add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 550, 180, 50));
@@ -164,7 +164,13 @@ public class ProloguePanel extends javax.swing.JPanel {
         ChoseCharacterPanel.getInstance().getSelectMusic().playLoop();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        // TODO add your handling code here:
+        this.prologueMusic.stop();
+        MainFrame.getInstance().SwitchPanel("ending");
+    }//GEN-LAST:event_jButton3MouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         storyLabel.setText(storyTexts[i]);
         
@@ -180,13 +186,7 @@ public class ProloguePanel extends javax.swing.JPanel {
             i = 0;
             storyLabel.setText("Once upon a time ...");
         }
-    }//GEN-LAST:event_jButton2MouseClicked
-
-    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
-        // TODO add your handling code here:
-        this.prologueMusic.stop();
-        MainFrame.getInstance().SwitchPanel("ending");
-    }//GEN-LAST:event_jButton3MouseClicked
+    }//GEN-LAST:event_jButton2ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
