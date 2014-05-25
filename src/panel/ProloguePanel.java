@@ -78,19 +78,19 @@ public class ProloguePanel extends javax.swing.JPanel {
         });
         add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 230, 150, 90));
 
-        fighterLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/ch_woody.png")));
+        fighterLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/defence_woody.png")));
         add(fighterLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 440, 100, 100));
 
-        fighterLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/ch_john.png")));
+        fighterLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/defence_john.png")));
         add(fighterLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 440, 100, 100));
 
-        fighterLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/ch_davis.png")));
+        fighterLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/defence_davis.png")));
         add(fighterLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 420, 100, 100));
 
-        fighterLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/ch_firen.png")));
+        fighterLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/defence_firen.png")));
         add(fighterLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 420, 100, 100));
 
-        fighterLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/ch_freeze.png")));
+        fighterLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/defence_freeze.png")));
         add(fighterLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 430, 100, 100));
 
         jButton1.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
