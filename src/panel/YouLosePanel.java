@@ -278,6 +278,7 @@ class HandleLoseThread extends Thread
         }
         else
         {
+            StartPanel.getInstance().getStartMusic().playLoop();
             MainFrame.getInstance().SwitchPanel("start");
         }
     }
