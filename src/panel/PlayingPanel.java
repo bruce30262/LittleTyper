@@ -1905,6 +1905,7 @@ class DeathThread extends Thread
                         PlayingPanel.getInstance().getFinalWinMusic().playOnce();
                         //switch to ending
                         EndingPanel.getInstance().SetRankData();
+                        EndingPanel.getInstance().refreshPosition();
                         MainFrame.getInstance().SwitchPanel("ending");
                         EndingPanel.getInstance().StartEnding();
                     }

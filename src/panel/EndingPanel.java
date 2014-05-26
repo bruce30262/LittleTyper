@@ -83,6 +83,15 @@ public class EndingPanel extends javax.swing.JPanel {
         return endingSingle;
     }
     
+    public void refreshPosition()
+    {
+        chLabel.setIcon(chIMGs[imgID]);
+        chLabel.setLocation(130, 470);
+        
+        cubeLabel.setIcon(null);
+        cubeLabel.setLocation(625, 470);
+    }
+    
     public void setStandIMG(int id)
     {
         chLabel.setIcon(chIMGs[id]);
