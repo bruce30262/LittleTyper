@@ -1856,7 +1856,7 @@ class DeathThread extends Thread
             
             Switch();
         }
-        else
+        else //network battle
         {
             
         }
