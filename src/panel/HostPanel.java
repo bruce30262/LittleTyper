@@ -276,6 +276,9 @@ public class HostPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         if(connected == true)
         {
+            ChoseCharacterPanel.getInstance().getSelectMusic().stop();
+            PlayingPanel.getInstance().setStageBGM(3);
+            PlayingPanel.getInstance().getStageBGM().playLoop();
             MainFrame.getInstance().SwitchPanel("playing");
             Connection.getInstance().send("start");
             PlayingPanel.getInstance().setDifficultyForNetWork(diffy,ChoseCharacterPanel.getInstance().getName(Connection.getInstance().character2));

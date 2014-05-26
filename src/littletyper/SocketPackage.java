@@ -119,6 +119,9 @@ public class SocketPackage implements java.lang.Runnable
                         else    ClientConnectedPanel.getInstance().setDifficultyText(msg);
                     }
                     
+                    ChoseCharacterPanel.getInstance().getSelectMusic().stop();
+                    PlayingPanel.getInstance().setStageBGM(3);
+                    PlayingPanel.getInstance().getStageBGM().playLoop();
                     MainFrame.getInstance().SwitchPanel("playing");
                     PlayingPanel.getInstance().setDifficultyForNetWork(Connection.getInstance().diff,ChoseCharacterPanel.getInstance().getName(Connection.getInstance().character2));
                     PlayingPanel.getInstance().getFocus();  
