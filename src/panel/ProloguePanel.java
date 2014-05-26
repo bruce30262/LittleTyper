@@ -67,7 +67,6 @@ public class ProloguePanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton3 = new javax.swing.JButton();
         fighterLabel5 = new javax.swing.JLabel();
         fighterLabel4 = new javax.swing.JLabel();
         fighterLabel1 = new javax.swing.JLabel();
@@ -79,14 +78,6 @@ public class ProloguePanel extends javax.swing.JPanel {
         backgroundLabel = new javax.swing.JLabel();
 
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jButton3.setText("endingTEST");
-        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton3MouseClicked(evt);
-            }
-        });
-        add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 230, 150, 90));
 
         fighterLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/panel/image/defence_woody.png")));
         add(fighterLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 440, 100, 100));
@@ -164,12 +155,6 @@ public class ProloguePanel extends javax.swing.JPanel {
         ChoseCharacterPanel.getInstance().getSelectMusic().playLoop();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
-        // TODO add your handling code here:
-        this.prologueMusic.stop();
-        MainFrame.getInstance().SwitchPanel("ending");
-    }//GEN-LAST:event_jButton3MouseClicked
-
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         storyLabel.setText(storyTexts[i]);
@@ -198,7 +183,6 @@ public class ProloguePanel extends javax.swing.JPanel {
     private javax.swing.JLabel fighterLabel5;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel storyLabel;
     // End of variables declaration//GEN-END:variables
 }
