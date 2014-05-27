@@ -28,7 +28,7 @@ public class Connection
     
     boolean connected = false;
     String IP;
-    boolean isServer;
+    public boolean isServer;
     SocketPackage socket1;
     SocketPackage socket2;
     Thread thread1;
@@ -43,11 +43,22 @@ public class Connection
     public int character2;
     public String diff;
     
-    public Connection()
+    public void startServer()
     {
+        
         try {
             welcomeSocket1 = new ServerSocket(port1);
             welcomeSocket2 = new ServerSocket(port2);
+        } catch (IOException ex) {
+            Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void endServer()
+    {
+        try {
+            welcomeSocket1.close();
+            welcomeSocket2.close();
         } catch (IOException ex) {
             Logger.getLogger(Connection.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -296,6 +296,7 @@ public class HostPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         reset();
         Connection.getInstance().stop();
+        Connection.getInstance().endServer();
         ChoseCharacterPanel.getInstance().choseInit();
         MainFrame.getInstance().SwitchPanel("character");
     }//GEN-LAST:event_jButton3ActionPerformed
