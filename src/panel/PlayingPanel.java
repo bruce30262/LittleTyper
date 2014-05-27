@@ -1956,11 +1956,9 @@ class DeathThread extends Thread
                 }
                 else //Lose
                 {
-                    /*PlayingPanel.getInstance().getLoseMusic().playOnce();
-                    String s = String.valueOf( PlayingPanel.getInstance().getScore() );
-                    YouLosePanel.getInstance().setScoreLabel(s);
-                    MainFrame.getInstance().SwitchPanel("youLose");
-                    YouLosePanel.getInstance().StartRank();*/
+                    MainFrame.getInstance().SwitchPanel("netLose");
+                    NetworkLosePanel.getInstance().getNetLoseMusic().playOnce();
+                    NetworkLosePanel.getInstance().Ticking();                    
                 }
             }
         });

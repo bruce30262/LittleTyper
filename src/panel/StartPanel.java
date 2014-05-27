@@ -223,8 +223,6 @@ public class StartPanel extends javax.swing.JPanel {
 
     private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
         // TODO add your handling code here:
-        //this.startClip.stop();
-       // LittleTyper.MAINFRAME.dispose();
         System.exit(0);
     }//GEN-LAST:event_jLabel5MouseClicked
 

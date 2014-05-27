@@ -40,7 +40,7 @@ public class MainFrame extends javax.swing.JFrame {
         this.add(YouLosePanel.getInstance(), "youLose");
         this.add(ClientConnectedPanel.getInstance(), "clientConnected");
         this.add(NetworkWinPanel.getInstance(), "netWin");
-        //this.add(ClientConnectedPanel.getInstance(), "clientConnected");
+        this.add(NetworkLosePanel.getInstance(), "netLose");        
     }
     
     public static MainFrame getInstance()
