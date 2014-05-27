@@ -100,22 +100,49 @@ public class Connection
     
     public void stop() 
     {   
-        try {
-            
-          
-            this.thread1.interrupt();
-            this.thread2.interrupt();
-            this.socket1.socket.close();
-            this.socket2.socket.close();
-            
-            if(this.socket1.isServer == true)
-            {
-                this.socket1.welcomeSocket.close();
-                this.socket2.welcomeSocket.close();
-            }
+        boolean[] completed = new  boolean[6];
+        for(int i=0;i<6;i++)
+            completed[i] = false;
+        boolean allFinished = false;
+        
+        while(allFinished == false)
+        {
+            try {
+                
+                if(this.socket1.isServer == true)
+                {
+                    if(completed[4] == false){
+                        completed[4] = true;
+                        this.socket1.welcomeSocket.close();
+                    }
+                    if(completed[5] == false){
+                        completed[5] = true;
+                        this.socket2.welcomeSocket.close();
+                    }
+                }
 
-        } catch (Exception ex) {
-            
+                if(completed[0] == false){
+                    completed[0] = true;
+                    this.thread1.interrupt();
+                }
+                if(completed[1] == false){
+                    completed[1] = true;
+                    this.thread2.interrupt();
+                }
+                if(completed[2] == false){
+                    completed[2] = true;
+                    this.socket1.socket.close();
+                }
+                if(completed[3] == false){
+                    completed[3] = true;
+                    this.socket2.socket.close();
+                }
+                
+                allFinished = true;
+                
+            } catch (Exception ex) {
+
+            }
         }
         
         connected = false;

@@ -6,6 +6,8 @@
 
 package panel;
 import frame.MainFrame;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import panel.HostOrClientPanel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -26,7 +28,7 @@ public class ClientConnectedPanel extends javax.swing.JPanel {
     public ClientConnectedPanel() {
         initComponents();
         
-        jButton3.setVisible(false);
+        //jButton3.setVisible(false);
     }
     
     public static ClientConnectedPanel getInstance()

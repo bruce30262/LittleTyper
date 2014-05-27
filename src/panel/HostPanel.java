@@ -39,7 +39,7 @@ public class HostPanel extends javax.swing.JPanel {
     public HostPanel() {
         initComponents();
         jButton2.setVisible(false);
-        jButton3.setVisible(false);
+        //jButton3.setVisible(false);
         
         try{
             jLabel2.setText("Local IP:  " + InetAddress.getLocalHost().getHostAddress().toString());
@@ -80,7 +80,7 @@ public class HostPanel extends javax.swing.JPanel {
         jButton1.setBackground(new java.awt.Color(0, 165, 22));
         jButton1.setText("   GO!   ");
         
-        //jButton2.setVisible(true);
+        jButton2.setVisible(true);
     }
     
     public void reset()
@@ -314,7 +314,6 @@ public class HostPanel extends javax.swing.JPanel {
         // TODO add your handling code here:
         reset();
         Connection.getInstance().stop();
-        Connection.getInstance().connect("server","");
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed

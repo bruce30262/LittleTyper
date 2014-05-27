@@ -80,8 +80,7 @@ public class SocketPackage implements java.lang.Runnable
                     output.writeObject(Connection.getInstance().diff);
                 }
                 HostPanel.getInstance().connected = true;
-                
-                
+
                 
                 while(true)
                 {

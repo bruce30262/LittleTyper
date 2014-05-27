@@ -6,6 +6,8 @@
 
 package panel;
 import frame.MainFrame;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import panel.HostOrClientPanel;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
