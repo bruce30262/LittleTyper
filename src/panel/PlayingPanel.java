@@ -98,6 +98,8 @@ public class PlayingPanel extends javax.swing.JPanel {
     private Music finalWinMusic = new Music("stage_win_2.wav");
     private Music loseMusic = new Music("lose.wav");
     
+    private boolean needSwitch = true;
+    
     private int userBallX;
     private int userBallY;
     private int enemyBallX;
@@ -181,6 +183,7 @@ public class PlayingPanel extends javax.swing.JPanel {
         }
         this.stageBGM = allStageBGM[stageNum - 1];
     }
+    
     public void setDifficulty(String d)
     {
         this.curDiffy = d.toLowerCase();
@@ -300,6 +303,16 @@ public class PlayingPanel extends javax.swing.JPanel {
         {
             userScoreLabel.setVisible(false);
         }
+    }
+    
+    public boolean getNeedSwitch()
+    {
+        return this.needSwitch;
+    }
+    
+    public void setNeedSwitch(boolean v)
+    {
+        this.needSwitch = v;
     }
     
     public void setStage(int s)
@@ -1858,7 +1871,9 @@ class DeathThread extends Thread
         }
         else //network battle
         {
-            
+            PlayingPanel.getInstance().setNeedSwitch(false);
+            Connection.getInstance().stop();
+            SwitchForNetwork();
         }
                 
     }
@@ -1922,6 +1937,30 @@ class DeathThread extends Thread
                     YouLosePanel.getInstance().setScoreLabel(s);
                     MainFrame.getInstance().SwitchPanel("youLose");
                     YouLosePanel.getInstance().StartRank();
+                }
+            }
+        });
+    }
+    
+    private void SwitchForNetwork()
+    {
+        SwingUtilities.invokeLater(new Runnable() 
+        {
+            public void run() 
+            {
+                if(winOrLose.equals("win")) //win
+                {
+                    MainFrame.getInstance().SwitchPanel("netWin");
+                    NetworkWinPanel.getInstance().getNetWinMusic().playOnce();
+                    NetworkWinPanel.getInstance().Ticking();
+                }
+                else //Lose
+                {
+                    /*PlayingPanel.getInstance().getLoseMusic().playOnce();
+                    String s = String.valueOf( PlayingPanel.getInstance().getScore() );
+                    YouLosePanel.getInstance().setScoreLabel(s);
+                    MainFrame.getInstance().SwitchPanel("youLose");
+                    YouLosePanel.getInstance().StartRank();*/
                 }
             }
         });

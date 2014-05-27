@@ -143,13 +143,22 @@ public class SocketPackage implements java.lang.Runnable
                 if(isServer == true) 
                 {
                     HostPanel.getInstance().reset();
-                    MainFrame.getInstance().SwitchPanel("host");
+                    
+                    if(PlayingPanel.getInstance().getNeedSwitch())
+                    {
+                        MainFrame.getInstance().SwitchPanel("host");
+                    }
+                    
                     Connection.getInstance().stop();
                     Connection.getInstance().connect("server", "");
                 }
                 else
                 {
-                    MainFrame.getInstance().SwitchPanel("client");
+                    if(PlayingPanel.getInstance().getNeedSwitch())
+                    {
+                        MainFrame.getInstance().SwitchPanel("client");
+                    }
+                    
                     Connection.getInstance().stop();
                 }
             }
