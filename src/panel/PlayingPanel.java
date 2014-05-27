@@ -1873,6 +1873,7 @@ class DeathThread extends Thread
         {
             PlayingPanel.getInstance().setNeedSwitch(false);
             Connection.getInstance().stop();
+            HostPanel.getInstance().reset();
             SwitchForNetwork();
         }
                 

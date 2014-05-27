@@ -30,19 +30,19 @@ public class SocketPackage implements java.lang.Runnable
     boolean isServer;
     boolean isInput;
     
-    public ServerSocket welcomeSocket;
     public Socket socket;
     public ObjectOutputStream output;
     public ObjectInputStream input;
-    
+    public ServerSocket welcomeSocket;
 
-    public SocketPackage(String who, String dir, String i,int p)
+    public SocketPackage(String who, String dir, String i,int p, ServerSocket ws)
     {
         isServer = who.equals("server"); 
         isInput = dir.equals("input");
         
         ip = i;
         port = p;
+        welcomeSocket = ws;
     }
       
     
@@ -52,7 +52,6 @@ public class SocketPackage implements java.lang.Runnable
     {
         try {
             if(isServer == true) {
-                welcomeSocket = new ServerSocket(port);
                 socket = welcomeSocket.accept();
             } else {
                 socket = new Socket(ip, port);
@@ -81,17 +80,12 @@ public class SocketPackage implements java.lang.Runnable
                 }
                 HostPanel.getInstance().connected = true;
 
-                
-                while(true)
+                if(isInput == true)
                 {
-                    if(isInput == true)
+                    while(true)
                     {
                         String msg = input.readObject().toString();
-                        if(msg.equals("leave"))
-                        {
-                             HostPanel.getInstance().connected = false;
-                             HostPanel.getInstance().reset();
-                        }
+                        if(msg.equals("leave")) break;
                         else if(msg.equals("ult") == true) PlayingPanel.getInstance().setNetworkEnemySpecial();
                         else    PlayingPanel.getInstance().NetworkEnemyAtk(Integer.parseInt(msg));
                     }
@@ -129,8 +123,10 @@ public class SocketPackage implements java.lang.Runnable
                     {
                         String msg = input.readObject().toString();
                         if(msg.equals("ult") == true) PlayingPanel.getInstance().setNetworkEnemySpecial();
+                        else if(msg.equals("leave") == true)    break;
                         else    PlayingPanel.getInstance().NetworkEnemyAtk(Integer.parseInt(msg));
                     }
+                    
                 }
                 else
                 {
