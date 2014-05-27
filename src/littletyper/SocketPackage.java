@@ -147,6 +147,10 @@ public class SocketPackage implements java.lang.Runnable
                     if(PlayingPanel.getInstance().getNeedSwitch())
                     {
                         MainFrame.getInstance().SwitchPanel("host");
+                        if(PlayingPanel.getInstance().getStageBGM() != null )
+                        {
+                            PlayingPanel.getInstance().getStageBGM().stop();
+                        }
                     }
                     
                     Connection.getInstance().stop();
@@ -157,6 +161,10 @@ public class SocketPackage implements java.lang.Runnable
                     if(PlayingPanel.getInstance().getNeedSwitch())
                     {
                         MainFrame.getInstance().SwitchPanel("client");
+                        if(PlayingPanel.getInstance().getStageBGM() != null )
+                        {
+                            PlayingPanel.getInstance().getStageBGM().stop();
+                        }
                     }
                     
                     Connection.getInstance().stop();
