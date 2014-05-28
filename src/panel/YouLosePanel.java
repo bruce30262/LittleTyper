@@ -8,6 +8,7 @@ package panel;
 import frame.MainFrame;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.WindowConstants;
 import littletyper.RankingList;
@@ -26,9 +27,16 @@ public class YouLosePanel extends javax.swing.JPanel {
     private String diffy;
     private int id;
     private int score;
+    private Icon dead[] = new Icon[5];
     
     private YouLosePanel() {
         initComponents();
+        
+        dead[0] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/dead_freeze.png")); 
+        dead[1] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/dead_firen.png"));
+        dead[2] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/dead_davis.png"));
+        dead[3] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/dead_john.png"));
+        dead[4] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/dead_woody.png"));
     }
     
     public static YouLosePanel getInstance()
@@ -38,6 +46,12 @@ public class YouLosePanel extends javax.swing.JPanel {
             ylSingle = new YouLosePanel();
         }
         return ylSingle;
+    }
+    
+    public void setDeadIcon()
+    {
+        int id = PlayingPanel.getInstance().getRoleId();
+        deadLabel.setIcon(dead[id]);
     }
     
     public void setScoreLabel(String score)
@@ -80,6 +94,7 @@ public class YouLosePanel extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         scoreLabel = new javax.swing.JLabel();
+        deadLabel = new javax.swing.JLabel();
 
         inputNameDialog.setAlwaysOnTop(true);
         inputNameDialog.setMinimumSize(new java.awt.Dimension(400, 300));
@@ -140,17 +155,25 @@ public class YouLosePanel extends javax.swing.JPanel {
                 .addGap(24, 24, 24))
         );
 
+        setBackground(new java.awt.Color(0, 0, 0));
+
         jLabel1.setFont(new java.awt.Font("Impact", 0, 48)); // NOI18N
-        jLabel1.setText("You Lose");
+        jLabel1.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel1.setText("You Lose.......");
 
         jLabel2.setFont(new java.awt.Font("Impact", 0, 48)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 0, 0));
         jLabel2.setText(":(");
 
         jLabel3.setFont(new java.awt.Font("Impact", 0, 48)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 0, 0));
         jLabel3.setText("Score: ");
 
         scoreLabel.setFont(new java.awt.Font("Impact", 0, 48)); // NOI18N
+        scoreLabel.setForeground(new java.awt.Color(255, 0, 0));
         scoreLabel.setText("000000");
+
+        deadLabel.setText("   ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -160,16 +183,19 @@ public class YouLosePanel extends javax.swing.JPanel {
                 .addContainerGap(255, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(313, 313, 313))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(386, 386, 386))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addGap(18, 18, 18)
                         .addComponent(scoreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(201, 201, 201))))
+                        .addGap(201, 201, 201))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(deadLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(298, 298, 298))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(254, 254, 254))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -182,7 +208,9 @@ public class YouLosePanel extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(scoreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(190, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(deadLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(58, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -235,6 +263,7 @@ public class YouLosePanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel deadLabel;
     private javax.swing.JDialog inputNameDialog;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

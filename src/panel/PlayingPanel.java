@@ -1939,6 +1939,7 @@ class DeathThread extends Thread
                     PlayingPanel.getInstance().getLoseMusic().playOnce();
                     String s = String.valueOf( PlayingPanel.getInstance().getScore() );
                     YouLosePanel.getInstance().setScoreLabel(s);
+                    YouLosePanel.getInstance().setDeadIcon();
                     MainFrame.getInstance().SwitchPanel("youLose");
                     YouLosePanel.getInstance().StartRank();
                 }
