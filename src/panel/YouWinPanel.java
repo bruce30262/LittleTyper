@@ -6,6 +6,12 @@
 
 package panel;
 import frame.MainFrame;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.Icon;
 
 /**
@@ -19,8 +25,10 @@ public class YouWinPanel extends javax.swing.JPanel {
      */
     private static YouWinPanel ywSingle = null;
     private Icon[] walkIMGs;
-        
+    private BufferedImage bg;
+            
     private YouWinPanel() {
+        
         initComponents();
         
         walkIMGs = new Icon[5];
@@ -29,6 +37,12 @@ public class YouWinPanel extends javax.swing.JPanel {
         walkIMGs[2] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/walk_davis.gif"));
         walkIMGs[3] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/walk_john.gif"));
         walkIMGs[4] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/walk_woody.gif"));
+        
+        try {
+            this.bg = ImageIO.read(getClass().getResource("/panel/image/castle_bg.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(YouWinPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public static YouWinPanel getInstance()
@@ -38,6 +52,12 @@ public class YouWinPanel extends javax.swing.JPanel {
             ywSingle = new YouWinPanel();
         }
         return ywSingle;
+    }
+    
+    public void paintComponent(Graphics g) 
+    {
+        super.paintComponent(g);
+        g.drawImage(bg, 0, 0, this); // Draw the background image.
     }
     
     public void setWalkIcon()
@@ -61,9 +81,11 @@ public class YouWinPanel extends javax.swing.JPanel {
         walkingLabel = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Impact", 0, 48)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("You Win!!");
 
         jLabel2.setFont(new java.awt.Font("Impact", 0, 48)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Get ready for the next battle!!");
 
         jButton2.setFont(new java.awt.Font("Impact", 0, 24)); // NOI18N
@@ -74,6 +96,8 @@ public class YouWinPanel extends javax.swing.JPanel {
                 jButton2ActionPerformed(evt);
             }
         });
+
+        walkingLabel.setText("    ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -92,7 +116,7 @@ public class YouWinPanel extends javax.swing.JPanel {
                         .addGap(296, 296, 296)
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(375, 375, 375)
+                        .addGap(349, 349, 349)
                         .addComponent(walkingLabel)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -103,9 +127,9 @@ public class YouWinPanel extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addGap(62, 62, 62)
                 .addComponent(jLabel2)
-                .addGap(65, 65, 65)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 184, Short.MAX_VALUE)
                 .addComponent(walkingLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 182, Short.MAX_VALUE)
+                .addGap(48, 48, 48)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
