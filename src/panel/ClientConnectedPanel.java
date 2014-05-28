@@ -43,6 +43,7 @@ public class ClientConnectedPanel extends javax.swing.JPanel {
     public void setDifficultyText(String diff)
     {
         choseNameLabel3.setText(diff);
+        Connection.getInstance().diff = diff;
     }
     
     public void setMyInfo(int cnt)
