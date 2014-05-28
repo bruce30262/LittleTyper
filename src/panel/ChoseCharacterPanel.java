@@ -255,8 +255,8 @@ public class ChoseCharacterPanel extends javax.swing.JPanel {
                 HostPanel.getInstance().setRole(headIcon[cnt], roleName[cnt], cnt);
                 MainFrame.getInstance().SwitchPanel("host");
                 Connection.getInstance().saveMyInfo(cnt);
+                Connection.getInstance().startServer();
                 Connection.getInstance().connect("server","");
-
             }
             else
             {
