@@ -1930,6 +1930,7 @@ class DeathThread extends Thread
                     else
                     {
                         PlayingPanel.getInstance().getStageWinMusic().playOnce();
+                        YouWinPanel.getInstance().setWalkIcon();
                         MainFrame.getInstance().SwitchPanel("youWin");
                     }
                 }

@@ -6,6 +6,7 @@
 
 package panel;
 import frame.MainFrame;
+import javax.swing.Icon;
 
 /**
  *
@@ -17,9 +18,17 @@ public class YouWinPanel extends javax.swing.JPanel {
      * Creates new form YouWinPanel
      */
     private static YouWinPanel ywSingle = null;
+    private Icon[] walkIMGs;
         
     private YouWinPanel() {
         initComponents();
+        
+        walkIMGs = new Icon[5];
+        walkIMGs[0] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/walk_freeze.gif"));
+        walkIMGs[1] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/walk_firen.gif"));
+        walkIMGs[2] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/walk_davis.gif"));
+        walkIMGs[3] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/walk_john.gif"));
+        walkIMGs[4] = new javax.swing.ImageIcon(getClass().getResource("/panel/image/walk_woody.gif"));
     }
     
     public static YouWinPanel getInstance()
@@ -29,6 +38,12 @@ public class YouWinPanel extends javax.swing.JPanel {
             ywSingle = new YouWinPanel();
         }
         return ywSingle;
+    }
+    
+    public void setWalkIcon()
+    {
+        int id = PlayingPanel.getInstance().getRoleId();
+        walkingLabel.setIcon(walkIMGs[id]);
     }
 
     /**
@@ -43,6 +58,7 @@ public class YouWinPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
+        walkingLabel = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("Impact", 0, 48)); // NOI18N
         jLabel1.setText("You Win!!");
@@ -66,24 +82,30 @@ public class YouWinPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(122, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(109, 109, 109))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(114, 114, 114)
-                        .addComponent(jLabel2))
+                        .addGap(296, 296, 296)
+                        .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(294, 294, 294)
-                        .addComponent(jLabel1)))
-                .addContainerGap(117, Short.MAX_VALUE))
+                        .addGap(375, 375, 375)
+                        .addComponent(walkingLabel)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(210, 210, 210)
+                .addGap(117, 117, 117)
                 .addComponent(jLabel1)
-                .addGap(66, 66, 66)
+                .addGap(62, 62, 62)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 150, Short.MAX_VALUE)
+                .addGap(65, 65, 65)
+                .addComponent(walkingLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 182, Short.MAX_VALUE)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -104,5 +126,6 @@ public class YouWinPanel extends javax.swing.JPanel {
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel walkingLabel;
     // End of variables declaration//GEN-END:variables
 }
