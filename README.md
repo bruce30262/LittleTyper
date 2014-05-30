@@ -45,6 +45,8 @@ Execution
 Run the game from command line : `java -jar "LittleTyper.jar`<br/>
 In Windows you can simply double clicked the **LittleTyper.jar** file after you install JRE 8
 
+Make sure the dic directory, music directory and LittleTyper.jar are all in the same directory.
+
 There's a **Tutorial** in the start menu, it teach you how to play the game, make sure you read it before you play the whole game. 
 
 ####**Hope you enjoy!!**
