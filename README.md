@@ -38,14 +38,14 @@ Due to the sound effect problem, **it is highly recommend to run the game in Win
 
 Download
 ==========
-You can download the game here.
+You can download the game [here](https://github.com/bruce30262/LittleTyper/releases).
 
 Execution
 ==========
 Run the game from command line : `java -jar "LittleTyper.jar`<br/>
 In Windows you can simply double clicked the **LittleTyper.jar** file after you install JRE 8
 
-Make sure the dic directory, music directory and LittleTyper.jar are all in the same directory.
+**Make sure the dic directory, music directory and LittleTyper.jar are all in the same directory.**
 
 There's a **Tutorial** in the start menu, it teach you how to play the game, make sure you read it before you play the whole game. 
 
