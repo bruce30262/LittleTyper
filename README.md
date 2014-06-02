@@ -32,7 +32,7 @@ System Requirement
 To run this game, you'll have to install [JRE 8](http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html) **(Java SE Runtime Environment 8)** first.
 
 ####**Important:**
-Due to the sound effect problem, **it is highly recommend to run the game in Windows 7/8**, in Linux you might get the **LineUnavailableException** error, **which make the program unable to play musics & sound effects normally under Linux**.
+Due to the sound effect problem, **it is highly recommend to run the game in Windows 7/8**, in Linux you might get the **LineUnavailableException** error, **which makes the program unable to play musics & sound effects normally under Linux**.
 
 
 
@@ -42,7 +42,7 @@ You can download the game [here](https://github.com/bruce30262/LittleTyper/relea
 
 Execution
 ==========
-Run the game from command line : `java -jar "LittleTyper.jar`<br/>
+Run the game from command line : `java -jar LittleTyper.jar`<br/>
 In Windows you can simply double clicked the **LittleTyper.jar** file after you install JRE 8
 
 **Make sure the dic directory, music directory and LittleTyper.jar are all in the same directory.**
