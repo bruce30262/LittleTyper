@@ -59,7 +59,7 @@ Basically we have done developing this project. But if you're interested in impr
 * Make sure you have installed the development tool
     * **[Java SE Development Kit 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)**
     * **[NetBeans IDE 8.0](https://netbeans.org/community/releases/80/)**
-* Fork the project, download the whole repository and import as a netbeans project
+* **Fork the project**, download the whole repository and import as a netbeans project
 * Have fun! Feel free to develop the project, **you don't have to send the pull request to us**.
 
 ####If you have any problem, please contact [Bruce Chen](https://github.com/bruce30262) via email 
