@@ -74,6 +74,8 @@ public class HostPanel extends javax.swing.JPanel {
     
     public void setEnemyInfo(int cnt)
     { 
+        jButton3.setVisible(false);
+        
         choseLabel1.setIcon(ChoseCharacterPanel.getInstance().getIcon(cnt));
         choseNameLabel1.setText(ChoseCharacterPanel.getInstance().getName(cnt));
         
@@ -85,6 +87,7 @@ public class HostPanel extends javax.swing.JPanel {
     
     public void reset()
     {
+        jButton3.setVisible(true);
         jButton2.setVisible(false);
         
         jButton1.setBackground(new java.awt.Color(255, 0, 51));
